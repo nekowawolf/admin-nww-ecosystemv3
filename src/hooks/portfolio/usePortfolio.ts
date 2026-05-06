@@ -9,12 +9,14 @@ import {
   addExperience,
   addEducation,
   addTechSkill,
+  addDesignSkill,
   deleteCertificate,
   deleteDesign,
   deleteProject,
   deleteExperience,
   deleteEducation,
-  deleteTechSkill
+  deleteTechSkill,
+  deleteDesignSkill,
 } from '@/services/portfolio/portfolioService'
 import { 
   Portfolio, 
@@ -159,6 +161,12 @@ export const usePortfolio = () => {
   const handleDeleteTechSkill = (id: string) => 
     handleSectionDelete(deleteTechSkill, id, 'tech skill')
 
+  const handleAddDesignSkill = (data: SkillItem) => 
+    handleSectionAction(addDesignSkill, data, 'design skill')
+
+  const handleDeleteDesignSkill = (id: string) => 
+    handleSectionDelete(deleteDesignSkill, id, 'design skill')
+
   const handleEditCertificate = async (id: string, data: Certificate) => {
     try {
       await deleteCertificate(id)
@@ -231,6 +239,18 @@ export const usePortfolio = () => {
     }
   }
 
+  const handleEditDesignSkill = async (id: string, data: SkillItem) => {
+    try {
+      await deleteDesignSkill(id)
+      await addDesignSkill(data)
+      await fetchPortfolio()
+      return true
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to update design skill')
+      return false
+    }
+  }
+
   useEffect(() => {
     fetchPortfolio()
   }, [])
@@ -269,5 +289,9 @@ export const usePortfolio = () => {
     addTechSkill: handleAddTechSkill,
     deleteTechSkill: handleDeleteTechSkill,
     editTechSkill: handleEditTechSkill,
+
+    addDesignSkill: handleAddDesignSkill,
+    deleteDesignSkill: handleDeleteDesignSkill,
+    editDesignSkill: handleEditDesignSkill,
   }
 }

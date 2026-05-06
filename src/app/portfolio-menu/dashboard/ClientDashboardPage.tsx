@@ -35,7 +35,10 @@ export default function PortfolioDashboard() {
     editEducation,
     addTechSkill,
     deleteTechSkill,
-    editTechSkill
+    editTechSkill,
+    addDesignSkill,
+    deleteDesignSkill,
+    editDesignSkill,
   } = usePortfolio()
 
   const [activeSection, setActiveSection] = useState('hero')
@@ -273,21 +276,19 @@ export default function PortfolioDashboard() {
             />
 
             {/* Design Skills */}
-            {portfolio.skills?.design && portfolio.skills.design.length > 0 && (
-              <CRUDList
-                title="Design Skills"
-                items={portfolio.skills.design}
-                fields={[
-                  { key: 'name', label: 'Skill Name', type: 'text' },
-                  { key: 'icon_url', label: 'Icon URL', type: 'url' },
-                ]}
-                onAdd={() => Promise.resolve()}
-                onEdit={() => Promise.resolve()}
-                onDelete={() => Promise.resolve()}
-                isLoading={false}
-                onRefresh={refetch}
-              />
-            )}
+            <CRUDList
+              title="Design Skills"
+              items={portfolio.skills?.design || []}
+              fields={[
+                { key: 'name', label: 'Skill Name', type: 'text' },
+                { key: 'icon_url', label: 'Icon URL', type: 'url' },
+              ]}
+              onAdd={addDesignSkill}
+              onEdit={editDesignSkill}
+              onDelete={deleteDesignSkill}
+              isLoading={sectionLoading === 'design skill'}
+              onRefresh={refetch}
+            />
           </div>
         )}
       </div>

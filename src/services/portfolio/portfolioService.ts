@@ -157,6 +157,20 @@ export const addTechSkill = async (data: SkillItem): Promise<any> => {
   return response.json()
 }
 
+export const addDesignSkill = async (data: SkillItem): Promise<any> => {
+  const response = await authFetch(`${API_BASE_URL}/airdrop/portfolio/skills/design`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to add design skill')
+  }
+
+  return response.json()
+}
+
 export const deleteCertificate = async (id: string): Promise<any> => {
   const response = await authFetch(`${API_BASE_URL}/airdrop/portfolio/certificates/${id}`, {
     method: 'DELETE',
@@ -212,6 +226,18 @@ export const deleteEducation = async (id: string): Promise<any> => {
 
   if (!response.ok) {
     throw new Error('Failed to delete education')
+  }
+
+  return response.json()
+}
+
+export const deleteDesignSkill = async (id: string): Promise<any> => {
+  const response = await authFetch(`${API_BASE_URL}/airdrop/portfolio/skills/design/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to delete design skill')
   }
 
   return response.json()
