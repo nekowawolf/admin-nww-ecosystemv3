@@ -7,7 +7,7 @@ export const login = async (username: string, password: string) => {
     throw new Error('All fields are required.')
   }
 
-  const res = await fetch(`${API_BASE_URL}/airdrop/login`, {
+  const res = await fetch(`${API_BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
@@ -41,7 +41,7 @@ export const refreshAccessToken = async () => {
   const refreshToken = Cookies.get('refresh_token')
   if (!refreshToken) throw new Error('No refresh token found')
 
-  const res = await fetch(`${API_BASE_URL}/airdrop/refresh`, {
+  const res = await fetch(`${API_BASE_URL}/refresh`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ refresh_token: refreshToken }),
@@ -65,7 +65,7 @@ export const logout = async () => {
     const refreshToken = Cookies.get('refresh_token')
 
     if (refreshToken) {
-      await fetch(`${API_BASE_URL}/airdrop/logout`, {
+      await fetch(`${API_BASE_URL}/logout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: refreshToken }),

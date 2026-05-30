@@ -4,7 +4,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const getAirdropEnded = async () => {
   try {
-    const response = await authFetch(`${API_BASE_URL}/airdrop/allairdrop`, {
+    const response = await authFetch(`${API_BASE_URL}/allairdrop`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -32,7 +32,7 @@ export const getAirdropEnded = async () => {
 }
 
 export const updateAirdropEnded = async (id: string, data: any) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/allairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/allairdrop/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -47,7 +47,7 @@ export const updateAirdropEnded = async (id: string, data: any) => {
 }
 
 export const getAirdropEndedById = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/allairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/allairdrop/${id}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -62,7 +62,7 @@ export const getAirdropEndedById = async (id: string) => {
 }
 
 export const deleteAirdropEnded = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/allairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/allairdrop/${id}`, {
     method: 'DELETE',
   })
 

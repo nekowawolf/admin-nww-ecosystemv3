@@ -7,7 +7,7 @@ export const uploadImage = async (file: File): Promise<Image> => {
   const formData = new FormData()
   formData.append('file', file)
 
-  const response = await authFetch(`${API_BASE_URL}/airdrop/images`, {
+  const response = await authFetch(`${API_BASE_URL}/images`, {
     method: 'POST',
     body: formData,
   })
@@ -21,7 +21,7 @@ export const uploadImage = async (file: File): Promise<Image> => {
 }
 
 export const getAllImages = async (): Promise<Image[]> => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/images`, {
+  const response = await authFetch(`${API_BASE_URL}/images`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -37,7 +37,7 @@ export const getAllImages = async (): Promise<Image[]> => {
 }
 
 export const deleteImage = async (id: string): Promise<void> => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/images/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/images/${id}`, {
     method: 'DELETE',
   })
 

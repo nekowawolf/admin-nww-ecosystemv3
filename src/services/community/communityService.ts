@@ -4,7 +4,7 @@ import { CommunityRequest } from '@/types/community'
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const createCommunity = async (data: CommunityRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/cryptocommunity`, {
+  const response = await authFetch(`${API_BASE_URL}/cryptocommunity`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -19,7 +19,7 @@ export const createCommunity = async (data: CommunityRequest) => {
 }
 
 export const getCommunity = async () => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/cryptocommunity`, {
+  const response = await authFetch(`${API_BASE_URL}/cryptocommunity`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -34,7 +34,7 @@ export const getCommunity = async () => {
 }
 
 export const updateCommunity = async (_id: string, data: CommunityRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/cryptocommunity/${_id}`, {
+  const response = await authFetch(`${API_BASE_URL}/cryptocommunity/${_id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -50,7 +50,7 @@ export const updateCommunity = async (_id: string, data: CommunityRequest) => {
 
 export const getCommunityById = async (_id: string) => {
   try {
-    const response = await authFetch(`${API_BASE_URL}/airdrop/cryptocommunity/${_id}`, {
+    const response = await authFetch(`${API_BASE_URL}/cryptocommunity/${_id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -78,7 +78,7 @@ export const getCommunityById = async (_id: string) => {
 }
 
 export const deleteCommunity = async (_id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/cryptocommunity/${_id}`, {
+  const response = await authFetch(`${API_BASE_URL}/cryptocommunity/${_id}`, {
     method: 'DELETE',
   })
 

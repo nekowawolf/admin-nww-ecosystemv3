@@ -5,7 +5,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 // Profile
 export const getProfile = async () => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/profilelink`, {
+  const response = await authFetch(`${API_BASE_URL}/profilelink`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -19,7 +19,7 @@ export const getProfile = async () => {
 }
 
 export const updateProfile = async (data: Profile) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/profilelink`, {
+  const response = await authFetch(`${API_BASE_URL}/profilelink`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -35,7 +35,7 @@ export const updateProfile = async (data: Profile) => {
 
 // Posts
 export const getPosts = async () => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/postslink`, {
+  const response = await authFetch(`${API_BASE_URL}/postslink`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -50,7 +50,7 @@ export const getPosts = async () => {
 }
 
 export const getPostById = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/postslink/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/postslink/${id}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -64,7 +64,7 @@ export const getPostById = async (id: string) => {
 }
 
 export const createPost = async (data: LinkPostRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/postslink`, {
+  const response = await authFetch(`${API_BASE_URL}/postslink`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -79,7 +79,7 @@ export const createPost = async (data: LinkPostRequest) => {
 }
 
 export const updatePost = async (id: string, data: LinkPostRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/postslink/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/postslink/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -94,7 +94,7 @@ export const updatePost = async (id: string, data: LinkPostRequest) => {
 }
 
 export const deletePost = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/postslink/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/postslink/${id}`, {
     method: 'DELETE',
   })
 

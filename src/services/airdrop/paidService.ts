@@ -4,7 +4,7 @@ import { AirdropPaidRequest } from '@/types/airdrop'
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const createAirdropPaid = async (data: AirdropPaidRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/paidairdrop`, {
+  const response = await authFetch(`${API_BASE_URL}/paidairdrop`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -19,7 +19,7 @@ export const createAirdropPaid = async (data: AirdropPaidRequest) => {
 }
 
 export const getAirdropPaid = async () => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/paidairdrop`, {
+  const response = await authFetch(`${API_BASE_URL}/paidairdrop`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -34,7 +34,7 @@ export const getAirdropPaid = async () => {
 }
 
 export const updateAirdropPaid = async (id: string, data: AirdropPaidRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/paidairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/paidairdrop/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -49,7 +49,7 @@ export const updateAirdropPaid = async (id: string, data: AirdropPaidRequest) =>
 }
 
 export const getAirdropPaidById = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/paidairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/paidairdrop/${id}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -64,7 +64,7 @@ export const getAirdropPaidById = async (id: string) => {
 }
 
 export const deleteAirdropPaid = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/paidairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/paidairdrop/${id}`, {
     method: 'DELETE',
   })
 

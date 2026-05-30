@@ -4,7 +4,7 @@ import { AirdropFreeRequest } from '@/types/airdrop'
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export const createAirdropFree = async (data: AirdropFreeRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/freeairdrop`, {
+  const response = await authFetch(`${API_BASE_URL}/freeairdrop`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -19,7 +19,7 @@ export const createAirdropFree = async (data: AirdropFreeRequest) => {
 }
 
 export const getAirdropFree = async () => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/freeairdrop`, {
+  const response = await authFetch(`${API_BASE_URL}/freeairdrop`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -34,7 +34,7 @@ export const getAirdropFree = async () => {
 }
 
 export const updateAirdropFree = async (id: string, data: AirdropFreeRequest) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/freeairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/freeairdrop/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -49,7 +49,7 @@ export const updateAirdropFree = async (id: string, data: AirdropFreeRequest) =>
 }
 
 export const getAirdropFreeById = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/freeairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/freeairdrop/${id}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -64,7 +64,7 @@ export const getAirdropFreeById = async (id: string) => {
 }
 
 export const deleteAirdropFree = async (id: string) => {
-  const response = await authFetch(`${API_BASE_URL}/airdrop/freeairdrop/${id}`, {
+  const response = await authFetch(`${API_BASE_URL}/freeairdrop/${id}`, {
     method: 'DELETE',
   })
 
