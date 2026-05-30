@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/pagination"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
-import Image from 'next/image'
+import { FallbackImage } from '@/components/FallbackImage'
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
 import { createPortal } from "react-dom"
@@ -199,16 +199,12 @@ export default function ImagesTable({
                     </td>
                     <td className="px-6 py-4">
                       <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-border-divider">
-                        <Image 
+                        <FallbackImage 
                           src={item.url} 
                           alt={item.filename}
                           fill
                           className="object-cover"
                           sizes="64px"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                          }}
                         />
                       </div>
                     </td>

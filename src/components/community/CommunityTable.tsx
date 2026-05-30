@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/pagination"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
-import Image from 'next/image'
+import { FallbackImage } from '@/components/FallbackImage'
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
 import { MdEdit } from "react-icons/md"
@@ -206,15 +206,12 @@ export default function CommunityTable({
                     <td className="px-6 py-2">
                        {item.img_url ? (
                           <div className="relative w-10 h-10">
-                            <Image 
+                            <FallbackImage 
                               src={item.img_url} 
                               alt={item.name}
                               fill
                               className="object-cover rounded-lg"
                               sizes="40px"
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none'
-                              }}
                             />
                           </div>
                       ) : (

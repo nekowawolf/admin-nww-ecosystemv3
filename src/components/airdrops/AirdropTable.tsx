@@ -19,7 +19,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
-import Image from "next/image"
+import { FallbackImage } from '@/components/FallbackImage'
 
 interface AirdropTableProps {
   data: any[]
@@ -213,7 +213,7 @@ export default function AirdropTable({
                      <td className="px-6 py-2">
                         {item.image_url ? (
                           <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border-divider">
-                            <Image 
+                            <FallbackImage 
                                 src={item.image_url} 
                                 alt={item.name || 'Airdrop'} 
                                 fill 

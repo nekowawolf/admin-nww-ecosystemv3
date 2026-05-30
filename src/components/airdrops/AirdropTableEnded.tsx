@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from "next/image"
+import { FallbackImage } from '@/components/FallbackImage'
 import {
   Pagination,
   PaginationContent,
@@ -218,7 +218,7 @@ export default function EndedAirdropTable({
                     <td className="px-6 py-2">
                       {item.image_url ? (
                         <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border-divider">
-                          <Image 
+                          <FallbackImage 
                               src={item.image_url} 
                               alt={item.name || 'Airdrop'} 
                               fill 

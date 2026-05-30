@@ -7,6 +7,7 @@ import { MdEdit } from 'react-icons/md'
 import { FaTrash } from 'react-icons/fa'
 import { toast } from 'sonner'
 import { createPortal } from 'react-dom'
+import { FallbackNativeImage } from '../FallbackImage'
 
 interface Item {
   id: string
@@ -400,13 +401,10 @@ export default function CRUDList({
     if (field.key === 'image_url' && value) {
       return (
         <div className="w-24 h-14 rounded-lg overflow-hidden border border-border-divider bg-[var(--card-color2)]">
-          <img 
+          <FallbackNativeImage 
             src={value as string} 
             alt="Thumbnail" 
             className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.style.display = 'none'
-            }}
           />
         </div>
       )
@@ -422,7 +420,7 @@ export default function CRUDList({
                 const imageUrl = typeof shot === 'string' ? shot : shot.image_url
                 return (
                   <div key={idx} className="w-8 h-8 rounded bg-gray-200 overflow-hidden relative">
-                    <img src={imageUrl} alt="thumbnail" className="object-cover w-full h-full" onError={(e) => e.currentTarget.style.display = 'none'} />
+                    <FallbackNativeImage src={imageUrl} alt="thumbnail" className="object-cover w-full h-full" />
                   </div>
                 )
               })}
