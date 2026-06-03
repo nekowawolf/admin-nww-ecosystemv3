@@ -53,12 +53,17 @@ export default function ProfilePage() {
         {/* Right Column: System Information */}
         <div className="col-span-1 md:col-span-2 flex flex-col gap-6">
           <div className="bg-[var(--fill-color)] rounded-2xl border border-border-divider p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
-            <div className="flex items-center justify-between border-b border-border-divider pb-4 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border-divider pb-4 mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-primary">System Access Overview</h3>
-                <p className="text-sm text-secondary">Modules available for this role</p>
+                <h3 className="text-base sm:text-lg font-semibold text-primary break-words">
+                  System Access Overview
+                </h3>
+                <p className="text-xs sm:text-sm text-secondary mt-0.5">
+                  Modules available for this role
+                </p>
               </div>
-              <div className="text-white font-bold">
+              
+              <div className="self-start sm:self-center bg-primary/10 text-primary px-3 py-1.5 rounded-lg text-sm font-bold border border-primary/20 whitespace-nowrap">
                 Total Menus: {menus.length}
               </div>
             </div>
