@@ -2,6 +2,10 @@ import React from 'react'
 import { FaLayerGroup, FaUserCircle, FaBitcoin, FaRobot, FaLink, FaClock, FaSignOutAlt } from 'react-icons/fa'
 import { HiMiniRocketLaunch } from 'react-icons/hi2'
 import { MdImage } from 'react-icons/md'
+import BackButton from '@/components/ui/BackButton'
+import { dashboardMetadata } from '@/constants/metadataTemplates'
+
+export const metadata = dashboardMetadata('Admin Profile', 'Manage your account details and view system information')
 
 export default function ProfilePage() {
   {/* Available Menus in the Admin Dashboard */}
@@ -19,6 +23,7 @@ export default function ProfilePage() {
     <div className="min-h-screen p-6 md:p-8 body-color flex flex-col items-center">
       {/* Page Header */}
       <div className="w-full max-w-4xl mb-8">
+        <BackButton />
         <h1 className="text-2xl md:text-3xl font-bold text-primary">Admin Profile</h1>
         <p className="text-sm text-secondary mt-1">Manage your account details and view system information</p>
       </div>
