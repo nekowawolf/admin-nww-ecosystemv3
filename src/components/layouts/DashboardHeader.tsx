@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { RxHamburgerMenu } from 'react-icons/rx'
@@ -73,10 +74,10 @@ export default function DashboardHeader({ onToggleSidebar }: HeaderProps) {
 					</button>
 					{open && (
 						<div className="absolute right-0 mt-2 w-64 rounded-lg dropdown-border border dropdown-bg dropdown-shadow p-2">
-							<div className="flex items-center gap-3 px-3 py-2 rounded-md hover:hover-bg cursor-pointer">
+							<Link href="/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2 rounded-md hover:hover-bg cursor-pointer">
 								<i className="fa-regular fa-user text-muted" />
 								<span className="text-sm text-primary cursor-pointer">Profile</span>
-							</div>
+							</Link>
 
 							<hr className="my-2 border-border-divider" />
 							<button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:hover-bg text-left text-rose-600">

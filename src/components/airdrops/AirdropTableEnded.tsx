@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { FallbackImage } from '@/components/FallbackImage'
+import { FallbackImage } from '@/components/ui/FallbackImage'
 import {
   Pagination,
   PaginationContent,

@@ -7,7 +7,7 @@ import { MdEdit } from 'react-icons/md'
 import { FaTrash } from 'react-icons/fa'
 import { toast } from 'sonner'
 import { createPortal } from 'react-dom'
-import { FallbackNativeImage } from '../FallbackImage'
+import { FallbackNativeImage } from '@/components/ui/FallbackImage'
 
 interface Item {
   id: string

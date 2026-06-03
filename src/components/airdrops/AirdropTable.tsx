@@ -19,7 +19,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
-import { FallbackImage } from '@/components/FallbackImage'
+import { FallbackImage } from '@/components/ui/FallbackImage'
 
 interface AirdropTableProps {
   data: any[]

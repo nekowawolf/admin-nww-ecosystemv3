@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/pagination"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
-import { FallbackImage } from '@/components/FallbackImage'
+import { FallbackImage } from '@/components/ui/FallbackImage'
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
 import { MdEdit } from "react-icons/md"
