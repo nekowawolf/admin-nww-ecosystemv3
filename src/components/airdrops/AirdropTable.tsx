@@ -211,20 +211,15 @@ export default function AirdropTable({
                  paginatedData.map((item, index) => (
                    <tr key={item.id || index} className="border-t border-border-divider">
                      <td className="px-6 py-2">
-                        {item.image_url ? (
-                          <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border-divider">
+                          <div className="relative w-10 h-10">
                             <FallbackImage 
-                                src={item.image_url} 
+                                src={item.image_url || ''} 
                                 alt={item.name || 'Airdrop'} 
                                 fill 
-                                className="object-cover"
+                                className="object-cover rounded-lg"
+                                sizes="40px"
                             />
                           </div>
-                        ) : (
-                          <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">
-                             N/A
-                          </div>
-                        )}
                      </td>
                      <td className="px-6 py-2">{item.name || 'N/A'}</td>
                      <td className="px-6 py-2">{item.task || 'N/A'}</td>

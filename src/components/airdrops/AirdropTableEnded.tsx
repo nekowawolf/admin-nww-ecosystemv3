@@ -215,22 +215,17 @@ export default function EndedAirdropTable({
               {paginatedData.length > 0 ? (
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
-                    <td className="px-6 py-2">
-                      {item.image_url ? (
-                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border-divider">
-                          <FallbackImage 
-                              src={item.image_url} 
-                              alt={item.name || 'Airdrop'} 
-                              fill 
-                              className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">
-                            N/A
-                        </div>
-                      )}
-                    </td>
+                     <td className="px-6 py-2">
+                          <div className="relative w-10 h-10">
+                            <FallbackImage 
+                                src={item.image_url || ''} 
+                                alt={item.name || 'Airdrop'} 
+                                fill 
+                                className="object-cover rounded-lg"
+                                sizes="40px"
+                            />
+                          </div>
+                     </td>
                     <td className="px-6 py-2">{item.name || 'N/A'}</td>
                     <td className="px-6 py-2">{item.task || 'N/A'}</td>
                     <td className="px-6 py-2">

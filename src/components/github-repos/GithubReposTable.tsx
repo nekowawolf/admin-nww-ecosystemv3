@@ -188,7 +188,9 @@ export default function GithubReposTable({
                     <td className="px-6 py-2">{item.name || 'N/A'}</td>
                     <td className="px-6 py-2">{item.category || 'N/A'}</td>
                     <td className="px-6 py-2">
-                      <span className="text-secondary">{item.owner} / {item.repo_name}</span>
+                      <div className="flex flex-wrap gap-1.5 min-w-[200px]">
+                        <span className="text-secondary whitespace-nowrap">{item.owner} / {item.repo_name}</span>
+                      </div>
                     </td>
                     <td className="px-6 py-2 text-accent">
                       {item.repo_url ? (

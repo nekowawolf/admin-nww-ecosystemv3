@@ -174,9 +174,9 @@ export default function AIToolsTable({
           <table className="w-full text-left">
             <thead className="bg-[var(--card-color3)]">
               <tr>
+                <th className="px-6 py-2 min-w-[80px]">Image</th>
                 <th className="px-6 py-2 min-w-[120px]">Name</th>
                 <th className="px-6 py-2 min-w-[120px]">Categories</th>
-                <th className="px-6 py-2 min-w-[80px]">Image</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -185,30 +185,26 @@ export default function AIToolsTable({
               {paginatedData.length > 0 ? (
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
-                    <td className="px-6 py-2">{item.name || 'N/A'}</td>
                     <td className="px-6 py-2">
-                      <div className="flex gap-1 flex-wrap">
-                        {item.categories && item.categories.length > 0 ? item.categories.map((cat, i) => (
-                          <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-                            {cat}
-                          </span>
-                        )) : 'N/A'}
-                      </div>
-                    </td>
-                    <td className="px-6 py-2">
-                       {item.imgURL ? (
                           <div className="relative w-10 h-10">
                             <FallbackImage 
-                              src={item.imgURL} 
-                              alt={item.name}
+                              src={item.imgURL || ''} 
+                              alt={item.name || 'AI Tool'}
                               fill
                               className="object-cover rounded-lg"
                               sizes="40px"
                             />
                           </div>
-                      ) : (
-                        <span className="text-primary">No Image</span>
-                      )}
+                    </td>
+                    <td className="px-6 py-2">{item.name || 'N/A'}</td>
+                    <td className="px-6 py-2">
+                      <div className="flex flex-wrap gap-1.5 min-w-[200px]">
+                        {item.categories && item.categories.length > 0 ? item.categories.map((cat, i) => (
+                          <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
+                            {cat}
+                          </span>
+                        )) : 'N/A'}
+                      </div>
                     </td>
                     <td className="px-6 py-2 text-accent">
                       {item.website ? (

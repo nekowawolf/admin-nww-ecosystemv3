@@ -184,10 +184,10 @@ export default function CommunityTable({
           <table className="w-full text-left">
             <thead className="bg-[var(--card-color3)]">
               <tr>
+                <th className="px-6 py-2 min-w-[80px]">Image</th>
                 <th className="px-6 py-2 min-w-[120px]">Name</th>
                 <th className="px-6 py-2 min-w-[120px]">Platform</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
-                <th className="px-6 py-2 min-w-[80px]">Image</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -196,6 +196,17 @@ export default function CommunityTable({
               {paginatedData.length > 0 ? (
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
+                    <td className="px-6 py-2">
+                          <div className="relative w-10 h-10">
+                            <FallbackImage 
+                              src={item.img_url || ''} 
+                              alt={item.name || 'Community'}
+                              fill
+                              className="object-cover rounded-lg"
+                              sizes="40px"
+                            />
+                          </div>
+                    </td>
                     <td className="px-6 py-2">{item.name || 'N/A'}</td>
                     <td className="px-6 py-2">
                       <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
@@ -203,21 +214,6 @@ export default function CommunityTable({
                       </span>
                     </td>
                     <td className="px-6 py-2">{item.category || 'N/A'}</td>
-                    <td className="px-6 py-2">
-                       {item.img_url ? (
-                          <div className="relative w-10 h-10">
-                            <FallbackImage 
-                              src={item.img_url} 
-                              alt={item.name}
-                              fill
-                              className="object-cover rounded-lg"
-                              sizes="40px"
-                            />
-                          </div>
-                      ) : (
-                        <span className="text-primary">No Image</span>
-                      )}
-                    </td>
                     <td className="px-6 py-2 text-accent">
                       {item.link_url ? (
                         <a 
