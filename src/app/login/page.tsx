@@ -9,7 +9,7 @@ export default function LoginPage() {
   const router = useRouter()
 
    useEffect(() => {
-    const token = Cookies.get('token')
+    const token = Cookies.get('refresh_token')
     if (token) router.push('/airdrop-menu/dashboard')
   }, [router])
 
