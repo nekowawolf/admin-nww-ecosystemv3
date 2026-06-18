@@ -1,0 +1,191 @@
+"use client"
+
+import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
+import { useState, useEffect } from 'react'
+import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
+import { useEditAITool } from '@/hooks/ai-tools/useEditAITool'
+import { AIToolsRequest } from '@/types/ai-tools'
+import { useRouter } from 'next/navigation'
+
+export default function EditAIToolsForm({ id }: { id: string }) {
+  useAuthGuard()
+  const router = useRouter()
+  const { isSubmitting, initialData, submitEditAITool } = useEditAITool(id)
+  const [formData, setFormData] = useState<AIToolsRequest>({
+    name: '',
+    description: '',
+    categories: [],
+    video_url: '',
+    imgURL: '',
+    website: '',
+    twitter: '',
+    discord: '',
+    telegram: ''
+  })
+  const [categoriesInput, setCategoriesInput] = useState('')
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData)
+      setCategoriesInput(initialData.categories?.join(', ') || '')
+    }
+  }, [initialData])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const dataToSubmit = {
+      ...formData,
+      categories: categoriesInput.split(',').map(c => c.trim()).filter(Boolean)
+    }
+    const success = await submitEditAITool(dataToSubmit)
+    if (success) {
+      router.push('/ai-tools-menu/dashboard/ai-tools-list')
+    }
+  }
+
+  if (!initialData) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-12 mt-6 sm:mt-0">
+      <div className="text-center sm:text-left">
+        <h2 className="text-lg sm:text-2xl font-semibold text-primary">
+          Edit AI Tool
+        </h2>
+        <p className="text-xs sm:text-sm text-secondary">
+          Update an existing AI Tool listing
+        </p>
+      </div>
+
+      <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 pb-1 shadow-lg w-full sm:w-5/6 mx-auto mb-8">
+        <div className="mb-8">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 gap-6">
+              {/* Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="name">
+                  Name *
+                </label>
+                <div className="relative">
+                  <FiUsers className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter name"
+                    required
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="description">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  placeholder="Enter description"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+                />
+              </div>
+
+              {/* Categories */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="categoriesInput">
+                  Categories (comma separated) *
+                </label>
+                <input
+                  type="text"
+                  id="categoriesInput"
+                  value={categoriesInput}
+                  onChange={(e) => setCategoriesInput(e.target.value)}
+                  placeholder="e.g., Image Generation, Text to Video"
+                  required
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Image URL */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="imgURL">
+                  Image URL *
+                </label>
+                <div className="relative">
+                  <FiImage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type="url"
+                    id="imgURL"
+                    name="imgURL"
+                    value={formData.imgURL}
+                    onChange={handleInputChange}
+                    placeholder="https://example.com/image.jpg"
+                    required
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Website */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="website">
+                  Website URL *
+                </label>
+                <div className="relative">
+                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleInputChange}
+                    placeholder="https://example.com"
+                    required
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex justify-end gap-4 pt-6 border-t border-border-divider">
+                <button
+                  type="button"
+                  onClick={() => router.push('/ai-tools-menu/dashboard/ai-tools-list')}
+                  className="px-6 py-3 cursor-pointer rounded-lg text-secondary border border-border-divider hover:bg-button-hover text-sm font-medium transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-blue-600 hover:bg-blue-700 cursor-pointer disabled:bg-blue-400 text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-center transition-colors duration-200"
+                >
+                  {isSubmitting ? 'Updating...' : 'Update AI Tool'}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}

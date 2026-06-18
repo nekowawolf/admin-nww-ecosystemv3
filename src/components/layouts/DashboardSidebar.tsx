@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { RxDashboard } from 'react-icons/rx'
 import { IoIosAddCircleOutline } from 'react-icons/io'
 import { HiMiniRocketLaunch } from 'react-icons/hi2'
-import { FaLayerGroup, FaUserCircle, FaBitcoin, FaLink, FaRobot } from 'react-icons/fa'
+import { FaLayerGroup, FaUserCircle, FaBitcoin, FaLink, FaRobot, FaGithub } from 'react-icons/fa'
 import { MdImage } from 'react-icons/md'
 
 type SidebarProps = {
@@ -28,6 +28,14 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const [openLink, setOpenLink] = useState(false)
     const [openLinkDashboard, setOpenLinkDashboard] = useState(false)
 
+    const [openWeb3Tools, setOpenWeb3Tools] = useState(false)
+    const [openWeb3ToolsDashboard, setOpenWeb3ToolsDashboard] = useState(false)
+    const [openAITools, setOpenAITools] = useState(false)
+    const [openAIToolsDashboard, setOpenAIToolsDashboard] = useState(false)
+    const [openGithubRepos, setOpenGithubRepos] = useState(false)
+    const [openGithubReposDashboard, setOpenGithubReposDashboard] = useState(false)
+
+
     // === HANDLE ACTIVE SECTIONS ===
     useEffect(() => {
         setOpenAirdrop(false)
@@ -40,6 +48,21 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
         setOpenImagesDashboard(false)
         setOpenLink(false)
         setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+
+
+        setOpenWeb3Tools(false)
+        setOpenWeb3ToolsDashboard(false)
+        setOpenAITools(false)
+        setOpenAIToolsDashboard(false)
+        setOpenGithubRepos(false)
+        setOpenGithubReposDashboard(false)
+
 
         // === AIRDROP PATH ===
         if (pathname.startsWith('/airdrop-menu/dashboard')) {
@@ -79,6 +102,31 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
             }
         }
 
+    
+        // === WEB3 TOOLS PATH ===
+        if (pathname.startsWith('/web3-tools-menu/dashboard')) {
+            setOpenWeb3Tools(true)
+            if (!pathname.includes('/add-web3-tool')) {
+                setOpenWeb3ToolsDashboard(true)
+            }
+        }
+
+        // === AI TOOLS PATH ===
+        if (pathname.startsWith('/ai-tools-menu/dashboard')) {
+            setOpenAITools(true)
+            if (!pathname.includes('/add-ai-tool')) {
+                setOpenAIToolsDashboard(true)
+            }
+        }
+
+        // === GITHUB REPOS PATH ===
+        if (pathname.startsWith('/github-repos-menu/dashboard')) {
+            setOpenGithubRepos(true)
+            if (!pathname.includes('/add-github-repo')) {
+                setOpenGithubReposDashboard(true)
+            }
+        }
+
     }, [pathname])
 
     // === HANDLERS ===
@@ -94,6 +142,21 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 setOpenImagesDashboard(false)
                 setOpenLink(false)
                 setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+
+
+        setOpenWeb3Tools(false)
+        setOpenWeb3ToolsDashboard(false)
+        setOpenAITools(false)
+        setOpenAIToolsDashboard(false)
+        setOpenGithubRepos(false)
+        setOpenGithubReposDashboard(false)
+
             }
             return next
         })
@@ -113,6 +176,21 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 setOpenImagesDashboard(false)
                 setOpenLink(false)
                 setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+
+
+        setOpenWeb3Tools(false)
+        setOpenWeb3ToolsDashboard(false)
+        setOpenAITools(false)
+        setOpenAIToolsDashboard(false)
+        setOpenGithubRepos(false)
+        setOpenGithubReposDashboard(false)
+
             }
             return next
         })
@@ -133,6 +211,21 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 setOpenImagesDashboard(false)
                 setOpenLink(false)
                 setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+
+
+        setOpenWeb3Tools(false)
+        setOpenWeb3ToolsDashboard(false)
+        setOpenAITools(false)
+        setOpenAIToolsDashboard(false)
+        setOpenGithubRepos(false)
+        setOpenGithubReposDashboard(false)
+
             }
             return next
         })
@@ -153,6 +246,21 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 setOpenPortfolioDashboard(false)
                 setOpenLink(false)
                 setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+
+
+        setOpenWeb3Tools(false)
+        setOpenWeb3ToolsDashboard(false)
+        setOpenAITools(false)
+        setOpenAIToolsDashboard(false)
+        setOpenGithubRepos(false)
+        setOpenGithubReposDashboard(false)
+
             }
             return next
         })
@@ -180,6 +288,79 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
 
     const handleLinkDashboardDropdown = () =>
         setOpenLinkDashboard(v => !v)
+
+    const handleWeb3ToolsDropdown = () => {
+        setOpenWeb3Tools(prev => {
+            const next = !prev
+            if (next) {
+                setOpenAirdrop(false)
+                setOpenDashboard(false)
+                setOpenCommunity(false)
+                setOpenCommunityDashboard(false)
+                setOpenPortfolio(false)
+                setOpenPortfolioDashboard(false)
+                setOpenImages(false)
+                setOpenImagesDashboard(false)
+                setOpenLink(false)
+                setOpenLinkDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+            }
+            return next
+        })
+    }
+    const handleWeb3ToolsDashboardDropdown = () => setOpenWeb3ToolsDashboard(v => !v)
+
+    const handleAIToolsDropdown = () => {
+        setOpenAITools(prev => {
+            const next = !prev
+            if (next) {
+                setOpenAirdrop(false)
+                setOpenDashboard(false)
+                setOpenCommunity(false)
+                setOpenCommunityDashboard(false)
+                setOpenPortfolio(false)
+                setOpenPortfolioDashboard(false)
+                setOpenImages(false)
+                setOpenImagesDashboard(false)
+                setOpenLink(false)
+                setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+            }
+            return next
+        })
+    }
+    const handleAIToolsDashboardDropdown = () => setOpenAIToolsDashboard(v => !v)
+
+    const handleGithubReposDropdown = () => {
+        setOpenGithubRepos(prev => {
+            const next = !prev
+            if (next) {
+                setOpenAirdrop(false)
+                setOpenDashboard(false)
+                setOpenCommunity(false)
+                setOpenCommunityDashboard(false)
+                setOpenPortfolio(false)
+                setOpenPortfolioDashboard(false)
+                setOpenImages(false)
+                setOpenImagesDashboard(false)
+                setOpenLink(false)
+                setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+            }
+            return next
+        })
+    }
+    const handleGithubReposDashboardDropdown = () => setOpenGithubReposDashboard(v => !v)
+
 
     // === ACTIVE PATH DETECTION ===
     const isAnalyticsActive = pathname === '/airdrop-menu/dashboard'
@@ -221,6 +402,22 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isLinkDashboardPathActive =
         pathname.startsWith('/links-menu/dashboard') && !pathname.includes('/add-post')
     const isLinkAnalyticActive = pathname === '/links-menu/dashboard'
+
+    
+    const isWeb3ToolsAnalyticActive = pathname === '/web3-tools-menu/dashboard'
+    const isAddWeb3ToolActive = pathname === '/web3-tools-menu/dashboard/add-web3-tool'
+    const isWeb3ToolsDashboardPathActive = pathname.startsWith('/web3-tools-menu/dashboard') && !pathname.includes('/add-web3-tool')
+    const isWeb3ToolsListActive = pathname === '/web3-tools-menu/dashboard/web3-tools-list'
+
+    const isAIToolsAnalyticActive = pathname === '/ai-tools-menu/dashboard'
+    const isAddAIToolActive = pathname === '/ai-tools-menu/dashboard/add-ai-tool'
+    const isAIToolsDashboardPathActive = pathname.startsWith('/ai-tools-menu/dashboard') && !pathname.includes('/add-ai-tool')
+    const isAIToolsListActive = pathname === '/ai-tools-menu/dashboard/ai-tools-list'
+
+    const isGithubReposAnalyticActive = pathname === '/github-repos-menu/dashboard'
+    const isAddGithubRepoActive = pathname === '/github-repos-menu/dashboard/add-github-repo'
+    const isGithubReposDashboardPathActive = pathname.startsWith('/github-repos-menu/dashboard') && !pathname.includes('/add-github-repo')
+    const isGithubReposListActive = pathname === '/github-repos-menu/dashboard/github-repos-list'
 
     // === SIDEBAR CONTENT ===
     const content = (
@@ -660,28 +857,301 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     )}
                 </div>
 
-                {/* === Crypto Tools Group === */}
-                <div
-                    className={`
-                        group flex items-center gap-3 rounded-lg px-3 py-2 text-sm w-full text-left
-                        border-l-4 border-transparent 
-                        text-secondary opacity-60 cursor-not-allowed
-                    `}
-                >
-                    <FaBitcoin className="text-muted" size={18} />
-                    <span>Web3 Tools</span>
+                {/* === Web3 Tools Group === */}
+                <div>
+                    <button
+                        type="button"
+                        onClick={handleWeb3ToolsDropdown}
+                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                            pathname.startsWith('/web3-tools-menu/dashboard')
+                                ? 'border-accent text-accent bg-accent/10'
+                                : 'border-transparent text-secondary hover:hover-bg'
+                        }`}
+                    >
+                        <FaBitcoin
+                            className={`${
+                                pathname.startsWith('/web3-tools-menu/dashboard')
+                                    ? 'text-accent'
+                                    : 'text-muted'
+                            }`}
+                            size={18}
+                        />
+                        <span>Web3 Tools</span>
+                        <i
+                            className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                openWeb3Tools ? 'rotate-180' : ''
+                            }`}
+                        />
+                    </button>
+
+                    {openWeb3Tools && (
+                        <div className="pl-8 mt-2 space-y-1">
+                            <button
+                                type="button"
+                                onClick={handleWeb3ToolsDashboardDropdown}
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                    isWeb3ToolsDashboardPathActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <RxDashboard
+                                    className={`${
+                                        isWeb3ToolsDashboardPathActive
+                                            ? 'text-accent'
+                                            : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Dashboard</span>
+                                <i
+                                    className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                        openWeb3ToolsDashboard ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+
+                            {openWeb3ToolsDashboard && (
+                                <div className="pl-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/web3-tools-menu/dashboard"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isWeb3ToolsAnalyticActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Analytic
+                                    </Link>
+                                    <Link
+                                        href="/web3-tools-menu/dashboard/web3-tools-list"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isWeb3ToolsListActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Web3 Tools List
+                                    </Link>
+                                </div>
+                            )}
+
+                            <Link
+                                href="/web3-tools-menu/dashboard/add-web3-tool"
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors border-l-4 ${
+                                    isAddWeb3ToolActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <IoIosAddCircleOutline
+                                    className={`${
+                                        isAddWeb3ToolActive ? 'text-accent' : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Add Web3 Tool</span>
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
-                {/* === AI Group === */}
-                <div
-                    className={`
-                        group flex items-center gap-3 rounded-lg px-3 py-2 text-sm w-full text-left
-                        border-l-4 border-transparent 
-                        text-secondary opacity-60 cursor-not-allowed
-                    `}
-                >
-                    <FaRobot className="text-muted" size={18} />
-                    <span>AI</span>
+                {/* === AI Tools Group === */}
+                <div>
+                    <button
+                        type="button"
+                        onClick={handleAIToolsDropdown}
+                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                            pathname.startsWith('/ai-tools-menu/dashboard')
+                                ? 'border-accent text-accent bg-accent/10'
+                                : 'border-transparent text-secondary hover:hover-bg'
+                        }`}
+                    >
+                        <FaRobot
+                            className={`${
+                                pathname.startsWith('/ai-tools-menu/dashboard')
+                                    ? 'text-accent'
+                                    : 'text-muted'
+                            }`}
+                            size={18}
+                        />
+                        <span>AI Tools</span>
+                        <i
+                            className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                openAITools ? 'rotate-180' : ''
+                            }`}
+                        />
+                    </button>
+
+                    {openAITools && (
+                        <div className="pl-8 mt-2 space-y-1">
+                            <button
+                                type="button"
+                                onClick={handleAIToolsDashboardDropdown}
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                    isAIToolsDashboardPathActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <RxDashboard
+                                    className={`${
+                                        isAIToolsDashboardPathActive
+                                            ? 'text-accent'
+                                            : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Dashboard</span>
+                                <i
+                                    className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                        openAIToolsDashboard ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+
+                            {openAIToolsDashboard && (
+                                <div className="pl-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/ai-tools-menu/dashboard"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isAIToolsAnalyticActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Analytic
+                                    </Link>
+                                    <Link
+                                        href="/ai-tools-menu/dashboard/ai-tools-list"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isAIToolsListActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        AI Tools List
+                                    </Link>
+                                </div>
+                            )}
+
+                            <Link
+                                href="/ai-tools-menu/dashboard/add-ai-tool"
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors border-l-4 ${
+                                    isAddAIToolActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <IoIosAddCircleOutline
+                                    className={`${
+                                        isAddAIToolActive ? 'text-accent' : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Add AI Tool</span>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+
+                {/* === GitHub Repos Group === */}
+                <div>
+                    <button
+                        type="button"
+                        onClick={handleGithubReposDropdown}
+                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                            pathname.startsWith('/github-repos-menu/dashboard')
+                                ? 'border-accent text-accent bg-accent/10'
+                                : 'border-transparent text-secondary hover:hover-bg'
+                        }`}
+                    >
+                        <FaGithub
+                            className={`${
+                                pathname.startsWith('/github-repos-menu/dashboard')
+                                    ? 'text-accent'
+                                    : 'text-muted'
+                            }`}
+                            size={18}
+                        />
+                        <span>GitHub Repos</span>
+                        <i
+                            className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                openGithubRepos ? 'rotate-180' : ''
+                            }`}
+                        />
+                    </button>
+
+                    {openGithubRepos && (
+                        <div className="pl-8 mt-2 space-y-1">
+                            <button
+                                type="button"
+                                onClick={handleGithubReposDashboardDropdown}
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                    isGithubReposDashboardPathActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <RxDashboard
+                                    className={`${
+                                        isGithubReposDashboardPathActive
+                                            ? 'text-accent'
+                                            : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Dashboard</span>
+                                <i
+                                    className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                        openGithubReposDashboard ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+
+                            {openGithubReposDashboard && (
+                                <div className="pl-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/github-repos-menu/dashboard"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGithubReposAnalyticActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Analytic
+                                    </Link>
+                                    <Link
+                                        href="/github-repos-menu/dashboard/github-repos-list"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGithubReposListActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        GitHub Repos List
+                                    </Link>
+                                </div>
+                            )}
+
+                            <Link
+                                href="/github-repos-menu/dashboard/add-github-repo"
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors border-l-4 ${
+                                    isAddGithubRepoActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <IoIosAddCircleOutline
+                                    className={`${
+                                        isAddGithubRepoActive ? 'text-accent' : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Add GitHub Repo</span>
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {/* === Image Resources Group === */}
