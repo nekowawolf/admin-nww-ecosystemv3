@@ -3,7 +3,8 @@
 import { usePortfolio } from '@/hooks/portfolio/usePortfolio'
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import StatCard from '@/components/airdrops/chart/StatCard'
-import { FaProjectDiagram, FaPaintBrush, FaCertificate, FaTools } from 'react-icons/fa'
+import { FaProjectDiagram, FaPaintBrush, FaTools } from 'react-icons/fa'
+import { LiaCertificateSolid } from "react-icons/lia"
 
 export default function PortfolioAnalyticsDashboard() {
   useAuthGuard()
@@ -37,7 +38,7 @@ export default function PortfolioAnalyticsDashboard() {
         <StatCard
           title="Total Certificates"
           value={portfolio?.certificates?.length || 0}
-          icon={<FaCertificate />}
+          icon={<LiaCertificateSolid />}
           loading={loading}
         />
         <StatCard

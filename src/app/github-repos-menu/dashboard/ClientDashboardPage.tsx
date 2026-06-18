@@ -4,7 +4,8 @@ import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { useGithubReposData } from '@/hooks/github-repos/useGithubReposData'
 import StatCard from '@/components/airdrops/chart/StatCard'
 import GithubReposCategoryChart from '@/components/github-repos/GithubReposCategoryChart'
-import { FaGithub, FaTags, FaCodeBranch } from 'react-icons/fa'
+import { FaGithub, FaCodeBranch } from 'react-icons/fa'
+import { TbCategoryFilled } from "react-icons/tb"
 import { useMemo } from 'react'
 
 export default function ClientDashboardPage() {
@@ -54,7 +55,7 @@ export default function ClientDashboardPage() {
         <StatCard
           title="Total Categories"
           value={totalCategories}
-          icon={<FaTags />}
+          icon={<TbCategoryFilled />}
           loading={loading}
         />
         <StatCard

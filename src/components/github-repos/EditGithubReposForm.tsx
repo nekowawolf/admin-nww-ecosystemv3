@@ -2,7 +2,7 @@
 
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { useState, useEffect } from 'react'
-import { FiUsers, FiLink, FiGithub } from 'react-icons/fi'
+import { FiUsers, FiGithub } from 'react-icons/fi'
 import { useEditGithubRepo } from '@/hooks/github-repos/useEditGithubRepo'
 import { GithubRepoRequest } from '@/types/github-repos'
 import { useRouter } from 'next/navigation'
@@ -174,6 +174,54 @@ export default function EditGithubReposForm({ id }: { id: string }) {
                     className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+              </div>
+
+              {/* Twitter */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="twitter">
+                  Twitter URL
+                </label>
+                <input
+                  type="url"
+                  id="twitter"
+                  name="twitter"
+                  value={formData.twitter}
+                  onChange={handleInputChange}
+                  placeholder="https://twitter.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Discord */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="discord">
+                  Discord URL
+                </label>
+                <input
+                  type="url"
+                  id="discord"
+                  name="discord"
+                  value={formData.discord}
+                  onChange={handleInputChange}
+                  placeholder="https://discord.gg/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Telegram */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="telegram">
+                  Telegram URL
+                </label>
+                <input
+                  type="url"
+                  id="telegram"
+                  name="telegram"
+                  value={formData.telegram}
+                  onChange={handleInputChange}
+                  placeholder="https://t.me/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
               </div>
 
               {/* Form Actions */}

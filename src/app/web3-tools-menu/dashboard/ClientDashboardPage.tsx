@@ -5,7 +5,8 @@ import { useWeb3ToolsData } from '@/hooks/web3-tools/useWeb3ToolsData'
 import StatCard from '@/components/airdrops/chart/StatCard'
 import Web3ToolsCategoryChart from '@/components/web3-tools/Web3ToolsCategoryChart'
 import Web3ToolsChainChart from '@/components/web3-tools/Web3ToolsChainChart'
-import { FaBitcoin, FaTags, FaLink } from 'react-icons/fa'
+import { FaBitcoin, FaLink } from 'react-icons/fa'
+import { TbCategoryFilled } from "react-icons/tb"
 import { useMemo } from 'react'
 
 export default function ClientDashboardPage() {
@@ -55,7 +56,7 @@ export default function ClientDashboardPage() {
         <StatCard
           title="Total Categories"
           value={totalCategories}
-          icon={<FaTags />}
+          icon={<TbCategoryFilled />}
           loading={loading}
         />
         <StatCard

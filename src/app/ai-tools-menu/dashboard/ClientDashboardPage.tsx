@@ -4,7 +4,8 @@ import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { useAIToolsData } from '@/hooks/ai-tools/useAIToolsData'
 import StatCard from '@/components/airdrops/chart/StatCard'
 import AIToolsCategoryChart from '@/components/ai-tools/AIToolsCategoryChart'
-import { FaRobot, FaTags } from 'react-icons/fa'
+import { FaRobot } from 'react-icons/fa'
+import { TbCategoryFilled } from "react-icons/tb"
 import { useMemo } from 'react'
 
 export default function ClientDashboardPage() {
@@ -44,7 +45,7 @@ export default function ClientDashboardPage() {
         <StatCard
           title="Total Categories"
           value={totalCategories}
-          icon={<FaTags />}
+          icon={<TbCategoryFilled />}
           loading={loading}
         />
       </section>

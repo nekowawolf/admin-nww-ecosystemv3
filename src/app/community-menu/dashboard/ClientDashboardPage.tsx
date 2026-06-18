@@ -5,7 +5,8 @@ import { useCommunityData } from '@/hooks/community/useCommunityData'
 import StatCard from '@/components/airdrops/chart/StatCard'
 import CommunityCategoryChart from '@/components/community/CommunityCategoryChart'
 import CommunityPlatformChart from '@/components/community/CommunityPlatformChart'
-import { FaLayerGroup, FaTags } from 'react-icons/fa'
+import { FaLayerGroup } from 'react-icons/fa'
+import { TbCategoryFilled } from "react-icons/tb"
 import { useMemo } from 'react'
 
 export default function ClientDashboardPage() {
@@ -40,7 +41,7 @@ export default function ClientDashboardPage() {
         <StatCard
           title="Total Categories"
           value={totalCategories}
-          icon={<FaTags />}
+          icon={<TbCategoryFilled />}
           loading={loading}
         />
       </section>

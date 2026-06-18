@@ -165,6 +165,54 @@ export default function EditAIToolsForm({ id }: { id: string }) {
                 </div>
               </div>
 
+              {/* Twitter */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="twitter">
+                  Twitter URL
+                </label>
+                <input
+                  type="url"
+                  id="twitter"
+                  name="twitter"
+                  value={formData.twitter}
+                  onChange={handleInputChange}
+                  placeholder="https://twitter.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Discord */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="discord">
+                  Discord URL
+                </label>
+                <input
+                  type="url"
+                  id="discord"
+                  name="discord"
+                  value={formData.discord}
+                  onChange={handleInputChange}
+                  placeholder="https://discord.gg/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Telegram */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="telegram">
+                  Telegram URL
+                </label>
+                <input
+                  type="url"
+                  id="telegram"
+                  name="telegram"
+                  value={formData.telegram}
+                  onChange={handleInputChange}
+                  placeholder="https://t.me/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
               {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-6 border-t border-border-divider">
                 <button

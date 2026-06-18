@@ -4,7 +4,8 @@ import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { usePostsData } from '@/hooks/links/usePostsData'
 import StatCard from '@/components/airdrops/chart/StatCard'
 import LinkCategoryChart from '@/components/links/LinkCategoryChart'
-import { FaLink, FaListAlt } from 'react-icons/fa'
+import { FaLink } from 'react-icons/fa'
+import { TbCategoryFilled } from "react-icons/tb"
 import { useMemo } from 'react'
 
 export default function ClientDashboardPage() {
@@ -39,13 +40,13 @@ export default function ClientDashboardPage() {
         <StatCard
           title="Total Categories"
           value={totalCategories}
-          icon={<FaListAlt />}
+          icon={<TbCategoryFilled />}
           loading={loading}
         />
       </section>
 
       {/* Link Analytics Charts */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+      <section className="grid grid-cols-1 gap-4 mt-6">
         <LinkCategoryChart data={data} />
       </section>
     </div>
