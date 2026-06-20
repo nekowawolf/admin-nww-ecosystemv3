@@ -6,6 +6,7 @@ export interface GithubRepoBase {
   owner: string
   repo_name: string
   twitter: string
+  instagram: string
   discord: string
   telegram: string
 }

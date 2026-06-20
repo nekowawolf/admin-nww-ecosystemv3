@@ -20,6 +20,7 @@ export function useEditAITool(id: string) {
             imgURL: data.imgURL || '',
             website: data.website || '',
             twitter: data.twitter || '',
+            instagram: data.instagram || '',
             discord: data.discord || '',
             telegram: data.telegram || ''
           })

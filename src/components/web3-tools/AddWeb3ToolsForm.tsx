@@ -16,6 +16,7 @@ export default function AddWeb3ToolsForm() {
     imageUrl: '',
     website: '',
     twitter: '',
+    instagram: '',
     discord: '',
     telegram: ''
   })
@@ -40,6 +41,7 @@ export default function AddWeb3ToolsForm() {
       imageUrl: '',
       website: '',
       twitter: '',
+      instagram: '',
       discord: '',
       telegram: ''
     })
@@ -191,6 +193,22 @@ export default function AddWeb3ToolsForm() {
                   value={formData.twitter}
                   onChange={handleInputChange}
                   placeholder="https://twitter.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Instagram */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="instagram">
+                  Instagram URL
+                </label>
+                <input
+                  type="url"
+                  id="instagram"
+                  name="instagram"
+                  value={formData.instagram}
+                  onChange={handleInputChange}
+                  placeholder="https://instagram.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>

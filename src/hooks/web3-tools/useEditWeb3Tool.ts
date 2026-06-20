@@ -20,6 +20,7 @@ export function useEditWeb3Tool(id: string) {
             imageUrl: data.imageUrl || '',
             website: data.website || '',
             twitter: data.twitter || '',
+            instagram: data.instagram || '',
             discord: data.discord || '',
             telegram: data.telegram || ''
           })

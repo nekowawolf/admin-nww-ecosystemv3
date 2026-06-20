@@ -20,6 +20,7 @@ export function useEditGithubRepo(id: string) {
             owner: data.owner || '',
             repo_name: data.repo_name || '',
             twitter: data.twitter || '',
+            instagram: data.instagram || '',
             discord: data.discord || '',
             telegram: data.telegram || ''
           })

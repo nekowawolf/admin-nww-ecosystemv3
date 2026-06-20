@@ -6,6 +6,7 @@ export interface AIToolsBase {
   imgURL: string
   website: string
   twitter: string
+  instagram: string
   discord: string
   telegram: string
 }

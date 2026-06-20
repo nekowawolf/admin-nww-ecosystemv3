@@ -6,6 +6,7 @@ export interface Web3ToolsBase {
   imageUrl: string
   website: string
   twitter: string
+  instagram: string
   discord: string
   telegram: string
 }
