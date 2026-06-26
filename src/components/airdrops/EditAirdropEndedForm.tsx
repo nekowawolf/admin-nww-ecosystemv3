@@ -1,105 +1,11 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { FaFreeCodeCamp } from "react-icons/fa";
-import { IoIosArrowUp } from "react-icons/io"
 import { useEditAirdrop } from '@/hooks/airdrop/useEditAirdropEnded'
 import { useRouter } from 'next/navigation'
+import { CustomDropdown } from '@/components/ui/CustomDropdown'
 
-interface DropdownOption {
-  value: string
-  label: string
-}
-
-interface CustomDropdownProps {
-  id: string
-  name: string
-  value: string
-  onChange: (value: string) => void
-  options: DropdownOption[]
-  placeholder?: string
-  required?: boolean
-}
-
-const CustomDropdown: React.FC<CustomDropdownProps> = ({
-  id,
-  name,
-  value,
-  onChange,
-  options,
-  placeholder = "Select an option",
-  required = false
-}) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
-
-  const selectedOption = options.find(option => option.value === value)
-
-  return (
-    <div className="relative w-full" ref={dropdownRef}>
-      <button
-        type="button"
-        id={`${id}-button`}
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 inline-flex items-center justify-between"
-      >
-        <span className={value ? "text-primary" : "text-muted"}>
-          {selectedOption ? selectedOption.label : placeholder}
-        </span>
-        <IoIosArrowUp 
-          className={`h-4 w-4 transition-transform duration-200 ${
-            isOpen ? 'transform rotate-0' : 'transform rotate-180'
-          }`}
-        />
-      </button>
-
-      <div 
-        id={id}
-        className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider ${
-          isOpen ? 'block' : 'hidden'
-        }`}
-      >
-        <ul className="py-2 text-sm text-primary" aria-labelledby={`${id}-button`}>
-          {options.map(option => (
-            <li key={option.value}>
-              <button
-                type="button"
-                onClick={() => {
-                  onChange(option.value)
-                  setIsOpen(false)
-                }}
-                className={`block w-full text-left px-4 py-2 hover:hover-bg ${
-                  value === option.value ? 'hover-bg-accent text-accent' : ''
-                }`}
-              >
-                {option.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <input
-        type="hidden"
-        name={name}
-        value={value}
-        required={required}
-      />
-    </div>
-  )
-}
 
 interface EditAirdropEndedFormProps {
   airdropData: any
@@ -219,15 +125,24 @@ export default function EditAirdropEndedForm({ airdropData, onSuccess }: EditAir
                 <label className="text-secondary text-sm font-medium" htmlFor="task">
                   Task Type *
                 </label>
-                <input
-                  type="text"
+                <CustomDropdown
                   id="task"
                   name="task"
                   value={formData.task}
-                  onChange={handleInputChange}
-                  placeholder="e.g., daily, quest, testnet"
+                  onChange={(value) => handleDropdownChange('task', value)}
+                  options={[
+                    { value: 'daily', label: 'Daily' },
+                    { value: 'testnet', label: 'Testnet' },
+                    { value: 'game', label: 'Game' },
+                    { value: 'social', label: 'Social' },
+                    { value: 'depin', label: 'DePin' },
+                    { value: 'retro', label: 'Retro' },
+                    { value: 'stake', label: 'Stake' },
+                    { value: 'hold', label: 'Hold' },
+                    { value: 'node', label: 'Node' }
+                  ]}
+                  placeholder="Select Task Type"
                   required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>

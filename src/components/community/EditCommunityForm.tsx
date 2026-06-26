@@ -5,6 +5,8 @@ import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useEditCommunity } from '@/hooks/community/useEditCommunity'
 import { CommunityRequest } from '@/types/community'
 import { useRouter } from 'next/navigation'
+import { CustomDropdown } from '@/components/ui/CustomDropdown'
+
 
 interface EditCommunityFormProps {
   communityData: any
@@ -25,6 +27,13 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleDropdownChange = (name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -93,15 +102,19 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                 <label className="text-secondary text-sm font-medium" htmlFor="platforms">
                   Platform *
                 </label>
-                <input
-                  type="text"
+                <CustomDropdown
                   id="platforms"
                   name="platforms"
                   value={formData.platforms}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Telegram, Discord, Facebook, Twitter"
+                  onChange={(value) => handleDropdownChange('platforms', value)}
+                  options={[
+                    { value: 'telegram', label: 'Telegram' },
+                    { value: 'discord', label: 'Discord' },
+                    { value: 'facebook', label: 'Facebook' },
+                    { value: 'reddit', label: 'Reddit' }
+                  ]}
+                  placeholder="Select Platform"
                   required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -110,15 +123,22 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                 <label className="text-secondary text-sm font-medium" htmlFor="category">
                   Category *
                 </label>
-                <input
-                  type="text"
+                <CustomDropdown
                   id="category"
                   name="category"
                   value={formData.category}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Airdrop, NFT, Social, Trading"
+                  onChange={(value) => handleDropdownChange('category', value)}
+                  options={[
+                    { value: 'Airdrop', label: 'Airdrop' },
+                    { value: 'Trading', label: 'Trading' },
+                    { value: 'NFT', label: 'NFT' },
+                    { value: 'Developers', label: 'Developers' },
+                    { value: 'Forum', label: 'Forum' },
+                    { value: 'Web3 Jobs', label: 'Web3 Jobs' },
+                    { value: 'Meme Coin', label: 'Meme Coin' }
+                  ]}
+                  placeholder="Select Category"
                   required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 

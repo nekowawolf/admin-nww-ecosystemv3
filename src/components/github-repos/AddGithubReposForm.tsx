@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { FiUsers, FiGithub } from 'react-icons/fi'
 import { useAddGithubRepo } from '@/hooks/github-repos/useAddGithubRepo'
 import { GithubRepoRequest } from '@/types/github-repos'
+import { CustomDropdown } from '@/components/ui/CustomDropdown'
 
 export default function AddGithubReposForm() {
   useAuthGuard()
@@ -25,6 +26,13 @@ export default function AddGithubReposForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleDropdownChange = (name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -132,15 +140,23 @@ export default function AddGithubReposForm() {
                 <label className="text-secondary text-sm font-medium" htmlFor="category">
                   Category *
                 </label>
-                <input
-                  type="text"
+                <CustomDropdown
                   id="category"
                   name="category"
                   value={formData.category}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Open Source, Tools, Library"
+                  onChange={(value) => handleDropdownChange('category', value)}
+                  options={[
+                    { value: 'Automation', label: 'Automation' },
+                    { value: 'Development', label: 'Development' },
+                    { value: 'AI', label: 'AI' },
+                    { value: 'Infrastructure', label: 'Infrastructure' },
+                    { value: 'Data', label: 'Data' },
+                    { value: 'Design', label: 'Design' },
+                    { value: 'Security', label: 'Security' },
+                    { value: 'Learning', label: 'Learning' }
+                  ]}
+                  placeholder="Select Category"
                   required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 

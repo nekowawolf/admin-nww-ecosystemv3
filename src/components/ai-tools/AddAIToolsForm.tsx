@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useAddAITool } from '@/hooks/ai-tools/useAddAITool'
 import { AIToolsRequest } from '@/types/ai-tools'
+import { CustomDropdown } from '@/components/ui/CustomDropdown'
 
 export default function AddAIToolsForm() {
   useAuthGuard()
@@ -111,16 +112,25 @@ export default function AddAIToolsForm() {
               {/* Categories */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="categoriesInput">
-                  Categories (comma separated) *
+                  Categories *
                 </label>
-                <input
-                  type="text"
+                <CustomDropdown
                   id="categoriesInput"
+                  name="categoriesInput"
                   value={categoriesInput}
-                  onChange={(e) => setCategoriesInput(e.target.value)}
-                  placeholder="e.g., Image Generation, Text to Video"
+                  onChange={(value) => setCategoriesInput(value)}
+                  options={[
+                    { value: 'Image', label: 'Image' },
+                    { value: 'Design', label: 'Design' },
+                    { value: 'Video', label: 'Video' },
+                    { value: 'Audio', label: 'Audio' },
+                    { value: 'Chatbot', label: 'Chatbot' },
+                    { value: 'Coding', label: 'Coding' },
+                    { value: '3D', label: '3D' },
+                    { value: 'Research', label: 'Research' }
+                  ]}
+                  placeholder="Select Category"
                   required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
