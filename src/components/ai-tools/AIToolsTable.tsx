@@ -176,6 +176,7 @@ export default function AIToolsTable({
               <tr>
                 <th className="px-6 py-2 min-w-[80px]">Image</th>
                 <th className="px-6 py-2 min-w-[120px]">Name</th>
+                <th className="px-6 py-2 min-w-[200px]">Description</th>
                 <th className="px-6 py-2 min-w-[120px]">Categories</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
@@ -197,6 +198,15 @@ export default function AIToolsTable({
                           </div>
                     </td>
                     <td className="px-6 py-2">{item.name || 'N/A'}</td>
+                    <td className="px-6 py-2">
+                      {item.description ? (
+                        <div className="max-w-[280px] truncate">
+                          {item.description.length > 15 ? item.description.slice(0, 15) + '...' : item.description}
+                        </div>
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
                     <td className="px-6 py-2">
                       <div className="flex flex-wrap gap-1.5 min-w-[200px]">
                         {item.categories && item.categories.length > 0 ? item.categories.map((cat, i) => (
@@ -229,7 +239,7 @@ export default function AIToolsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="text-center py-4 text-secondary">No AI Tools found.</td>
+                  <td colSpan={6} className="text-center py-4 text-secondary">No AI Tools found.</td>
                 </tr>
               )}
             </tbody>

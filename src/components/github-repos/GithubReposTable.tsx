@@ -175,6 +175,7 @@ export default function GithubReposTable({
             <thead className="bg-[var(--card-color3)]">
               <tr>
                 <th className="px-6 py-2 min-w-[120px]">Name</th>
+                <th className="px-6 py-2 min-w-[200px]">Description</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
                 <th className="px-6 py-2 min-w-[120px]">Owner / Repo</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
@@ -186,6 +187,15 @@ export default function GithubReposTable({
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
                     <td className="px-6 py-2">{item.name || 'N/A'}</td>
+                    <td className="px-6 py-2">
+                      {item.description ? (
+                        <div className="max-w-[280px] truncate">
+                          {item.description.length > 15 ? item.description.slice(0, 15) + '...' : item.description}
+                        </div>
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
                     <td className="px-6 py-2">{item.category || 'N/A'}</td>
                     <td className="px-6 py-2">
                       <div className="flex flex-wrap gap-1.5 min-w-[200px]">
@@ -215,7 +225,7 @@ export default function GithubReposTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="text-center py-4 text-secondary">No GitHub Repos found.</td>
+                  <td colSpan={6} className="text-center py-4 text-secondary">No GitHub Repos found.</td>
                 </tr>
               )}
             </tbody>
