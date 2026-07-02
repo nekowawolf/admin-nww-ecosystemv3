@@ -7,6 +7,7 @@ import { useEditGithubRepo } from '@/hooks/github-repos/useEditGithubRepo'
 import { GithubRepoRequest } from '@/types/github-repos'
 import { useRouter } from 'next/navigation'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
+import { Spinner } from "@/components/ui/shadcn-io/spinner"
 
 export default function EditGithubReposForm({ id }: { id: string }) {
   useAuthGuard()
@@ -83,7 +84,7 @@ export default function EditGithubReposForm({ id }: { id: string }) {
   if (!initialData) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <Spinner variant="circle" size={40} className="text-blue-500" />
       </div>
     )
   }
