@@ -19,6 +19,7 @@ export function useEditGithubRepo(id: string) {
             repo_url: data.repo_url || '',
             owner: data.owner || '',
             repo_name: data.repo_name || '',
+            website: data.website || '',
             twitter: data.twitter || '',
             instagram: data.instagram || '',
             discord: data.discord || '',

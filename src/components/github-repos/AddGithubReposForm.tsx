@@ -16,6 +16,7 @@ export default function AddGithubReposForm() {
     repo_url: '',
     owner: '',
     repo_name: '',
+    website: '',
     twitter: '',
     instagram: '',
     discord: '',
@@ -47,6 +48,7 @@ export default function AddGithubReposForm() {
       repo_url: '',
       owner: '',
       repo_name: '',
+      website: '',
       twitter: '',
       instagram: '',
       discord: '',
@@ -178,6 +180,22 @@ export default function AddGithubReposForm() {
                     className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+              </div>
+
+              {/* Website */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="website">
+                  Website URL
+                </label>
+                <input
+                  type="url"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  placeholder="https://..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
               </div>
 
               {/* Twitter */}

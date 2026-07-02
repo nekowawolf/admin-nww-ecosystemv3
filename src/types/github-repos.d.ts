@@ -5,6 +5,7 @@ export interface GithubRepoBase {
   repo_url: string
   owner: string
   repo_name: string
+  website: string
   twitter: string
   instagram: string
   discord: string
