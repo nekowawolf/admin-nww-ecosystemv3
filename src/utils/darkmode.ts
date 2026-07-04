@@ -23,4 +23,5 @@ export function applyDarkMode(): void {
   } else {
     document.documentElement.classList.remove('darkmode');
   }
+
 }

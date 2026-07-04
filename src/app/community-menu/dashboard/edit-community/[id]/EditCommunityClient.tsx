@@ -73,7 +73,7 @@ export default function EditCommunityClient() {
           <p className="text-secondary mb-4">{error}</p>
           <button
             onClick={() => router.push('/community-menu/dashboard/community-list')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
           >
             Back to Communities
           </button>
@@ -90,7 +90,7 @@ export default function EditCommunityClient() {
           <p className="text-secondary mb-4 sm:text-base text-sm">The community you're looking for doesn't exist.</p>
           <button
             onClick={() => router.push('/community-menu/dashboard/community-list')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
           >
             Back to Communities
           </button>

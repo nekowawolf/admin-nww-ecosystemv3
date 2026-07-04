@@ -68,7 +68,7 @@ export default function ClientDashboardPage() {
           <h3 className="text-lg font-semibold text-primary">Image Sizes</h3>
           <button 
             onClick={toggleSort}
-            className="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors"
+            className="cursor-pointer flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors"
           >
             <FaSort />
             <span>Sort by Size ({sortOrder === 'desc' ? 'Largest First' : 'Smallest First'})</span>

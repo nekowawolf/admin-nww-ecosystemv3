@@ -60,7 +60,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         type="button"
         id={`${id}-button`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left bg-card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 inline-flex items-center justify-between"
+        className="cursor-pointer w-full text-left bg-card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 inline-flex items-center justify-between"
       >
         <span className={value ? "text-primary" : "text-muted"}>
           {selectedOption ? selectedOption.label : placeholder}
@@ -87,7 +87,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                   onChange(option.value)
                   setIsOpen(false)
                 }}
-                className={`block w-full text-left px-4 py-2 hover:hover-bg ${
+                className={`cursor-pointer block w-full text-left px-4 py-2 hover:hover-bg ${
                   value === option.value ? 'hover-bg-accent text-accent' : ''
                 }`}
               >
@@ -234,7 +234,7 @@ export default function ClientDashboardPage() {
             <div className="relative">
               <button
                 onClick={() => setShowFilter(!showFilter)}
-                className="p-2 rounded-lg bg-[var(--hover-bg)] border border-border-divider hover:bg-[var(--button-hover)] flex items-center gap-1"
+                className="cursor-pointer p-2 rounded-lg bg-[var(--hover-bg)] border border-border-divider hover:bg-[var(--button-hover)] flex items-center gap-1"
                 title="Filter by year"
               >
                 <Filter size={16} />
@@ -270,7 +270,7 @@ export default function ClientDashboardPage() {
                         handleYearChange(year)
                         setShowFilter(false)
                       }}
-                      className="flex-1 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
+                      className="cursor-pointer flex-1 py-2 bg-blue-500 text-white rounded-md text-sm hover:bg-blue-600"
                     >
                       Apply
                     </button>
@@ -281,7 +281,7 @@ export default function ClientDashboardPage() {
                         handleYearChange(null)
                         setShowFilter(false)
                       }}
-                      className="flex-1 py-2 bg-gray-300 text-gray-700 rounded-md text-sm hover:bg-gray-400"
+                      className="cursor-pointer flex-1 py-2 bg-gray-300 text-gray-700 rounded-md text-sm hover:bg-gray-400"
                     >
                       Clear
                     </button>

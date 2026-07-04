@@ -208,7 +208,7 @@ export default function GithubReposTable({
                           href={item.repo_url} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-blue-500 hover:underline"
+                          className="cursor-pointer text-blue-500 hover:underline"
                         >
                           Visit
                         </a>
@@ -217,7 +217,7 @@ export default function GithubReposTable({
                       )}
                     </td>
                     <td className="px-6 py-2 relative">
-                      <button onClick={(e) => handleOpenDropdown(e, index)} className="p-2">
+                      <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />
                       </button>
                     </td>
@@ -247,7 +247,7 @@ export default function GithubReposTable({
               <li>
                 <button
                   onClick={() => handleEdit(paginatedData[openDropdownIndex])}
-                  className="flex items-center gap-2 w-full px-4 py-2 hover:hover-bg"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 hover:hover-bg"
                 >
                   <MdEdit size={16} /> Edit
                 </button>
@@ -258,7 +258,7 @@ export default function GithubReposTable({
                     paginatedData[openDropdownIndex]._id, 
                     paginatedData[openDropdownIndex].name || 'Unknown'
                   )}
-                  className="flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg"
                 >
                   <FaTrash size={16} /> Delete
                 </button>
@@ -283,13 +283,13 @@ export default function GithubReposTable({
               <div className="flex justify-center gap-4">
                 <button
                   onClick={confirmDelete}
-                  className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+                  className="cursor-pointer bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
                 >
                   Yes
                 </button>
                 <button
                   onClick={() => setShowConfirmModal(false)}
-                  className="bg-gray-300 text-black px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                  className="cursor-pointer bg-gray-300 text-black px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-200"
                 >
                   No
                 </button>
@@ -308,7 +308,7 @@ export default function GithubReposTable({
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === 1 && "pointer-events-none opacity-50"
                   )}
@@ -323,7 +323,7 @@ export default function GithubReposTable({
                     <PaginationLink
                       isActive={currentPage === page}
                       onClick={() => handlePageChange(Number(page))}
-                      className={cn(
+                      className={cn("cursor-pointer", 
                         "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm transition-none",
                         currentPage === page
                          ? "text-primary hover-bg-accent border-[var(--border-divider)] shadow-sm"
@@ -339,7 +339,7 @@ export default function GithubReposTable({
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === totalPages && "pointer-events-none opacity-50"
                   )}

@@ -92,7 +92,7 @@ export default function EditPostForm() {
           <p className="text-secondary mb-4">{error}</p>
           <button
             onClick={() => router.push('/links-menu/dashboard/posts')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
           >
             Back to Posts
           </button>

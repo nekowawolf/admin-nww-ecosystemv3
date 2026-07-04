@@ -212,7 +212,7 @@ export default function ImagesTable({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => copyToClipboard(item.url)}
-                          className="flex items-center gap-2 px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                          className="cursor-pointer flex items-center gap-2 px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                           title="Copy URL"
                         >
                           {copiedUrl === item.url ? (
@@ -233,7 +233,7 @@ export default function ImagesTable({
                     <td className="px-6 py-4 relative">
                       <button 
                         onClick={(e) => handleOpenDropdown(e, index)} 
-                        className="p-2 hover:bg-[var(--hover-bg)] rounded-lg transition-colors"
+                        className="cursor-pointer p-2 hover:bg-[var(--hover-bg)] rounded-lg transition-colors"
                         disabled={!item._id}
                       >
                         <HiEllipsisVertical size={20} className="text-secondary" />
@@ -271,7 +271,7 @@ export default function ImagesTable({
                     paginatedData[openDropdownIndex]._id!, 
                     paginatedData[openDropdownIndex].filename
                   )}
-                  className="flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg transition-colors"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg transition-colors"
                 >
                   <FaTrash size={14} /> Delete
                 </button>
@@ -298,13 +298,13 @@ export default function ImagesTable({
               <div className="flex justify-center gap-4">
                 <button
                   onClick={() => setShowConfirmModal(false)}
-                  className="px-6 py-2 rounded-lg border border-border-divider hover:bg-[var(--hover-bg)] text-primary transition-colors duration-200 text-sm font-medium"
+                  className="cursor-pointer px-6 py-2 rounded-lg border border-border-divider hover:bg-[var(--hover-bg)] text-primary transition-colors duration-200 text-sm font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm font-medium"
+                  className="cursor-pointer bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm font-medium"
                 >
                   Delete
                 </button>

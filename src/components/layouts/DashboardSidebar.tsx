@@ -445,7 +445,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleAirdropDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/airdrop-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -472,7 +472,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -566,7 +566,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleCommunityDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/community-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -594,7 +594,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleCommunityDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isCommunityDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -670,7 +670,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handlePortfolioDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/portfolio-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -697,7 +697,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handlePortfolioDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isPortfolioDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -752,7 +752,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleLinkDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/links-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -779,7 +779,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleLinkDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isLinkDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -862,7 +862,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleWeb3ToolsDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/web3-tools-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -889,7 +889,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleWeb3ToolsDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isWeb3ToolsDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -961,7 +961,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleAIToolsDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/ai-tools-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -988,7 +988,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleAIToolsDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isAIToolsDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -1060,7 +1060,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleGithubReposDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/github-repos-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -1087,7 +1087,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleGithubReposDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isGithubReposDashboardPathActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -1159,7 +1159,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                     <button
                         type="button"
                         onClick={handleImagesDropdown}
-                        className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                             pathname.startsWith('/images-menu/dashboard')
                                 ? 'border-accent text-accent bg-accent/10'
                                 : 'border-transparent text-secondary hover:hover-bg'
@@ -1186,7 +1186,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                             <button
                                 type="button"
                                 onClick={handleImagesDashboardDropdown}
-                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
                                     isImagesDashboardActive
                                         ? 'border-accent text-accent bg-accent/10'
                                         : 'border-transparent text-secondary hover:hover-bg'
@@ -1267,7 +1267,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
             {isOpen ? (
                 <div className="md:hidden fixed inset-0 z-50">
                     <div
-                        className="absolute inset-0 overlay-bg"
+                        className="cursor-pointer absolute inset-0 overlay-bg"
                         onClick={onClose}
                     />
                     <div className="absolute inset-y-0 left-0 w-64 sidebar-bg sidebar-border border-r animate-[slideIn_.2s_ease-out]">

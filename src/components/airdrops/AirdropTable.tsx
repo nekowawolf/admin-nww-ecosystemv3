@@ -234,14 +234,14 @@ export default function AirdropTable({
                      </td>
                      <td className="px-6 py-2 text-accent">
                        {item.link ? (
-                         <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-blue-500">Visit</a>
+                         <a href={item.link} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-500">Visit</a>
                        ) : (
                          <span className="text-primary">N/A</span>
                       )}
                      </td>
                      <td className="px-6 py-2 text-accent">
                        {item.link_guide ? (
-                         <a href={item.link_guide} target="_blank" rel="noopener noreferrer" className="text-blue-500">Visit</a>
+                         <a href={item.link_guide} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-500">Visit</a>
                        ) : (
                          <span className="text-primary">N/A</span>
                        )}
@@ -249,17 +249,17 @@ export default function AirdropTable({
                      <td className="px-6 py-2">
                         <div className="flex gap-2">
                            {item.link_discord && (
-                             <a href={item.link_discord} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-500">
+                             <a href={item.link_discord} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
                                <FaDiscord size={16} />
                              </a>
                            )}
                            {item.link_twitter && (
-                             <a href={item.link_twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-500">
+                             <a href={item.link_twitter} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
                                <FaXTwitter size={16} />
                              </a>
                            )}
                            {item.link_telegram && (
-                             <a href={item.link_telegram} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-500">
+                             <a href={item.link_telegram} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
                                <FaTelegram size={16} />
                              </a>
                            )}
@@ -278,7 +278,7 @@ export default function AirdropTable({
                      <td className="px-6 py-2">{item.funds || 'N/A'}</td>
                      <td className="px-6 py-2">{item.created_at ? formatDate(item.created_at) : 'N/A'}</td>
                      <td className="px-6 py-2 relative">
-                       <button onClick={(e) => handleOpenDropdown(e, index)} className="p-2">
+                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                          <HiEllipsisVertical size={20} />
                        </button>
                      </td>
@@ -308,7 +308,7 @@ export default function AirdropTable({
               <li>
                 <button
                   onClick={() => handleEdit(paginatedData[openDropdownIndex])}
-                  className="flex items-center gap-2 w-full px-4 py-2"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2"
                 >
                   <MdEdit size={16} /> Edit
                 </button>
@@ -316,7 +316,7 @@ export default function AirdropTable({
               <li>
                  <button
                    onClick={() => handleDeleteClick(paginatedData[openDropdownIndex].id, paginatedData[openDropdownIndex].name || 'Unknown')}
-                   className="flex items-center gap-2 w-full px-4 py-2 text-red-600"
+                   className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600"
                  >
                    <FaTrash size={16} /> Delete
                  </button>
@@ -341,13 +341,13 @@ export default function AirdropTable({
               <div className="flex justify-center gap-4">
                 <button
                   onClick={confirmDelete}
-                  className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
+                  className="cursor-pointer bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700"
                 >
                   Yes
                 </button>
                 <button
                   onClick={() => setShowConfirmModal(false)}
-                  className="bg-gray-300 text-black px-6 py-2 rounded-lg hover:bg-gray-400"
+                  className="cursor-pointer bg-gray-300 text-black px-6 py-2 rounded-lg hover:bg-gray-400"
                 >
                   No
                 </button>
@@ -366,7 +366,7 @@ export default function AirdropTable({
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === 1 && "pointer-events-none opacity-50"
                   )}
@@ -381,7 +381,7 @@ export default function AirdropTable({
                     <PaginationLink
                       isActive={currentPage === page}
                       onClick={() => handlePageChange(Number(page))}
-                      className={cn(
+                      className={cn("cursor-pointer", 
                         "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm transition-none",
                         currentPage === page
                          ? "text-primary hover-bg-accent border-[var(--border-divider)] shadow-sm"
@@ -397,7 +397,7 @@ export default function AirdropTable({
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === totalPages && "pointer-events-none opacity-50"
                   )}

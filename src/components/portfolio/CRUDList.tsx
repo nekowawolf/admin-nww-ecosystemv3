@@ -269,7 +269,7 @@ export default function CRUDList({
                 <button
                   type="button"
                   onClick={() => handleRemoveScreenshot(field.key, index)}
-                  className="flex-shrink-0 px-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-red-400"
+                  className="cursor-pointer flex-shrink-0 px-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-red-400"
                   disabled={isProcessing}
                 >
                   Remove
@@ -289,7 +289,7 @@ export default function CRUDList({
           <button
             type="button"
             onClick={() => handleAddScreenshot(field.key)}
-            className="text-sm text-blue-600 hover:text-blue-700 disabled:text-blue-400"
+            className="cursor-pointer text-sm text-blue-600 hover:text-blue-700 disabled:text-blue-400"
             disabled={isProcessing}
           >
             + Add Screenshot
@@ -351,7 +351,7 @@ export default function CRUDList({
               <button
                 type="button"
                 onClick={() => handleRemoveArrayItem(field.key, index)}
-                className="flex-shrink-0 px-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-red-400"
+                className="cursor-pointer flex-shrink-0 px-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-red-400"
                 disabled={isProcessing}
               >
                 Remove
@@ -361,7 +361,7 @@ export default function CRUDList({
           <button
             type="button"
             onClick={() => handleAddArrayItem(field.key)}
-            className="text-sm text-blue-600 hover:text-blue-700 disabled:text-blue-400"
+            className="cursor-pointer text-sm text-blue-600 hover:text-blue-700 disabled:text-blue-400"
             disabled={isProcessing}
           >
             + Add {field.label}
@@ -446,7 +446,7 @@ export default function CRUDList({
                 href={nestedValue.image_url} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-xs"
+                className="cursor-pointer text-blue-600 hover:underline text-xs"
               >
                 View Image
               </a>
@@ -469,7 +469,7 @@ export default function CRUDList({
           href={value} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-blue-600 hover:underline truncate max-w-[200px] inline-block"
+          className="cursor-pointer text-blue-600 hover:underline truncate max-w-[200px] inline-block"
           title={value}
         >
           Visit
@@ -511,7 +511,7 @@ export default function CRUDList({
         </div>
         <button
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-1.5 sm:gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-colors whitespace-nowrap"
+          className="cursor-pointer flex items-center gap-1.5 sm:gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm transition-colors whitespace-nowrap"
           disabled={isProcessing}
         >
           <FaPlus className="text-xs sm:text-sm" /> 
@@ -528,7 +528,7 @@ export default function CRUDList({
             </h4>
             <button
               onClick={handleCancel}
-              className="text-sm text-secondary hover:text-primary"
+              className="cursor-pointer text-sm text-secondary hover:text-primary"
               disabled={isProcessing}
             >
               ✕ Close
@@ -547,7 +547,7 @@ export default function CRUDList({
               <button
                 onClick={editingId ? () => handleEdit(editingId) : handleAdd}
                 disabled={isProcessing || isLoading}
-                className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+                className="cursor-pointer flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
               >
                 {isProcessing || isLoading ? (
                   <>
@@ -560,7 +560,7 @@ export default function CRUDList({
               </button>
               <button
                 onClick={handleCancel}
-                className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
+                className="cursor-pointer flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium"
                 disabled={isProcessing || isLoading}
               >
                 Cancel
@@ -595,7 +595,7 @@ export default function CRUDList({
                   <td className="px-4 py-3">
                     <button 
                       onClick={(e) => handleOpenDropdown(e, index, item)}
-                      className="p-1.5 hover:bg-[var(--hover-bg)] rounded-lg transition-colors"
+                      className="cursor-pointer p-1.5 hover:bg-[var(--hover-bg)] rounded-lg transition-colors"
                       disabled={isProcessing}
                     >
                       <HiEllipsisVertical size={20} />
@@ -611,7 +611,7 @@ export default function CRUDList({
                     {!isAdding && (
                       <button
                         onClick={() => setIsAdding(true)}
-                        className="text-blue-600 hover:text-blue-700 text-sm"
+                        className="cursor-pointer text-blue-600 hover:text-blue-700 text-sm"
                       >
                         Click here to add your first {title.slice(0, -1).toLowerCase()}
                       </button>
@@ -639,7 +639,7 @@ export default function CRUDList({
               <li>
                 <button
                   onClick={() => startEditing(localItems[openDropdownIndex])}
-                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-primary hover:hover-bg disabled:opacity-50"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2.5 text-sm text-primary hover:hover-bg disabled:opacity-50"
                   disabled={isProcessing}
                 >
                   <MdEdit size={16} /> Edit
@@ -651,7 +651,7 @@ export default function CRUDList({
                     localItems[openDropdownIndex].id, 
                     localItems[openDropdownIndex].title || localItems[openDropdownIndex].name || 'Unknown'
                   )}
-                  className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-600 hover:hover-bg disabled:opacity-50"
+                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-600 hover:hover-bg disabled:opacity-50"
                   disabled={isProcessing}
                 >
                   <FaTrash size={16} /> Delete
@@ -690,14 +690,14 @@ export default function CRUDList({
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setShowConfirm(null)}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                  className="cursor-pointer flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
                   disabled={isProcessing}
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleDeleteConfirm(showConfirm)}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+                  className="cursor-pointer flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors"
                   disabled={isProcessing}
                 >
                   {isProcessing ? (

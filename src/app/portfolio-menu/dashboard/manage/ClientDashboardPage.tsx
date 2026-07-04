@@ -67,7 +67,7 @@ export default function PortfolioDashboard() {
           <p className="text-secondary mb-4">{error}</p>
           <button
             onClick={refetch}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
           >
             Retry
           </button>
@@ -83,7 +83,7 @@ export default function PortfolioDashboard() {
           <p className="text-secondary mb-4">No portfolio data found</p>
           <button
             onClick={refetch}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
           >
             Try Again
           </button>
@@ -120,7 +120,7 @@ export default function PortfolioDashboard() {
             <button
               key={section.id}
               onClick={() => setActiveSection(section.id)}
-              className={`px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
+              className={`cursor-pointer px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
                 activeSection === section.id
                   ? 'bg-blue-600 text-white'
                   : 'bg-[var(--card-color2)] text-primary hover:bg-[var(--hover-bg)]'

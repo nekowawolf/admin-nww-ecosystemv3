@@ -49,7 +49,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
         type="button"
         id={`${id}-button`}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 inline-flex items-center justify-between"
+        className="cursor-pointer w-full text-left card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 inline-flex items-center justify-between"
       >
         <span className={value ? "text-primary" : "text-muted"}>
           {selectedOption ? selectedOption.label : placeholder}
@@ -76,7 +76,7 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
                   onChange(option.value)
                   setIsOpen(false)
                 }}
-                className={`block w-full text-left px-4 py-2 hover:hover-bg ${
+                className={`cursor-pointer block w-full text-left px-4 py-2 hover:hover-bg ${
                   value === option.value ? 'hover-bg-accent text-accent' : ''
                 }`}
               >

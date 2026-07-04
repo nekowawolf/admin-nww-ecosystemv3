@@ -170,7 +170,7 @@ export default function HeroProfileForm({ data, onSubmit, isSubmitting }: HeroPr
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center justify-center"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center justify-center"
           >
             {isSubmitting ? (
               <>

@@ -145,7 +145,7 @@ export default function AddImagesForm() {
                     e.stopPropagation()
                     clearSelection()
                   }}
-                  className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center justify-center mx-auto"
+                  className="cursor-pointer text-red-500 hover:text-red-700 text-sm font-medium flex items-center justify-center mx-auto"
                 >
                   <FiX className="w-4 h-4 mr-1" />
                   Remove

@@ -51,7 +51,7 @@ export default function DashboardHeader({ onToggleSidebar }: HeaderProps) {
 	return (
 		<header className="h-16 body-color flex items-center justify-between px-4 md:px-6">
 			<div className="flex items-center gap-3">
-				<button onClick={onToggleSidebar} className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md button-hover">
+				<button onClick={onToggleSidebar} className="cursor-pointer md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md button-hover">
 					<RxHamburgerMenu className="text-secondary" size={20} />
 				</button>
 			</div>
@@ -68,7 +68,7 @@ export default function DashboardHeader({ onToggleSidebar }: HeaderProps) {
 				</button>
 
 				<div className="relative" ref={menuRef}>
-					<button onClick={() => setOpen((v) => !v)} className="flex items-center gap-2">
+					<button onClick={() => setOpen((v) => !v)} className="cursor-pointer flex items-center gap-2">
 						<img src="https://avatars.githubusercontent.com/u/113094795?s=400&u=09f3e0e5f27350cd376caa27f7aa65cf46c9384c&v=4" alt="avatar" className="h-9 w-9 rounded-full object-cover cursor-pointer" />
 						<span className="hidden sm:block text-sm font-medium text-primary cursor-pointer">admin</span>
 						<i className={`fa-solid fa-caret-down text-muted cursor-pointer transition-transform duration-200 ${open ? 'rotate-0' : 'rotate-180'}`} />
@@ -81,7 +81,7 @@ export default function DashboardHeader({ onToggleSidebar }: HeaderProps) {
 							</Link>
 
 							<hr className="my-2 border-border-divider" />
-							<button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:hover-bg text-left text-rose-600">
+							<button onClick={handleLogout} className="cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-md hover:hover-bg text-left text-rose-600">
 								<i className="fa-solid fa-arrow-right-from-bracket cursor-pointer" />
 								<span className="text-sm cursor-pointer">Logout</span>
 							</button>

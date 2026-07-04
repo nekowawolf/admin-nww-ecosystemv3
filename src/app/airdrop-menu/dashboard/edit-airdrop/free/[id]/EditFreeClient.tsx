@@ -58,7 +58,7 @@ export default function EditAirdropPage() {
           <p className="text-secondary mb-4">{error}</p>
           <button
             onClick={() => router.push('/airdrop-menu/dashboard/airdrop/free')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
           >
             Back to Dashboard
           </button>
@@ -75,7 +75,7 @@ export default function EditAirdropPage() {
           <p className="text-secondary mb-4 sm:text-base text-sm">The airdrop you're looking for doesn't exist.</p>
           <button
             onClick={() => router.push('/airdrop-menu/dashboard/airdrop/free')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
           >
             Back to Dashboard
           </button>

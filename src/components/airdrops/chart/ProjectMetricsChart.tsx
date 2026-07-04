@@ -252,7 +252,7 @@ export default function ProjectMetricsChart({ data, loading, height = 300 }: Pro
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === 1 && "pointer-events-none opacity-50"
                   )}
@@ -267,7 +267,7 @@ export default function ProjectMetricsChart({ data, loading, height = 300 }: Pro
                     <PaginationLink
                       isActive={currentPage === page}
                       onClick={() => handlePageChange(Number(page))}
-                      className={cn(
+                      className={cn("cursor-pointer", 
                         "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm transition-none",
                         currentPage === page
                          ? "text-primary hover-bg-accent border-[var(--border-divider)] shadow-sm"
@@ -283,7 +283,7 @@ export default function ProjectMetricsChart({ data, loading, height = 300 }: Pro
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={cn(
+                  className={cn("cursor-pointer", 
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === totalPages && "pointer-events-none opacity-50"
                   )}
