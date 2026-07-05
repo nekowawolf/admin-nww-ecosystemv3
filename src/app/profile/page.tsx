@@ -3,6 +3,7 @@ import { HiMiniRocketLaunch } from 'react-icons/hi2'
 import { MdImage } from 'react-icons/md'
 import BackButton from '@/components/ui/BackButton'
 import SessionActivity from './SessionActivity'
+import NotesManager from '@/components/profile/notes/NotesManager'
 import { dashboardMetadata } from '@/constants/metadataTemplates'
 
 export const metadata = dashboardMetadata('Admin Profile', 'Manage your account details and view system information')
@@ -81,6 +82,11 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Admin Notes Section */}
+      <div className="w-full max-w-4xl mt-8">
+        <NotesManager />
       </div>
     </div>
   )
