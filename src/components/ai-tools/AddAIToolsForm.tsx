@@ -5,7 +5,19 @@ import { useState } from 'react'
 import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useAddAITool } from '@/hooks/ai-tools/useAddAITool'
 import { AIToolsRequest } from '@/types/ai-tools'
-import { CustomDropdown } from '@/components/ui/CustomDropdown'
+import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
+
+const categories = [
+    "Image",
+    "Design",
+    "All",
+    "Video",
+    "Audio",
+    "Chatbot",
+    "Coding",
+    "3D",
+    "Research",
+];
 
 export default function AddAIToolsForm() {
   useAuthGuard()
@@ -21,7 +33,7 @@ export default function AddAIToolsForm() {
     discord: '',
     telegram: ''
   })
-  const [categoriesInput, setCategoriesInput] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const { isSubmitting, submitAITool } = useAddAITool()
 
@@ -46,14 +58,14 @@ export default function AddAIToolsForm() {
       discord: '',
       telegram: ''
     })
-    setCategoriesInput('')
+    setSelectedCategories([])
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const dataToSubmit = {
       ...formData,
-      categories: categoriesInput.split(',').map(c => c.trim()).filter(Boolean)
+      categories: selectedCategories
     }
     await submitAITool(dataToSubmit)
     resetForm()
@@ -111,26 +123,14 @@ export default function AddAIToolsForm() {
 
               {/* Categories */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="categoriesInput">
+                <label className="text-secondary text-sm font-medium">
                   Categories *
                 </label>
-                <CustomDropdown
-                  id="categoriesInput"
-                  name="categoriesInput"
-                  value={categoriesInput}
-                  onChange={(value) => setCategoriesInput(value)}
-                  options={[
-                    { value: 'Image', label: 'Image' },
-                    { value: 'Design', label: 'Design' },
-                    { value: 'Video', label: 'Video' },
-                    { value: 'Audio', label: 'Audio' },
-                    { value: 'Chatbot', label: 'Chatbot' },
-                    { value: 'Coding', label: 'Coding' },
-                    { value: '3D', label: '3D' },
-                    { value: 'Research', label: 'Research' }
-                  ]}
+                <MultiSelectDropdown
+                  options={categories}
+                  selected={selectedCategories}
+                  onChange={setSelectedCategories}
                   placeholder="Select Category"
-                  required
                 />
               </div>
 
