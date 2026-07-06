@@ -26,6 +26,7 @@
     --dropdown-border: #e5e7eb;
     --dropdown-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --overlay-bg: rgba(0, 0, 0, 0.4);
+    --scrollbar-thumb-rgb: 17, 24, 39;
   }
 
   .darkmode {
@@ -54,6 +55,7 @@
     --dropdown-border: #374151;
     --dropdown-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
     --overlay-bg: rgba(0, 0, 0, 0.6);
+    --scrollbar-thumb-rgb: 249, 250, 251;
   }
 
   .body-color {
@@ -143,3 +145,22 @@
         opacity: 0;
       }
     }
+
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--border-divider);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(var(--scrollbar-thumb-rgb), 0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--scrollbar-thumb-rgb), 0.5);
+  }
