@@ -63,28 +63,30 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
       <div 
         id={id}
-        className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider ${
+        className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider overflow-hidden ${
           isOpen ? 'block' : 'hidden'
         }`}
       >
-        <ul className="py-2 text-sm text-primary" aria-labelledby={`${id}-button`}>
-          {options.map(option => (
-            <li key={option.value}>
-              <button
-                type="button"
-                onClick={() => {
-                  onChange(option.value)
-                  setIsOpen(false)
-                }}
-                className={`cursor-pointer block w-full text-left px-4 py-2 hover:hover-bg ${
-                  value === option.value ? 'hover-bg-accent text-accent' : ''
-                }`}
-              >
-                {option.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
+          <ul className="py-2 text-sm text-primary" aria-labelledby={`${id}-button`}>
+            {options.map(option => (
+              <li key={option.value}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(option.value)
+                    setIsOpen(false)
+                  }}
+                  className={`cursor-pointer block w-full text-left px-4 py-2 hover:hover-bg ${
+                    value === option.value ? 'hover-bg-accent text-accent' : ''
+                  }`}
+                >
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <input
