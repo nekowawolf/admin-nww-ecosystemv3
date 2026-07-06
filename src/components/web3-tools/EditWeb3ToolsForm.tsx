@@ -7,7 +7,24 @@ import { useEditWeb3Tool } from '@/hooks/web3-tools/useEditWeb3Tool'
 import { Web3ToolsRequest } from '@/types/web3-tools'
 import { useRouter } from 'next/navigation'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
+import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
+
+const chains = [
+  "Arbitrum",
+  "Avalanche",
+  "Base",
+  "Bitcoin",
+  "BNB Chain",
+  "Ethereum",
+  "Optimism",
+  "Polygon",
+  "Solana",
+  "TON",
+  "Sui",
+  "TRON",
+  "Cosmos"
+];
 
 export default function EditWeb3ToolsForm({ id }: { id: string }) {
   useAuthGuard()
@@ -25,12 +42,12 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     discord: '',
     telegram: ''
   })
-  const [chainsInput, setChainsInput] = useState('')
+  const [selectedChains, setSelectedChains] = useState<string[]>([])
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
-      setChainsInput(initialData.chains?.join(', ') || '')
+      setSelectedChains(initialData.chains || [])
     }
   }, [initialData])
 
@@ -53,7 +70,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     e.preventDefault()
     const dataToSubmit = {
       ...formData,
-      chains: chainsInput.split(',').map(c => c.trim()).filter(Boolean)
+      chains: selectedChains
     }
     const success = await submitEditWeb3Tool(dataToSubmit)
     if (success) {
@@ -152,17 +169,14 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
 
               {/* Chains */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="chainsInput">
+                <label className="text-secondary text-sm font-medium">
                   Chains (comma separated) *
                 </label>
-                <input
-                  type="text"
-                  id="chainsInput"
-                  value={chainsInput}
-                  onChange={(e) => setChainsInput(e.target.value)}
+                <MultiSelectDropdown
+                  options={chains}
+                  selected={selectedChains}
+                  onChange={setSelectedChains}
                   placeholder="e.g., Ethereum, Solana, Polygon"
-                  required
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 

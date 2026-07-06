@@ -6,8 +6,20 @@ import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useEditAITool } from '@/hooks/ai-tools/useEditAITool'
 import { AIToolsRequest } from '@/types/ai-tools'
 import { useRouter } from 'next/navigation'
-import { CustomDropdown } from '@/components/ui/CustomDropdown'
+import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
+
+const categories = [
+    "Image",
+    "Design",
+    "All",
+    "Video",
+    "Audio",
+    "Chatbot",
+    "Coding",
+    "3D",
+    "Research",
+];
 
 export default function EditAIToolsForm({ id }: { id: string }) {
   useAuthGuard()
@@ -25,12 +37,12 @@ export default function EditAIToolsForm({ id }: { id: string }) {
     discord: '',
     telegram: ''
   })
-  const [categoriesInput, setCategoriesInput] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
-      setCategoriesInput(initialData.categories?.join(', ') || '')
+      setSelectedCategories(initialData.categories || [])
     }
   }, [initialData])
 
@@ -46,7 +58,7 @@ export default function EditAIToolsForm({ id }: { id: string }) {
     e.preventDefault()
     const dataToSubmit = {
       ...formData,
-      categories: categoriesInput.split(',').map(c => c.trim()).filter(Boolean)
+      categories: selectedCategories
     }
     const success = await submitEditAITool(dataToSubmit)
     if (success) {
@@ -114,26 +126,14 @@ export default function EditAIToolsForm({ id }: { id: string }) {
 
               {/* Categories */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="categoriesInput">
+                <label className="text-secondary text-sm font-medium">
                   Categories *
                 </label>
-                <CustomDropdown
-                  id="categoriesInput"
-                  name="categoriesInput"
-                  value={categoriesInput}
-                  onChange={(value) => setCategoriesInput(value)}
-                  options={[
-                    { value: 'Image', label: 'Image' },
-                    { value: 'Design', label: 'Design' },
-                    { value: 'Video', label: 'Video' },
-                    { value: 'Audio', label: 'Audio' },
-                    { value: 'Chatbot', label: 'Chatbot' },
-                    { value: 'Coding', label: 'Coding' },
-                    { value: '3D', label: '3D' },
-                    { value: 'Research', label: 'Research' }
-                  ]}
+                <MultiSelectDropdown
+                  options={categories}
+                  selected={selectedCategories}
+                  onChange={setSelectedCategories}
                   placeholder="Select Category"
-                  required
                 />
               </div>
 
