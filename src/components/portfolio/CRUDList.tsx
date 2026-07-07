@@ -547,7 +547,7 @@ export default function CRUDList({
               <button
                 onClick={editingId ? () => handleEdit(editingId) : handleAdd}
                 disabled={isProcessing || isLoading}
-                className="cursor-pointer flex-1 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
+                className="cursor-pointer flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2"
               >
                 {isProcessing || isLoading ? (
                   <>

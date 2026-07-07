@@ -12,7 +12,6 @@ import { Spinner } from "@/components/ui/shadcn-io/spinner"
 const categories = [
     "Image",
     "Design",
-    "All",
     "Video",
     "Audio",
     "Chatbot",

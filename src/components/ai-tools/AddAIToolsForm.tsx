@@ -10,7 +10,6 @@ import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 const categories = [
     "Image",
     "Design",
-    "All",
     "Video",
     "Audio",
     "Chatbot",
