@@ -52,7 +52,6 @@ export default function PortfolioDashboard() {
             size={40}
             className="text-blue-500 mx-auto mb-4"
           />
-          <p className="text-secondary">Loading portfolio data...</p>
         </div>
       </div>
     )
