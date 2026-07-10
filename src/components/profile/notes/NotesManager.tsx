@@ -184,8 +184,10 @@ export default function NotesManager() {
               <Spinner variant="circle" size={40} className="text-blue-500" />
             </div>
           ) : error ? (
-            <div className="text-red-500 text-center py-4 bg-red-50 rounded-lg border border-red-200">
-              {error}
+            <div className="flex justify-center items-center py-10 w-full">
+              <div className="text-red-500 text-center py-4 px-6 bg-red-500/10 rounded-lg border border-red-500/20 w-full max-w-md mx-auto">
+                {error}
+              </div>
             </div>
           ) : (
             <NotesTable data={filteredNotes} onEdit={handleEditClick} onDelete={handleDelete} />

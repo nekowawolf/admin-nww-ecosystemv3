@@ -180,7 +180,13 @@ export default function EndedAirdropTable({
         </div>
       )}
 
-      {error && <p className="text-red-500">{error}</p>}  
+      {error && (
+        <div className="flex justify-center items-center py-10 w-full">
+          <div className="text-red-500 text-center py-4 px-6 bg-red-500/10 rounded-lg border border-red-500/20 w-full max-w-md mx-auto">
+            {error}
+          </div>
+        </div>
+      )}
 
       {/* Table */}
       {!loading && !error && (

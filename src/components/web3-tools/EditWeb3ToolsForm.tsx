@@ -23,7 +23,8 @@ const chains = [
   "TON",
   "Sui",
   "TRON",
-  "Cosmos"
+  "Cosmos",
+  "Other Chains"
 ];
 
 export default function EditWeb3ToolsForm({ id }: { id: string }) {
@@ -170,7 +171,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
               {/* Chains */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium">
-                  Chains (comma separated) *
+                  Chains *
                 </label>
                 <MultiSelectDropdown
                   options={chains}
