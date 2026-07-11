@@ -51,6 +51,12 @@ export default function Web3ToolsTable({
 
   // ===== STATE =====
   const [search, setSearch] = useState('')
+  const [expandedChains, setExpandedChains] = useState<Record<string, boolean>>({})
+
+  const toggleChains = (id: string) => {
+    setExpandedChains(prev => ({ ...prev, [id]: !prev[id] }))
+  }
+
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null)
@@ -177,15 +183,15 @@ export default function Web3ToolsTable({
       {/* Table */}
       {!loading && !error && (
         <div className="overflow-x-auto rounded-lg bg-[var(--fill-color)] border border-border-divider">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[1000px]">
             <thead className="bg-[var(--card-color3)]">
               <tr>
                 <th className="px-6 py-2 min-w-[80px]">Image</th>
-                <th className="px-6 py-2 min-w-[120px]">Name</th>
-                <th className="px-6 py-2 min-w-[200px]">Description</th>
-                <th className="px-6 py-2 min-w-[120px]">Category</th>
-                <th className="px-6 py-2 min-w-[120px]">Chains</th>
-                <th className="px-6 py-2 min-w-[80px]">Link</th>
+                <th className="px-6 py-2 min-w-[150px]">Name</th>
+                <th className="px-6 py-2 min-w-[250px]">Description</th>
+                <th className="px-6 py-2 min-w-[150px]">Category</th>
+                <th className="px-6 py-2 min-w-[350px]">Chains</th>
+                <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
@@ -216,12 +222,26 @@ export default function Web3ToolsTable({
                     </td>
                     <td className="px-6 py-2">{item.category || 'N/A'}</td>
                     <td className="px-6 py-2">
-                      <div className="flex flex-wrap gap-1.5 min-w-[200px]">
-                        {item.chains && item.chains.length > 0 ? item.chains.map((chain, i) => (
-                          <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
-                            {chain}
-                          </span>
-                        )) : 'N/A'}
+                      <div className={cn("flex gap-1.5", expandedChains[item._id] ? "flex-wrap" : "flex-nowrap overflow-hidden")}>
+                        {item.chains && item.chains.length > 0 ? (
+                          <>
+                            {item.chains.slice(0, expandedChains[item._id] ? item.chains.length : 6).map((chain: string, i: number) => (
+                              <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
+                                {chain}
+                              </span>
+                            ))}
+                            {item.chains.length > 6 && (
+                              <button
+                                onClick={() => toggleChains(item._id)}
+                                className="text-xs text-blue-500 hover:underline flex-shrink-0 cursor-pointer px-1 py-1"
+                              >
+                                {expandedChains[item._id] ? 'Less' : 'More'}
+                              </button>
+                            )}
+                          </>
+                        ) : (
+                          'N/A'
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-2 text-accent">
