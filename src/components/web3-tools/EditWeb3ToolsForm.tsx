@@ -41,7 +41,8 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     twitter: '',
     instagram: '',
     discord: '',
-    telegram: ''
+    telegram: '',
+    youtube: ''
   })
   const [selectedChains, setSelectedChains] = useState<string[]>([])
 
@@ -281,6 +282,22 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                   value={formData.telegram}
                   onChange={handleInputChange}
                   placeholder="https://t.me/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Youtube */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="youtube">
+                  Youtube URL
+                </label>
+                <input
+                  type="url"
+                  id="youtube"
+                  name="youtube"
+                  value={formData.youtube}
+                  onChange={handleInputChange}
+                  placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>

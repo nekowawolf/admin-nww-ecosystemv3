@@ -9,7 +9,6 @@ export interface GithubRepoBase {
   twitter: string
   instagram: string
   discord: string
-  telegram: string
 }
 
 export interface GithubRepoRequest extends GithubRepoBase {}

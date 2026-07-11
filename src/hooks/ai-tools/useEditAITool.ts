@@ -22,7 +22,7 @@ export function useEditAITool(id: string) {
             twitter: data.twitter || '',
             instagram: data.instagram || '',
             discord: data.discord || '',
-            telegram: data.telegram || ''
+            youtube: data.youtube || ''
           })
         }
       } catch (err: any) {

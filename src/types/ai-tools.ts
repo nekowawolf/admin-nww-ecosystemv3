@@ -8,7 +8,7 @@ export interface AIToolsBase {
   twitter: string
   instagram: string
   discord: string
-  telegram: string
+  youtube: string
 }
 
 export interface AIToolsRequest extends AIToolsBase {}

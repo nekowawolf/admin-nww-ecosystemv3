@@ -22,7 +22,8 @@ export function useEditWeb3Tool(id: string) {
             twitter: data.twitter || '',
             instagram: data.instagram || '',
             discord: data.discord || '',
-            telegram: data.telegram || ''
+            telegram: data.telegram || '',
+            youtube: data.youtube || ''
           })
         }
       } catch (err: any) {

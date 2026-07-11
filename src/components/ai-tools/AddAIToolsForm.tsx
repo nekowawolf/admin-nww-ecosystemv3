@@ -30,7 +30,7 @@ export default function AddAIToolsForm() {
     twitter: '',
     instagram: '',
     discord: '',
-    telegram: ''
+    youtube: ''
   })
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
@@ -55,7 +55,7 @@ export default function AddAIToolsForm() {
       twitter: '',
       instagram: '',
       discord: '',
-      telegram: ''
+      youtube: ''
     })
     setSelectedCategories([])
   }
@@ -240,18 +240,18 @@ export default function AddAIToolsForm() {
                 />
               </div>
 
-              {/* Telegram */}
+              {/* Youtube */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="telegram">
-                  Telegram URL
+                <label className="text-secondary text-sm font-medium" htmlFor="youtube">
+                  Youtube URL
                 </label>
                 <input
                   type="url"
-                  id="telegram"
-                  name="telegram"
-                  value={formData.telegram}
+                  id="youtube"
+                  name="youtube"
+                  value={formData.youtube}
                   onChange={handleInputChange}
-                  placeholder="https://t.me/..."
+                  placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>

@@ -9,6 +9,7 @@ export interface Web3ToolsBase {
   instagram: string
   discord: string
   telegram: string
+  youtube: string
 }
 
 export interface Web3ToolsRequest extends Web3ToolsBase {}

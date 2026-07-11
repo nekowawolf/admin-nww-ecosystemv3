@@ -19,8 +19,7 @@ export default function AddGithubReposForm() {
     website: '',
     twitter: '',
     instagram: '',
-    discord: '',
-    telegram: ''
+    discord: ''
   })
 
   const { isSubmitting, submitGithubRepo } = useAddGithubRepo()
@@ -51,8 +50,7 @@ export default function AddGithubReposForm() {
       website: '',
       twitter: '',
       instagram: '',
-      discord: '',
-      telegram: ''
+      discord: ''
     })
   }
 
@@ -242,22 +240,6 @@ export default function AddGithubReposForm() {
                   value={formData.discord}
                   onChange={handleInputChange}
                   placeholder="https://discord.gg/..."
-                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              {/* Telegram */}
-              <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="telegram">
-                  Telegram URL
-                </label>
-                <input
-                  type="url"
-                  id="telegram"
-                  name="telegram"
-                  value={formData.telegram}
-                  onChange={handleInputChange}
-                  placeholder="https://t.me/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
