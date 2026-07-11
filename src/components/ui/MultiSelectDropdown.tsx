@@ -11,11 +11,14 @@ interface MultiSelectDropdownProps {
 export function MultiSelectDropdown({ options, selected, onChange, placeholder = "Select options" }: MultiSelectDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [tempSelected, setTempSelected] = useState<string[]>(selected);
+  const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       setTempSelected(selected);
+    } else {
+      setSearchTerm('');
     }
   }, [isOpen, selected]);
 
@@ -49,6 +52,10 @@ export function MultiSelectDropdown({ options, selected, onChange, placeholder =
     setIsOpen(false);
   };
 
+  const filteredOptions = options.filter(option => 
+    option.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="relative w-full text-left" ref={dropdownRef}>
       <button
@@ -63,17 +70,33 @@ export function MultiSelectDropdown({ options, selected, onChange, placeholder =
       </button>
 
       <div className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider overflow-hidden ${isOpen ? 'block' : 'hidden'}`}>
+        
+        <div className="p-2 border-b border-border-divider dropdown-bg">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-border-divider bg-transparent text-primary rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-text-accent"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+
         <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
           <ul className="py-2 text-sm text-primary">
-            {options.map((option) => (
-              <li key={option}>
-                <Checkbox 
-                  label={option} 
-                  checked={tempSelected.includes(option)} 
-                  onChange={(c) => handleCheckbox(option, c)} 
-                />
-              </li>
-            ))}
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option) => (
+                <li key={option}>
+                  <Checkbox 
+                    label={option} 
+                    checked={tempSelected.includes(option)} 
+                    onChange={(c) => handleCheckbox(option, c)} 
+                  />
+                </li>
+              ))
+            ) : (
+              <li className="px-4 py-3 text-muted text-center text-sm">No options found.</li>
+            )}
           </ul>
         </div>
 

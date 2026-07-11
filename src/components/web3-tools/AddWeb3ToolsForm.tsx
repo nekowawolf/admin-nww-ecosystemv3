@@ -9,20 +9,13 @@ import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 
 const chains = [
-  "Arbitrum",
-  "Avalanche",
-  "Base",
-  "Bitcoin",
-  "BNB Chain",
-  "Ethereum",
-  "Optimism",
-  "Polygon",
-  "Solana",
-  "TON",
-  "Sui",
-  "TRON",
-  "Cosmos",
-  "Other Chains"
+  "Ethereum", "Bitcoin", "Solana", "BNB Chain", "Polygon", "Optimism", "Arbitrum",
+  "Base", "Avalanche", "TON", "TRON", "Cosmos", "Near", "Aptos", "Sui", "Injective",
+  "Sei", "Linea", "ZKsync", "Scroll", "Mantle", "Blast", "Taiko", "Mode", "Fraxtal",
+  "Manta", "opBNB", "Unichain", "Soneium", "HyperEVM", "Bera", "Sonic", "Monad", "MegaETH",
+  "Plume", "Abstract", "Ink", "Morph", "Gravity", "Rootstock", "Core", "Corn", "BOB",
+  "Botanix", "Cronos", "Gnosis", "Celo", "Kaia", "X Layer", "Plasma", "Robinhood",
+  "Story", "WorldChain", "Other Chains"
 ];
 
 export default function AddWeb3ToolsForm() {
