@@ -83,7 +83,14 @@ export const logout = async () => {
 
 export const authFetch = async (url: string, options: RequestInit = {}) => {
   let token = Cookies.get('access_token')
-  if (!token) throw new Error('No access token found')
+
+  if (!token) {
+    try {
+      token = await refreshAccessToken()
+    } catch (err) {
+      throw new Error('Session expired, please login again')
+    }
+  }
 
   let headers = {
     ...options.headers,
