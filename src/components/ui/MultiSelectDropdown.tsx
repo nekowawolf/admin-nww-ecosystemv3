@@ -6,9 +6,10 @@ interface MultiSelectDropdownProps {
   selected: string[];
   onChange: (selected: string[]) => void;
   placeholder?: string;
+  required?: boolean;
 }
 
-export function MultiSelectDropdown({ options, selected, onChange, placeholder = "Select options" }: MultiSelectDropdownProps) {
+export function MultiSelectDropdown({ options, selected, onChange, placeholder = "Select options", required = false }: MultiSelectDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [tempSelected, setTempSelected] = useState<string[]>(selected);
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,6 +69,15 @@ export function MultiSelectDropdown({ options, selected, onChange, placeholder =
         </span>
         <FiChevronDown className={`h-4 w-4 text-muted transition-transform duration-200 ${isOpen ? 'transform rotate-0' : 'transform rotate-180'}`} />
       </button>
+
+      {/* Hidden input for native HTML5 form validation */}
+      <input 
+        type="text"
+        value={selected.length > 0 ? "filled" : ""}
+        onChange={() => {}}
+        required={required}
+        className="opacity-0 absolute inset-0 w-full h-full z-[-1]"
+      />
 
       <div className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider overflow-hidden ${isOpen ? 'block' : 'hidden'}`}>
         

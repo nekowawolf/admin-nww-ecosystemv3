@@ -47,6 +47,7 @@ export default function AddCommunityForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     await submitCommunity(formData)
     resetForm()
   }

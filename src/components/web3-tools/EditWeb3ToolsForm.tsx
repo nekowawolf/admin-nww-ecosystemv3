@@ -63,6 +63,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
     const dataToSubmit = {
       ...formData,
       chains: selectedChains
@@ -127,6 +128,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                   value={formData.description}
                   onChange={handleInputChange}
                   placeholder="Enter description"
+                  required
                   className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
                 />
               </div>
@@ -172,6 +174,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                   selected={selectedChains}
                   onChange={setSelectedChains}
                   placeholder="e.g., Ethereum, Solana, Polygon"
+                  required
                 />
               </div>
 

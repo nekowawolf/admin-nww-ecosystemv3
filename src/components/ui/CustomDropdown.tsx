@@ -61,6 +61,16 @@ export const CustomDropdown: React.FC<CustomDropdownProps> = ({
         />
       </button>
 
+      {/* Hidden input for native HTML5 form validation */}
+      <input 
+        type="text"
+        name={name}
+        value={value}
+        onChange={() => {}}
+        required={required}
+        className="opacity-0 absolute inset-0 w-full h-full z-[-1]"
+      />
+
       <div 
         id={id}
         className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider overflow-hidden ${
