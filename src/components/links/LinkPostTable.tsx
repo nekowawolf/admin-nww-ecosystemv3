@@ -72,8 +72,7 @@ export default function LinkPostTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.caption?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.category?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.caption?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 

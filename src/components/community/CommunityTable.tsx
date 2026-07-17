@@ -80,9 +80,7 @@ export default function CommunityTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.platforms?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.category?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 

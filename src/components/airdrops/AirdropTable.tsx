@@ -84,12 +84,7 @@ export default function AirdropTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.task?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.level?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.backed?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.funds?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.status?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 

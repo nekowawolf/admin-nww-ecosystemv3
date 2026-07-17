@@ -68,8 +68,7 @@ export default function ImagesTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return data.filter(item =>
-      (item.filename?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.path?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.filename?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, data])
 

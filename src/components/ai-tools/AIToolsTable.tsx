@@ -84,9 +84,7 @@ export default function AIToolsTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.categories?.join(', ')?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.description?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 

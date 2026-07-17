@@ -84,9 +84,7 @@ export default function Web3ToolsTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.category?.toLowerCase() || '').includes(search.toLowerCase()) ||
-      (item.chains?.join(', ')?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 
