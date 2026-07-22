@@ -153,6 +153,7 @@ export default function AddGithubReposForm() {
                     { value: 'Infrastructure', label: 'Infrastructure' },
                     { value: 'Data', label: 'Data' },
                     { value: 'Design', label: 'Design' },
+                    { value: 'Video', label: 'Video' },
                     { value: 'Security', label: 'Security' },
                     { value: 'Learning', label: 'Learning' }
                   ]}
