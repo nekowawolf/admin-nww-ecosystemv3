@@ -19,6 +19,7 @@ import { createPortal } from "react-dom"
 import { toast } from 'sonner'
 import { Image as ImageInterface } from '@/types/image'
 import { FaCopy, FaCheck } from "react-icons/fa"
+import { SearchInput } from "@/components/ui/SearchInput"
 
 interface ImagesTableProps {
   data: ImageInterface[]
@@ -158,12 +159,10 @@ export default function ImagesTable({
         <p className="text-xs sm:text-sm text-secondary">{subtitle}</p>
       </div>
 
-      <input
-        type="text"
+      <SearchInput
         placeholder="Search images..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="border border-border-divider bg-transparent text-primary rounded-lg px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-text-accent"
+        onChange={setSearch}
       />
 
       {loading && (

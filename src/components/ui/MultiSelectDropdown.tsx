@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { FiChevronDown, FiCheck } from 'react-icons/fi';
+import { SearchInput } from "@/components/ui/SearchInput";
 
 interface MultiSelectDropdownProps {
   options: string[];
@@ -82,12 +83,14 @@ export function MultiSelectDropdown({ options, selected, onChange, placeholder =
       <div className={`z-10 absolute top-full left-0 right-0 mt-1 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider overflow-hidden ${isOpen ? 'block' : 'hidden'}`}>
         
         <div className="p-2 border-b border-border-divider dropdown-bg">
-          <input
-            type="text"
+          <SearchInput
             placeholder="Search..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border border-border-divider bg-transparent text-primary rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-text-accent"
+            onChange={setSearchTerm}
+            className="px-3 py-2 text-sm"
+            clearButtonClassName="right-2"
+            iconClassName="w-4 h-4"
+            wrapperClassName="max-w-none"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

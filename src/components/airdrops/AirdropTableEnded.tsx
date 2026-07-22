@@ -19,6 +19,7 @@ import { FaTrash, FaDiscord } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6";
 import { TbWorld } from "react-icons/tb";
 import { MdEdit } from "react-icons/md"
+import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
 
@@ -166,12 +167,10 @@ export default function EndedAirdropTable({
         <p className="text-xs sm:text-sm text-secondary">List of completed airdrops</p>
       </div>
 
-      <input
-        type="text"
+      <SearchInput
         placeholder="Search ended airdrops..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="border border-border-divider bg-transparent text-primary rounded-lg px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-text-accent"
+        onChange={setSearch}
       />
 
       {loading && (

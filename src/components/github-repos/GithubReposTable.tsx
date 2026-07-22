@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
 import { MdEdit } from "react-icons/md"
+import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
 import { GithubRepoResponse } from '@/types/github-repos'
@@ -149,12 +150,10 @@ export default function GithubReposTable({
         <p className="text-xs sm:text-sm text-secondary">{subtitle}</p>
       </div>
 
-      <input
-        type="text"
+      <SearchInput
         placeholder="Search GitHub Repos..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="border border-border-divider bg-transparent text-primary rounded-lg px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-text-accent"
+        onChange={setSearch}
       />
 
       {loading && (
