@@ -8,6 +8,8 @@ import { NetRequest } from '@/types/net'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { validateUrl } from '@/utils/urlValidation'
 import { toast } from 'sonner'
+import { getNets } from '@/services/net/netService'
+import { ValidatedUrlInput } from '@/components/ui/ValidatedUrlInput'
 
 const categories = [
     "Design",
@@ -45,6 +47,8 @@ export default function AddNetForm() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const { isSubmitting, submitNet } = useAddNet()
+
+  const [urlExists, setUrlExists] = useState<boolean | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -117,6 +121,7 @@ export default function AddNetForm() {
     if (!formData.description) { toast.error('Please fill out Description'); return; }
     if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
     if (!formData.website) { toast.error('Please fill out Website URL'); return; }
+    if (urlExists === true) { toast.error('This website is already listed.'); return; }
     if (selectedCategories.length === 0) { toast.error('Please select at least one Category'); return; }
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
@@ -270,23 +275,21 @@ export default function AddNetForm() {
               </div>
 
               {/* Website */}
-              <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="website">
-                  Website URL *
-                </label>
-                <div className="relative">
-                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
-                  <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleInputChange}
-                    placeholder="https://example.com"
-                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                  />
-                </div>
-              </div>
+              <ValidatedUrlInput
+                label="Website URL *"
+                id="website"
+                name="website"
+                value={formData.website}
+                onChange={handleInputChange}
+                placeholder="https://example.com"
+                icon={<FiLink />}
+                fetchUrls={async () => {
+                  const nets = await getNets()
+                  return nets.map(n => n.website || '')
+                }}
+                onValidationChange={setUrlExists}
+                errorMessage="This website is already listed."
+              />
 
               {/* Twitter */}
               <div className="flex flex-col gap-2">

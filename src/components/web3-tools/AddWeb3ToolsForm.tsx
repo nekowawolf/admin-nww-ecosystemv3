@@ -9,6 +9,8 @@ import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { validateUrl } from '@/utils/urlValidation'
 import { toast } from 'sonner'
+import { getWeb3Tools } from '@/services/web3-tools/web3ToolsService'
+import { ValidatedUrlInput } from '@/components/ui/ValidatedUrlInput'
 
 const chains = [
   "Ethereum", "Bitcoin", "Solana", "BNB Chain", "Polygon", "Optimism", "Arbitrum",
@@ -38,6 +40,8 @@ export default function AddWeb3ToolsForm() {
   const [selectedChains, setSelectedChains] = useState<string[]>([])
 
   const { isSubmitting, submitWeb3Tool } = useAddWeb3Tool()
+
+  const [urlExists, setUrlExists] = useState<boolean | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -77,6 +81,7 @@ export default function AddWeb3ToolsForm() {
     if (!formData.description) { toast.error('Please fill out Description'); return; }
     if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
     if (!formData.website) { toast.error('Please fill out Website URL'); return; }
+    if (urlExists === true) { toast.error('This website is already listed.'); return; }
     if (selectedChains.length === 0) { toast.error('Please select at least one Chain'); return; }
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.twitter && !validateUrl(formData.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
@@ -206,23 +211,21 @@ export default function AddWeb3ToolsForm() {
               </div>
 
               {/* Website */}
-              <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="website">
-                  Website URL *
-                </label>
-                <div className="relative">
-                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
-                  <input
-                    type="url"
-                    id="website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleInputChange}
-                    placeholder="https://example.com"
-                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                  />
-                </div>
-              </div>
+              <ValidatedUrlInput
+                label="Website URL *"
+                id="website"
+                name="website"
+                value={formData.website}
+                onChange={handleInputChange}
+                placeholder="https://example.com"
+                icon={<FiLink />}
+                fetchUrls={async () => {
+                  const tools = await getWeb3Tools()
+                  return tools.map(t => t.website || '')
+                }}
+                onValidationChange={setUrlExists}
+                errorMessage="This website is already listed."
+              />
 
               {/* Twitter */}
               <div className="flex flex-col gap-2">
