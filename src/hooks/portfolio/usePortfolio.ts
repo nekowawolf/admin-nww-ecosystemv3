@@ -57,9 +57,9 @@ export const usePortfolio = () => {
         getCertificates()
       ])
       setPortfolio(data)
-      setProjects(projData)
-      setDesigns(desData)
-      setCertificates(certData)
+      setProjects(Array.isArray(projData) ? [...projData].reverse() : projData)
+      setDesigns(Array.isArray(desData) ? [...desData].reverse() : desData)
+      setCertificates(Array.isArray(certData) ? [...certData].reverse() : certData)
     } catch (err: any) {
       const message = err.message || 'Failed to fetch portfolio'
       setError(message)
