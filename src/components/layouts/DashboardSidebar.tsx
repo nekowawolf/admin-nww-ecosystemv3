@@ -10,6 +10,7 @@ import { FaLayerGroup, FaUserCircle, FaBitcoin, FaLink, FaRobot, FaGithub, FaGlo
 import { MdImage } from 'react-icons/md'
 import { AiOutlineDollar } from "react-icons/ai";
 import { TiMediaPause } from "react-icons/ti";
+import { RiFolderUserFill } from "react-icons/ri";
 
 type SidebarProps = {
     isOpen?: boolean
@@ -42,6 +43,8 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const [openNetDashboard, setOpenNetDashboard] = useState(false)
     const [openCreators, setOpenCreators] = useState(false)
     const [openCreatorsDashboard, setOpenCreatorsDashboard] = useState(false)
+    const [openGuild, setOpenGuild] = useState(false)
+    const [openGuildDashboard, setOpenGuildDashboard] = useState(false)
 
 
     // === HANDLE ACTIVE SECTIONS ===
@@ -66,6 +69,8 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 setOpenSupporterDashboard(false)
                 setOpenCreators(false)
                 setOpenCreatorsDashboard(false)
+                setOpenGuild(false)
+                setOpenGuildDashboard(false)
 
 
         setOpenWeb3Tools(false)
@@ -154,6 +159,14 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
             setOpenCreators(true)
             if (!pathname.includes('/add-creator')) {
                 setOpenCreatorsDashboard(true)
+            }
+        }
+
+        // === GUILD PATH ===
+        if (pathname.startsWith('/guild-menu/dashboard')) {
+            setOpenGuild(true)
+            if (!pathname.includes('/add-guild')) {
+                setOpenGuildDashboard(true)
             }
         }
 
@@ -471,6 +484,38 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     }
     const handleCreatorsDashboardDropdown = () => setOpenCreatorsDashboard(v => !v)
 
+    const handleGuildDropdown = () => {
+        setOpenGuild(prev => {
+            const next = !prev
+            if (next) {
+                setOpenAirdrop(false)
+                setOpenDashboard(false)
+                setOpenCommunity(false)
+                setOpenCommunityDashboard(false)
+                setOpenPortfolio(false)
+                setOpenPortfolioDashboard(false)
+                setOpenImages(false)
+                setOpenImagesDashboard(false)
+                setOpenLink(false)
+                setOpenLinkDashboard(false)
+                setOpenWeb3Tools(false)
+                setOpenWeb3ToolsDashboard(false)
+                setOpenAITools(false)
+                setOpenAIToolsDashboard(false)
+                setOpenGithubRepos(false)
+                setOpenGithubReposDashboard(false)
+                setOpenNet(false)
+                setOpenNetDashboard(false)
+                setOpenCreators(false)
+                setOpenCreatorsDashboard(false)
+                setOpenSupporter(false)
+                setOpenSupporterDashboard(false)
+            }
+            return next
+        })
+    }
+    const handleGuildDashboardDropdown = () => setOpenGuildDashboard(v => !v)
+
     const handleSupporterDropdown = () => {
         setOpenSupporter((prev) => {
             const next = !prev
@@ -576,6 +621,12 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddCreatorActive = pathname === '/creators-menu/dashboard/add-creator'
     const isCreatorsDashboardPathActive = pathname.startsWith('/creators-menu/dashboard') && !pathname.includes('/add-creator')
     const isCreatorsListActive = pathname === '/creators-menu/dashboard/creators-list'
+
+    // === GUILD ===
+    const isGuildAnalyticActive = pathname === '/guild-menu/dashboard'
+    const isAddGuildActive = pathname === '/guild-menu/dashboard/add-guild'
+    const isGuildDashboardPathActive = pathname.startsWith('/guild-menu/dashboard') && !pathname.includes('/add-guild')
+    const isGuildListActive = pathname === '/guild-menu/dashboard/guild-list'
 
     // === SIDEBAR CONTENT ===
     const content = (
@@ -1525,6 +1576,105 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                     size={18}
                                 />
                                 <span>Add Creator</span>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+
+                {/* === Guild Group === */}
+                <div>
+                    <button
+                        type="button"
+                        onClick={handleGuildDropdown}
+                        className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                            pathname.startsWith('/guild-menu/dashboard')
+                                ? 'border-accent text-accent bg-accent/10'
+                                : 'border-transparent text-secondary hover:hover-bg'
+                        }`}
+                    >
+                        <RiFolderUserFill
+                            className={`${
+                                pathname.startsWith('/guild-menu/dashboard')
+                                    ? 'text-accent'
+                                    : 'text-muted'
+                            }`}
+                            size={18}
+                        />
+                        <span>Guild</span>
+                        <i
+                            className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                openGuild ? 'rotate-180' : ''
+                            }`}
+                        />
+                    </button>
+
+                    {openGuild && (
+                        <div className="pl-8 mt-2 space-y-1">
+                            <button
+                                type="button"
+                                onClick={handleGuildDashboardDropdown}
+                                className={`cursor-pointer group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors w-full text-left border-l-4 ${
+                                    isGuildDashboardPathActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <RxDashboard
+                                    className={`${
+                                        isGuildDashboardPathActive
+                                            ? 'text-accent'
+                                            : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Dashboard</span>
+                                <i
+                                    className={`fa-solid fa-caret-down ml-auto text-xs transition-transform ${
+                                        openGuildDashboard ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+
+                            {openGuildDashboard && (
+                                <div className="pl-8 mt-1 space-y-1">
+                                    <Link
+                                        href="/guild-menu/dashboard"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGuildAnalyticActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Analytic
+                                    </Link>
+                                    <Link
+                                        href="/guild-menu/dashboard/guild-list"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGuildListActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Guild List
+                                    </Link>
+                                </div>
+                            )}
+
+                            <Link
+                                href="/guild-menu/dashboard/add-guild"
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors border-l-4 ${
+                                    isAddGuildActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <IoIosAddCircleOutline
+                                    className={`${
+                                        isAddGuildActive ? 'text-accent' : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Add Guild</span>
                             </Link>
                         </div>
                     )}
