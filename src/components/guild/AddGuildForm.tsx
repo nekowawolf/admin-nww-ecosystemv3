@@ -89,15 +89,15 @@ export default function AddGuildForm() {
     if (!formData.name) { toast.error('Please fill out Guild Name'); return; }
     if (!formData.description) { toast.error('Please fill out Description'); return; }
     if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
-    if (!formData.website) { toast.error('Please fill out Website URL'); return; }
-    if (urlExists === true) { toast.error('This website is already listed.'); return; }
+    if (!formData.link) { toast.error('Please fill out Guild Link'); return; }
+    if (urlExists === true) { toast.error('This guild link is already listed.'); return; }
     if (!formData.platform) { toast.error('Please select a Platform'); return; }
     if (!formData.category) { toast.error('Please select a Category'); return; }
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
     if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
-    if (formData.socials?.github && !validateUrl(formData.socials.github, 'github')) { toast.error('Invalid Github URL format'); return; }
+    if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return; }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return; }
 
     await submitGuild(formData)
@@ -203,40 +203,40 @@ export default function AddGuildForm() {
               </div>
 
               {/* Website */}
-              <ValidatedUrlInput
-                label="Website URL *"
-                id="website"
-                name="website"
-                value={formData.website}
-                onChange={handleInputChange}
-                placeholder="https://example.com"
-                icon={<FiLink />}
-                fetchUrls={async () => {
-                  const guilds = await getGuilds()
-                  return guilds.map(g => g.website || '')
-                }}
-                onValidationChange={setUrlExists}
-                errorMessage="This website is already listed."
-              />
-
-              {/* Link */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="link">
-                  Guild Link
+                <label className="text-secondary text-sm font-medium" htmlFor="website">
+                  Website URL
                 </label>
                 <div className="relative">
                   <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
                   <input
                     type="url"
-                    id="link"
-                    name="link"
-                    value={formData.link}
+                    id="website"
+                    name="website"
+                    value={formData.website}
                     onChange={handleInputChange}
-                    placeholder="https://discord.gg/... or invite link"
+                    placeholder="https://example.com"
                     className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                   />
                 </div>
               </div>
+
+              {/* Link */}
+              <ValidatedUrlInput
+                label="Guild Link *"
+                id="link"
+                name="link"
+                value={formData.link}
+                onChange={handleInputChange}
+                placeholder="https://discord.gg/... or invite link"
+                icon={<FiLink />}
+                fetchUrls={async () => {
+                  const guilds = await getGuilds()
+                  return guilds.map(g => g.link || '')
+                }}
+                onValidationChange={setUrlExists}
+                errorMessage="This guild link is already listed."
+              />
 
               {/* Twitter */}
               <div className="flex flex-col gap-2">

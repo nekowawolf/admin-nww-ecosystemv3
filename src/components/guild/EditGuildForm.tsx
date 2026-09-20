@@ -74,14 +74,14 @@ export default function EditGuildForm({ id }: { id: string }) {
     if (!formData.name) { toast.error('Please fill out Guild Name'); return; }
     if (!formData.description) { toast.error('Please fill out Description'); return; }
     if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
-    if (!formData.website) { toast.error('Please fill out Website URL'); return; }
+    if (!formData.link) { toast.error('Please fill out Guild Link'); return; }
     if (!formData.platform) { toast.error('Please select a Platform'); return; }
     if (!formData.category) { toast.error('Please select a Category'); return; }
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
     if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
-    if (formData.socials?.github && !validateUrl(formData.socials.github, 'github')) { toast.error('Invalid Github URL format'); return; }
+    if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return; }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return; }
 
     const success = await submitEditGuild(formData)
@@ -199,7 +199,7 @@ export default function EditGuildForm({ id }: { id: string }) {
               {/* Website */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="website">
-                  Website URL *
+                  Website URL
                 </label>
                 <div className="relative">
                   <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
@@ -218,7 +218,7 @@ export default function EditGuildForm({ id }: { id: string }) {
               {/* Link */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="link">
-                  Guild Link
+                  Guild Link *
                 </label>
                 <div className="relative">
                   <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />

@@ -216,7 +216,7 @@ export default function GuildTable({
                     </td>
                     <td className="px-6 py-2">
                       {item.platform ? (
-                        <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
                           {item.platform}
                         </span>
                       ) : (
