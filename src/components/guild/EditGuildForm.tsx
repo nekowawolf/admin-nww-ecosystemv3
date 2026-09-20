@@ -15,6 +15,8 @@ const categories = [
     "Programming",
     "Design",
     "3D",
+    "AI",
+    "Crypto",
     "Artist",
     "Editing",
     "Photography",
