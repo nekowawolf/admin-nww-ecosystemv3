@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { CommunityRequest } from '@/types/community'
+import { CommunityRequest, CommunityResponse } from '@/types/community'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -18,7 +18,7 @@ export const createCommunity = async (data: CommunityRequest) => {
   return response.json()
 }
 
-export const getCommunity = async () => {
+export const getCommunity = async (): Promise<CommunityResponse[]> => {
   const response = await authFetch(`${API_BASE_URL}/cryptocommunity`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -48,7 +48,7 @@ export const updateCommunity = async (_id: string, data: CommunityRequest) => {
   return response.json()
 }
 
-export const getCommunityById = async (_id: string) => {
+export const getCommunityById = async (_id: string): Promise<CommunityResponse> => {
   try {
     const response = await authFetch(`${API_BASE_URL}/cryptocommunity/${_id}`, {
       method: 'GET',

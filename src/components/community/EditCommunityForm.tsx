@@ -6,6 +6,8 @@ import { useEditCommunity } from '@/hooks/community/useEditCommunity'
 import { CommunityRequest } from '@/types/community'
 import { useRouter } from 'next/navigation'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
+import { validateUrl } from '@/utils/urlValidation'
+import { toast } from 'sonner'
 
 
 interface EditCommunityFormProps {
@@ -17,20 +19,33 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
   const router = useRouter()
   const [formData, setFormData] = useState<CommunityRequest>({
     name: communityData?.name || '',
+    description: communityData?.description || '',
     platforms: communityData?.platforms || '',
     category: communityData?.category || '',
     image_url: communityData?.image_url || '',
-    link: communityData?.link || ''
+    website: communityData?.website || '',
+    link: communityData?.link || '',
+    socials: {
+      twitter: communityData?.socials?.twitter || '',
+      instagram: communityData?.socials?.instagram || '',
+      discord: communityData?.socials?.discord || '',
+      github: communityData?.socials?.github || '',
+      youtube: communityData?.socials?.youtube || ''
+    }
   })
 
   const { isSubmitting, editCommunity } = useEditCommunity()
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    if (['twitter', 'instagram', 'discord', 'github', 'youtube'].includes(name)) {
+      setFormData(prev => ({ ...prev, socials: { ...prev.socials, [name]: value } }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    }
   }
 
   const handleDropdownChange = (name: string, value: string) => {
@@ -42,6 +57,17 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formData.name) { toast.error('Please fill out Community Name'); return }
+    if (!formData.image_url) { toast.error('Please fill out Image URL'); return }
+    if (!formData.link) { toast.error('Please fill out Community Link'); return }
+    if (!formData.platforms) { toast.error('Please select a Platform'); return }
+    if (!formData.category) { toast.error('Please select a Category'); return }
+    if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return }
+    if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return }
+    if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return }
+    if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return }
+    if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return }
+    if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return }
 
     const success = await editCommunity(communityData._id, formData)
     if (success && onSuccess) {
@@ -95,6 +121,21 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                     className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                   />
                 </div>
+              </div>
+
+              {/* Description */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="description">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  placeholder="Enter community description"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600 min-h-[100px]"
+                />
               </div>
 
               {/* Platform */}
@@ -175,6 +216,25 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                 )}
               </div>
 
+              {/* Website */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="website">
+                  Website URL
+                </label>
+                <div className="relative">
+                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type="url"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleInputChange}
+                    placeholder="https://example.com"
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+              </div>
+
               {/* Link URL */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="link">
@@ -193,6 +253,86 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                     className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                   />
                 </div>
+              </div>
+
+              {/* Twitter */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="twitter">
+                  Twitter URL
+                </label>
+                <input
+                  type="url"
+                  id="twitter"
+                  name="twitter"
+                  value={formData.socials?.twitter || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://twitter.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Instagram */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="instagram">
+                  Instagram URL
+                </label>
+                <input
+                  type="url"
+                  id="instagram"
+                  name="instagram"
+                  value={formData.socials?.instagram || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://instagram.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Discord */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="discord">
+                  Discord URL
+                </label>
+                <input
+                  type="url"
+                  id="discord"
+                  name="discord"
+                  value={formData.socials?.discord || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://discord.gg/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Github */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="github">
+                  Github URL
+                </label>
+                <input
+                  type="url"
+                  id="github"
+                  name="github"
+                  value={formData.socials?.github || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://github.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Youtube */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="youtube">
+                  Youtube URL
+                </label>
+                <input
+                  type="url"
+                  id="youtube"
+                  name="youtube"
+                  value={formData.socials?.youtube || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://youtube.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
               </div>
 
               {/* Form Actions */}
