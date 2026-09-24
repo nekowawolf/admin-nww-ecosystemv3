@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -563,6 +563,8 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
         !pathname.includes('/add-community')
     const isCommunityListActive =
         pathname === '/community-menu/dashboard/community-list'
+    const isCommunitySubmissionsActive =
+        pathname === '/community-menu/dashboard/community-submissions'
 
     const isPortfolioActive = pathname === '/portfolio-menu/dashboard'
     const isPortfolioManageActive = pathname === '/portfolio-menu/dashboard/manage'
@@ -849,6 +851,12 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                     >
                                         Community List
                                     </Link>
+                                      <Link
+                                          href="/community-menu/dashboard/community-submissions"
+                                          className={`block rounded-lg px-0 py-2 text-sm transition-colors ${isCommunitySubmissionsActive ? 'text-accent font-semibold' : 'text-secondary hover:text-accent'}`}
+                                      >
+                                          CC Submissions
+                                      </Link>
                                 </div>
                             )}
 

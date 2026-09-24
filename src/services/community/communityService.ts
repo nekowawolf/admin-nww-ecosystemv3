@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { CommunityRequest, CommunityResponse } from '@/types/community'
+import { CommunityRequest, CommunityResponse, CommunitySubmission } from '@/types/community'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -61,7 +61,7 @@ export const getCommunityById = async (_id: string): Promise<CommunityResponse> 
     }
 
     const data = await response.json()
-    
+
     if (data.data) {
       return data.data
     } else if (data.success && data.data) {
@@ -85,6 +85,34 @@ export const deleteCommunity = async (_id: string) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(errorData.message || 'Failed to delete community')
+  }
+
+  return response.json()
+}
+
+export const getCommunitySubmissions = async (): Promise<CommunitySubmission[]> => {
+  const response = await authFetch(`${API_BASE_URL}/community-submissions`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to fetch community submissions')
+  }
+
+  const data = await response.json()
+  return Array.isArray(data.data) ? data.data : []
+}
+
+export const deleteCommunitySubmission = async (_id: string) => {
+  const response = await authFetch(`${API_BASE_URL}/community-submissions/${_id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to delete community submission')
   }
 
   return response.json()

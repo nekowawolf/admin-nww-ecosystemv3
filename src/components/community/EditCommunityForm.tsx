@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
@@ -36,6 +36,9 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
 
   const { isSubmitting, editCommunity } = useEditCommunity()
 
+  const [addedByName, setAddedByName] = useState(communityData?.added_by?.name || '')
+  const [addedByUrl, setAddedByUrl] = useState(communityData?.added_by?.url || '')
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     if (['twitter', 'instagram', 'discord', 'github', 'youtube'].includes(name)) {
@@ -69,7 +72,8 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
     if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return }
 
-    const success = await editCommunity(communityData._id, formData)
+    const payload = { ...formData, added_by: { name: addedByName || 'nekowawolf', url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz') } }
+    const success = await editCommunity(communityData._id, payload)
     if (success && onSuccess) {
       onSuccess()
     }
@@ -255,7 +259,7 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                 </div>
               </div>
 
-              {/* Twitter */}
+                {/* Twitter */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="twitter">
                   Twitter URL
@@ -334,6 +338,36 @@ export default function EditCommunityForm({ communityData, onSuccess }: EditComm
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
+
+                {/* Added By Name */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                    Name (addedby)
+                  </label>
+                  <input
+                    type="text"
+                    id="addedByName"
+                    value={addedByName}
+                    onChange={(e) => setAddedByName(e.target.value)}
+                    placeholder="Your name or username"
+                    className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+
+                {/* Added By Link */}
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                    Link (opsional)
+                  </label>
+                  <input
+                    type="url"
+                    id="addedByUrl"
+                    value={addedByUrl}
+                    onChange={(e) => setAddedByUrl(e.target.value)}
+                    placeholder="https://..."
+                    className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
 
               {/* Form Actions */}
               <div className="flex justify-end gap-4 pt-6 border-t border-border-divider">
