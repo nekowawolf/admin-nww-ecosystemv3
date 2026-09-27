@@ -144,19 +144,22 @@ export default function EndedAirdropTable({
     }
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    })
-  }
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     }).format(amount)
+  }
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/A'
+    const date = new Date(dateStr)
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
   }
 
   // ===== RENDER =====
@@ -213,8 +216,8 @@ export default function EndedAirdropTable({
                 <th className="px-6 py-2 min-w-[120px]">LinkClaim</th>
                 <th className="px-6 py-2 min-w-[100px]">Price</th>
                 <th className="px-6 py-2 min-w-[100px]">USDIncome</th>
-                <th className="px-6 py-2 min-w-[160px]">CreatedAt</th>
-                <th className="px-6 py-2 min-w-[160px]">EndedAt</th>
+                <th className="px-6 py-2 min-w-[120px]">Date</th>
+                <th className="px-6 py-2 min-w-[120px]">EndedAt</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
@@ -301,8 +304,8 @@ export default function EndedAirdropTable({
                     </td>
                     <td className="px-6 py-2">{item.price ? formatCurrency(item.price) : 'N/A'}</td>
                     <td className="px-6 py-2">{item.usd_income ? formatCurrency(item.usd_income) : 'N/A'}</td>
-                    <td className="px-6 py-2">{item.created_at ? formatDate(item.created_at) : 'N/A'}</td>
-                    <td className="px-6 py-2">{item.ended_at ? formatDate(item.ended_at) : 'N/A'}</td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.ended_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />

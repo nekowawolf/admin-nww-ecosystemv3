@@ -16,4 +16,5 @@ export interface Web3ToolsRequest extends Web3ToolsBase {}
 
 export interface Web3ToolsResponse extends Web3ToolsBase {
   _id: string
+  created_at?: string
 }

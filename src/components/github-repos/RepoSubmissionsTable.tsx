@@ -214,7 +214,7 @@ export default function RepoSubmissionsTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                    <td className="px-6 py-2 text-secondary">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />

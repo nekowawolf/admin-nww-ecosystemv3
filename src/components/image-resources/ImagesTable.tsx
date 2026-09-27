@@ -151,14 +151,15 @@ export default function ImagesTable({
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  const formatDate = (dateStr?: string): string => {
+
+  const formatDate = (dateStr?: string) => {
     if (!dateStr) return 'N/A'
     const date = new Date(dateStr)
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
+    return new Intl.DateTimeFormat('en-US', {
       month: 'short',
       day: 'numeric',
-    })
+      year: 'numeric'
+    }).format(date)
   }
 
   // ===== RENDER =====
@@ -202,7 +203,7 @@ export default function ImagesTable({
                 <th className="px-6 py-3 min-w-[80px]">Type</th>
                 <th className="px-6 py-3 min-w-[200px]">URL</th>
                 <th className="px-6 py-3 min-w-[100px]">Size</th>
-                <th className="px-6 py-3 min-w-[120px]">Created</th>
+                <th className="px-6 py-3 min-w-[120px]">Date</th>
                 <th className="px-6 py-3 min-w-[80px]">Actions</th>
               </tr>
             </thead>
@@ -266,9 +267,7 @@ export default function ImagesTable({
                     <td className="px-6 py-4 text-secondary text-sm whitespace-nowrap">
                       {item.size ? formatFileSize(item.size) : 'N/A'}
                     </td>
-                    <td className="px-6 py-4 text-secondary text-sm whitespace-nowrap">
-                      {formatDate(item.created_at)}
-                    </td>
+                    <td className="px-6 py-3 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-4 relative">
                       <button 
                         onClick={(e) => handleOpenDropdown(e, index)} 

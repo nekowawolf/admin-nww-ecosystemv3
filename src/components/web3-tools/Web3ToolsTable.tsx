@@ -149,6 +149,16 @@ export default function Web3ToolsTable({
     }
   }
 
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/A'
+    const date = new Date(dateStr)
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
+  }
+
   // ===== RENDER =====
   return (
     <div className="space-y-6 min-h-screen p-6">
@@ -191,6 +201,7 @@ export default function Web3ToolsTable({
                 <th className="px-6 py-2 min-w-[150px]">Category</th>
                 <th className="px-6 py-2 min-w-[350px]">Chains</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
+                <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
@@ -257,6 +268,7 @@ export default function Web3ToolsTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
+                                        <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />

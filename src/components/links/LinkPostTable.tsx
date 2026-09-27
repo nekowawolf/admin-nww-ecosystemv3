@@ -137,20 +137,15 @@ export default function LinkPostTable({
     }
   }
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return {
-      date: date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      }),
-      time: date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      })
-    }
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/A'
+    const date = new Date(dateStr)
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
   }
 
   // ===== RENDER =====
@@ -192,14 +187,13 @@ export default function LinkPostTable({
                 <th className="px-6 py-2 min-w-[280px]">Caption</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
-                <th className="px-6 py-2 min-w-[180px]">Date & Time</th>
+                <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
             <tbody>
               {paginatedData.length > 0 ? (
                 paginatedData.map((item, index) => {
-                  const { date, time } = formatDate(item.created_at)
                   return (
                     <tr key={index} className="border-t border-border-divider">
                       <td className="px-6 py-2">
@@ -230,10 +224,7 @@ export default function LinkPostTable({
                           <span className="text-primary">N/A</span>
                         )}
                       </td>
-                      <td className="px-6 py-2">
-                        <div>{date}</div>
-                        <div className="text-xs text-secondary">{time}</div>
-                      </td>
+                      <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                       <td className="px-6 py-2 relative">
                         <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                           <HiEllipsisVertical size={20} />

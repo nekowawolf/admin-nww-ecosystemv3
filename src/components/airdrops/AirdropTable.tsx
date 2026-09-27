@@ -149,12 +149,15 @@ export default function AirdropTable({
     }
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/A'
+    const date = new Date(dateStr)
+    return new Intl.DateTimeFormat('en-US', {
       month: 'short',
-      day: 'numeric'
-    })
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
   }
 
   // ===== RENDER =====
@@ -204,7 +207,7 @@ export default function AirdropTable({
                 <th className="px-6 py-2 min-w-[120px]">Status</th>
                 <th className="px-6 py-2 min-w-[130px]">Backed</th>
                 <th className="px-6 py-2 min-w-[120px]">Funds</th>
-                <th className="px-6 py-2 min-w-[160px]">CreatedAt</th>
+                <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
@@ -278,7 +281,7 @@ export default function AirdropTable({
                      </td>
                      <td className="px-6 py-2 whitespace-nowrap">{item.backed || 'N/A'}</td>
                      <td className="px-6 py-2">{item.funds || 'N/A'}</td>
-                     <td className="px-6 py-2">{item.created_at ? formatDate(item.created_at) : 'N/A'}</td>
+                     <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                      <td className="px-6 py-2 relative">
                        <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                          <HiEllipsisVertical size={20} />

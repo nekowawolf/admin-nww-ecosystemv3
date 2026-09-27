@@ -101,12 +101,15 @@ export default function NotesTable({ data, onEdit, onDelete }: NotesTableProps) 
     }
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
+
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/A'
+    const date = new Date(dateStr)
+    return new Intl.DateTimeFormat('en-US', {
       month: 'short',
-      day: 'numeric'
-    })
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date)
   }
 
   return (
@@ -139,8 +142,7 @@ export default function NotesTable({ data, onEdit, onDelete }: NotesTableProps) 
                       {item.type}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-secondary">
-                    {item.created_at ? formatDate(item.created_at) : 'N/A'}
+                  <td className="px-6 py-4 text-secondary whitespace-nowrap">{formatDate(item.created_at)}
                   </td>
                   <td className="px-6 py-4">
                     <p className="text-secondary text-sm">
