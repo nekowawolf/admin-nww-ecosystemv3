@@ -278,8 +278,14 @@ export default function NotesTable({ data, onEdit, onDelete }: NotesTableProps) 
 
       {selectedViewNote &&
         createPortal(
-          <div className="fixed inset-0 flex items-center justify-center bg-[var(--overlay-bg)] z-50 p-4">
-            <div className="dropdown-bg rounded-xl shadow-2xl p-6 max-w-lg w-full border border-border-divider relative animate-in fade-in zoom-in-95 duration-200">
+          <div 
+            className="fixed inset-0 flex items-center justify-center bg-[var(--overlay-bg)] backdrop-blur-sm z-50 p-4"
+            onClick={() => setSelectedViewNote(null)}
+          >
+            <div 
+              className="dropdown-bg rounded-xl shadow-2xl p-6 max-w-lg w-full border border-border-divider relative animate-in fade-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => setSelectedViewNote(null)}
                 className="absolute top-4 right-4 opacity-70 hover:opacity-100 transition-opacity text-primary cursor-pointer"
