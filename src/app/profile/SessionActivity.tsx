@@ -28,9 +28,9 @@ export default function SessionActivity() {
   }
 
   return (
-    <div className="bg-[var(--fill-color)] rounded-2xl border border-border-divider p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-[var(--fill-color)] rounded-2xl border border-border-divider p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 flex flex-col">
       <h3 className="text-md font-semibold text-primary mb-4 border-b border-border-divider pb-2">Session Activity</h3>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 flex-1 justify-center">
         <div className="flex items-start gap-3">
           <div className="p-2 rounded-lg bg-blue-500/10">
             <FaClock className="text-blue-500" size={18} />

@@ -78,7 +78,7 @@ export default function ProfilePage() {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[350px] overflow-y-auto md:max-h-none md:overflow-visible custom-scrollbar pr-1 md:pr-0">
               {menus.map((menu, index) => (
                 <div key={index} className="flex items-center gap-3 p-3 rounded-xl border border-border-divider hover:bg-[var(--hover-bg)] transition-colors duration-200">
                   <div className="p-2 rounded-lg bg-[var(--card-color2)] shadow-inner">
