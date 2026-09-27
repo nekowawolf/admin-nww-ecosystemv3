@@ -1,6 +1,9 @@
-import { FaLayerGroup, FaUserCircle, FaBitcoin, FaRobot, FaLink, FaGithub } from 'react-icons/fa'
+import { FaLayerGroup, FaUserCircle, FaBitcoin, FaRobot, FaLink, FaGithub, FaGlobe } from 'react-icons/fa'
 import { HiMiniRocketLaunch } from 'react-icons/hi2'
 import { MdImage } from 'react-icons/md'
+import { AiOutlineDollar } from "react-icons/ai"
+import { TiMediaPause } from "react-icons/ti"
+import { RiFolderUserFill } from "react-icons/ri"
 import BackButton from '@/components/ui/BackButton'
 import SessionActivity from './SessionActivity'
 import NotesManager from '@/components/profile/notes/NotesManager'
@@ -15,11 +18,15 @@ export default function ProfilePage() {
     { name: 'Airdrop', icon: <HiMiniRocketLaunch className="text-accent" /> },
     { name: 'Community', icon: <FaLayerGroup className="text-accent" /> },
     { name: 'Portfolio', icon: <FaUserCircle className="text-accent" /> },
-    { name: 'Link', icon: <FaLink className="text-accent" /> },
     { name: 'Image Resources', icon: <MdImage className="text-accent" /> },
+    { name: 'Link', icon: <FaLink className="text-accent" /> },
     { name: 'Web3 Tools', icon: <FaBitcoin className="text-accent" /> },
     { name: 'AI', icon: <FaRobot className="text-accent" /> },
     { name: 'GitHub Repos', icon: <FaGithub className="text-accent" /> },
+    { name: 'Net', icon: <FaGlobe className="text-accent" /> },
+    { name: 'Supporter', icon: <AiOutlineDollar className="text-accent" /> },
+    { name: 'Creators', icon: <TiMediaPause className="text-accent" /> },
+    { name: 'Guild', icon: <RiFolderUserFill className="text-accent" /> },
   ]
 
   return (
