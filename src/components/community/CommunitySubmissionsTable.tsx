@@ -175,7 +175,7 @@ export default function CommunitySubmissionsTable({
             <thead className="bg-[var(--card-color3)]">
               <tr>
                 <th className="px-6 py-2 min-w-[200px]">Community Link</th>
-                <th className="px-6 py-2 min-w-[120px]">Submitted By</th>
+                <th className="px-6 py-2 min-w-[120px] whitespace-nowrap">Submitted By</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
@@ -199,7 +199,7 @@ export default function CommunitySubmissionsTable({
                         'N/A'
                       )}
                     </td>
-                    <td className="px-6 py-2">{item.added_by?.name || 'N/A'}</td>
+                    <td className="px-6 py-2 whitespace-nowrap">{item.added_by?.name || 'N/A'}</td>
                     <td className="px-6 py-2">
                       {item.added_by?.url ? (
                         <a

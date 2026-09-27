@@ -194,6 +194,7 @@ export default function CommunityTable({
                 <th className="px-6 py-2 min-w-[120px]">Platform</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
+                <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
             </thead>
@@ -232,6 +233,24 @@ export default function CommunityTable({
                       ) : (
                         <span className="text-primary">N/A</span>
                       )}
+                    </td>
+                    <td className="px-6 py-2">
+                      <div className="flex items-center gap-1">
+                        <span>{item.added_by?.name || 'N/A'}</span>
+                        <span className="text-secondary">/</span>
+                        {item.added_by?.url ? (
+                          <a
+                            href={item.added_by.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                          >
+                            Visit
+                          </a>
+                        ) : (
+                          <span className="text-secondary">N/A</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
