@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import {
   Pagination,
   PaginationContent,
@@ -13,51 +12,39 @@ import {
 } from "@/components/ui/pagination"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
-import { FallbackImage } from '@/components/ui/FallbackImage'
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
-import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
-import { NetResponse } from '@/types/net'
+import { NetSubmission } from '@/types/net'
 
-interface NetTableProps {
-  data: NetResponse[]
+interface NetSubmissionsTableProps {
+  data: NetSubmission[]
   loading: boolean
   error: string | null
   onDelete: (id: string) => Promise<void>
-  editRoute?: string
   title?: string
   subtitle?: string
 }
 
-export default function NetTable({
+export default function NetSubmissionsTable({
   data,
   loading,
   error,
   onDelete,
-  editRoute = '/net-menu/dashboard/edit-net',
-  title = 'Net List',
-  subtitle = 'Manage your Net listings'
-}: NetTableProps) {
-  const router = useRouter()
-  
+  title = 'Net Submissions',
+  subtitle = 'Review and manage incoming net submissions'
+}: NetSubmissionsTableProps) {
   const safeData = Array.isArray(data) ? data.filter(item => 
     item && 
     item !== null && 
     item !== undefined && 
-    item.name
+    item.website
   ) : []
 
   // ===== STATE =====
   const [search, setSearch] = useState('')
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({})
-
-  const toggleCategories = (id: string) => {
-    setExpandedCategories(prev => ({ ...prev, [id]: !prev[id] }))
-  }
-
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(null)
@@ -85,7 +72,8 @@ export default function NetTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.website?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (item.added_by?.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 
@@ -124,11 +112,6 @@ export default function NetTable({
     setOpenDropdownIndex(index)
   }
 
-  const handleEdit = (item: any) => {
-    router.push(`${editRoute}/${item._id}`)
-    setOpenDropdownIndex(null)
-  }
-
   const handleDeleteClick = (id: string, name: string) => {
     setSelectedId(id)
     setSelectedName(name)
@@ -140,9 +123,9 @@ export default function NetTable({
     if (!selectedId) return
     try {
       await onDelete(selectedId)
-      toast.success("Net deleted successfully!")
+      toast.success("Submission deleted successfully!")
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete Net.")
+      toast.error(err.message || "Failed to delete submission.")
     } finally {
       setShowConfirmModal(false)
       setSelectedId(null)
@@ -152,11 +135,7 @@ export default function NetTable({
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return 'N/A'
     const date = new Date(dateStr)
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    }).format(date)
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
   }
 
   // ===== RENDER =====
@@ -168,11 +147,11 @@ export default function NetTable({
       </div>
 
       <SearchInput
-        placeholder="Search Net..."
+        placeholder="Search submissions..."
         value={search}
         onChange={setSearch}
         suggestionData={safeData}
-        suggestionKey="name"
+        suggestionKey="website"
       />
 
       {loading && (
@@ -192,15 +171,12 @@ export default function NetTable({
       {/* Table */}
       {!loading && !error && (
         <div className="overflow-x-auto rounded-lg bg-[var(--fill-color)] border border-border-divider">
-          <table className="w-full text-left min-w-[1000px]">
+          <table className="w-full text-left">
             <thead className="bg-[var(--card-color3)]">
               <tr>
-                <th className="px-6 py-2 min-w-[80px]">Image</th>
-                <th className="px-6 py-2 min-w-[150px]">Name</th>
-                <th className="px-6 py-2 min-w-[250px]">Description</th>
-                <th className="px-6 py-2 min-w-[350px]">Categories</th>
+                <th className="px-6 py-2 min-w-[200px]">Website</th>
+                <th className="px-6 py-2 min-w-[120px] whitespace-nowrap">Submitted By</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
-                <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -210,55 +186,26 @@ export default function NetTable({
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
                     <td className="px-6 py-2">
-                          <div className="relative w-10 h-10">
-                            <FallbackImage 
-                              src={item.image_url || ''} 
-                              alt={item.name || 'Net'}
-                              fill
-                              className="object-cover rounded-lg"
-                              sizes="40px"
-                            />
-                          </div>
-                    </td>
-                    <td className="px-6 py-2 whitespace-nowrap">{item.name || 'N/A'}</td>
-                    <td className="px-6 py-2">
-                      {item.description ? (
-                        <div className="max-w-[280px] truncate">
-                          {item.description.length > 15 ? item.description.slice(0, 15) + '...' : item.description}
-                        </div>
+                      {item.website ? (
+                        <a
+                          href={item.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cursor-pointer text-blue-500 hover:underline"
+                        >
+                          {item.website.length > 40 ? item.website.slice(0, 40) + '...' : item.website}
+                        </a>
                       ) : (
                         'N/A'
                       )}
                     </td>
+                    <td className="px-6 py-2 whitespace-nowrap">{item.added_by?.name || 'N/A'}</td>
                     <td className="px-6 py-2">
-                      <div className={cn("flex gap-1.5", expandedCategories[item._id] ? "flex-wrap" : "flex-nowrap overflow-hidden")}>
-                        {item.categories && item.categories.length > 0 ? (
-                          <>
-                            {item.categories.slice(0, expandedCategories[item._id] ? item.categories.length : 6).map((cat: string, i: number) => (
-                              <span key={i} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
-                                {cat}
-                              </span>
-                            ))}
-                            {item.categories.length > 6 && (
-                              <button
-                                onClick={() => toggleCategories(item._id)}
-                                className="text-xs text-blue-500 hover:underline flex-shrink-0 cursor-pointer px-1 py-1"
-                              >
-                                {expandedCategories[item._id] ? 'Less' : 'More'}
-                              </button>
-                            )}
-                          </>
-                        ) : (
-                          'N/A'
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-6 py-2 text-accent">
-                      {item.website ? (
-                        <a 
-                          href={item.website} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                      {item.added_by?.url ? (
+                        <a
+                          href={item.added_by.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="cursor-pointer text-blue-500 hover:underline"
                         >
                           Visit
@@ -266,24 +213,6 @@ export default function NetTable({
                       ) : (
                         <span className="text-primary">N/A</span>
                       )}
-                    </td>
-                    <td className="px-6 py-2">
-                      <div className="flex items-center gap-1">
-                        <span>{item.added_by?.name || 'N/A'}</span>
-                        <span className="text-secondary">/</span>
-                        {item.added_by?.url ? (
-                          <a
-                            href={item.added_by.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                          >
-                            Visit
-                          </a>
-                        ) : (
-                          <span className="text-secondary">N/A</span>
-                        )}
-                      </div>
                     </td>
                     <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
@@ -295,7 +224,7 @@ export default function NetTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="text-center py-4 text-secondary">No Net found.</td>
+                  <td colSpan={5} className="text-center py-4 text-secondary">No submissions found.</td>
                 </tr>
               )}
             </tbody>
@@ -316,17 +245,9 @@ export default function NetTable({
             <ul className="py-2 text-sm text-primary">
               <li>
                 <button
-                  onClick={() => handleEdit(paginatedData[openDropdownIndex])}
-                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 hover:hover-bg"
-                >
-                  <MdEdit size={16} /> Edit
-                </button>
-              </li>
-              <li>
-                <button
                   onClick={() => handleDeleteClick(
                     paginatedData[openDropdownIndex]._id, 
-                    paginatedData[openDropdownIndex].name || 'Unknown'
+                    paginatedData[openDropdownIndex].added_by?.name || 'Unknown'
                   )}
                   className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg"
                 >
@@ -345,9 +266,9 @@ export default function NetTable({
           <div className="fixed inset-0 flex items-center justify-center bg-[var(--overlay-bg)] z-50">
             <div className="dropdown-bg rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
               <FaTrash size={32} className="text-red-600 mx-auto mb-4" />
-              <h3 className="text-primary text-lg font-semibold mb-2">Delete Net</h3>
+              <h3 className="text-primary text-lg font-semibold mb-2">Delete Submission</h3>
               <p className="text-secondary mb-6">
-                Are you sure you want to delete this Net:{" "}
+                Are you sure you want to delete this submission from{" "}
                 <span className="font-semibold text-primary">{selectedName}</span>?
               </p>
               <div className="flex justify-center gap-4">
@@ -420,7 +341,7 @@ export default function NetTable({
 
           {/* Pagination Info */}
           <div className="text-center text-xs text-muted-foreground mt-2 text-secondary">
-            Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} Net
+            Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} submissions
           </div>
         </>
       )}

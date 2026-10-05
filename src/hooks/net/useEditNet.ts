@@ -28,7 +28,8 @@ export function useEditNet(id: string) {
               discord: data.socials?.discord || '',
               github: data.socials?.github || '',
               youtube: data.socials?.youtube || ''
-            }
+            },
+            added_by: data.added_by
           })
         }
       } catch (err: any) {

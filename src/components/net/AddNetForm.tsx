@@ -50,6 +50,8 @@ export default function AddNetForm() {
   const { isSubmitting, submitNet } = useAddNet()
 
   const [urlExists, setUrlExists] = useState<boolean | null>(null)
+  const [addedByName, setAddedByName] = useState('')
+  const [addedByUrl, setAddedByUrl] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -114,6 +116,8 @@ export default function AddNetForm() {
       }
     })
     setSelectedCategories([])
+    setAddedByName('')
+    setAddedByUrl('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -134,7 +138,11 @@ export default function AddNetForm() {
 
     const dataToSubmit = {
       ...formData,
-      categories: selectedCategories
+      categories: selectedCategories,
+      added_by: {
+        name: addedByName || 'nekowawolf',
+        url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz')
+      }
     }
     await submitNet(dataToSubmit)
     resetForm()
@@ -369,6 +377,36 @@ export default function AddNetForm() {
                   onChange={handleInputChange}
                   placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                  Name (added by)
+                </label>
+                <input
+                  type="text"
+                  id="addedByName"
+                  value={addedByName}
+                  onChange={(e) => setAddedByName(e.target.value)}
+                  placeholder="Your name or username"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Link */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                  Link (optional)
+                </label>
+                <input
+                  type="url"
+                  id="addedByUrl"
+                  value={addedByUrl}
+                  onChange={(e) => setAddedByUrl(e.target.value)}
+                  placeholder="https://..."
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
 

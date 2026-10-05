@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { NetRequest, NetResponse } from '@/types/net'
+import { NetRequest, NetResponse, NetSubmission } from '@/types/net'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -43,6 +43,34 @@ export const updateNet = async (_id: string, data: NetRequest) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(errorData.message || 'Failed to update Net')
+  }
+
+  return response.json()
+}
+
+export const getNetSubmissions = async (): Promise<NetSubmission[]> => {
+  const response = await authFetch(`${API_BASE_URL}/net-submissions`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to fetch net submissions')
+  }
+
+  const data = await response.json()
+  return Array.isArray(data.data) ? data.data : []
+}
+
+export const deleteNetSubmission = async (_id: string) => {
+  const response = await authFetch(`${API_BASE_URL}/net-submissions/${_id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to delete net submission')
   }
 
   return response.json()

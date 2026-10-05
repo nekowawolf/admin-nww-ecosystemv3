@@ -2,13 +2,7 @@ import '@/styles/globals.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import { Toaster } from 'sonner'
 import { ReactNode } from 'react'
-import { Montserrat } from 'next/font/google'
 import { Metadata } from 'next'
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-})
 
 export const metadata: Metadata = {
   title: '503 | Forbidden',
@@ -38,7 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           })();`
         }} />
       </head>
-      <body className={`${montserrat.className} body-color`}>
+      <body className="body-color">
         <Toaster richColors position="top-center" />
         {children}
       </body>

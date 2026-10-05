@@ -617,6 +617,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddNetActive = pathname === '/net-menu/dashboard/add-net'
     const isNetDashboardPathActive = pathname.startsWith('/net-menu/dashboard') && !pathname.includes('/add-net')
     const isNetListActive = pathname === '/net-menu/dashboard/net-list'
+    const isNetSubmissionsActive = pathname === '/net-menu/dashboard/net-submissions'
 
     // === CREATORS ===
     const isCreatorsAnalyticActive = pathname === '/creators-menu/dashboard'
@@ -1466,6 +1467,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                         }`}
                                     >
                                         Net List
+                                    </Link>
+                                    <Link
+                                        href="/net-menu/dashboard/net-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isNetSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Net Submissions
                                     </Link>
                                 </div>
                             )}
