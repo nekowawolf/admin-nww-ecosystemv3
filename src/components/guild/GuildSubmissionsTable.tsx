@@ -17,15 +17,31 @@ import { FaTrash } from "react-icons/fa"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
-import { GuildSubmission } from '@/types/guild'
+
+type SubmissionUrlKey = 'guild_link' | 'website'
+
+interface SubmissionItem {
+  _id: string
+  guild_link?: string
+  website?: string
+  added_by?: {
+    name?: string
+    url?: string
+  }
+  created_at?: string
+}
 
 interface GuildSubmissionsTableProps {
-  data: GuildSubmission[]
+  data: SubmissionItem[]
   loading: boolean
   error: string | null
   onDelete: (id: string) => Promise<void>
   title?: string
   subtitle?: string
+  submissionUrlKey?: SubmissionUrlKey
+  entityName?: string
+  linkColumnLabel?: string
+  searchPlaceholder?: string
 }
 
 export default function GuildSubmissionsTable({
@@ -34,13 +50,17 @@ export default function GuildSubmissionsTable({
   error,
   onDelete,
   title = 'Guild Submissions',
-  subtitle = 'Review and manage incoming Guild submissions'
+  subtitle = 'Review and manage incoming Guild submissions',
+  submissionUrlKey = 'guild_link',
+  entityName = 'Guild',
+  linkColumnLabel = 'Guild Link',
+  searchPlaceholder = 'Search Guild submissions...'
 }: GuildSubmissionsTableProps) {
   const safeData = Array.isArray(data) ? data.filter(item =>
     item &&
     item !== null &&
     item !== undefined &&
-    item.guild_link
+    item[submissionUrlKey]
   ) : []
 
   // ===== STATE =====
@@ -72,10 +92,10 @@ export default function GuildSubmissionsTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.guild_link?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (item[submissionUrlKey]?.toLowerCase() || '').includes(search.toLowerCase()) ||
       (item.added_by?.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
-  }, [search, safeData])
+  }, [search, safeData, submissionUrlKey])
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage)
 
@@ -147,11 +167,11 @@ export default function GuildSubmissionsTable({
       </div>
 
       <SearchInput
-        placeholder="Search Guild submissions..."
+        placeholder={searchPlaceholder}
         value={search}
         onChange={setSearch}
         suggestionData={safeData}
-        suggestionKey="guild_link"
+        suggestionKey={submissionUrlKey}
       />
 
       {loading && (
@@ -174,7 +194,7 @@ export default function GuildSubmissionsTable({
           <table className="w-full text-left">
             <thead className="bg-[var(--card-color3)]">
               <tr>
-                <th className="px-6 py-2 min-w-[200px]">Guild Link</th>
+                <th className="px-6 py-2 min-w-[200px]">{linkColumnLabel}</th>
                 <th className="px-6 py-2 min-w-[120px] whitespace-nowrap">Submitted By</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
@@ -183,45 +203,49 @@ export default function GuildSubmissionsTable({
             </thead>
             <tbody>
               {paginatedData.length > 0 ? (
-                paginatedData.map((item, index) => (
-                  <tr key={index} className="border-t border-border-divider">
-                    <td className="px-6 py-2">
-                      {item.guild_link ? (
-                        <a
-                          href={item.guild_link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="cursor-pointer text-blue-500 hover:underline"
-                        >
-                          {item.guild_link.length > 40 ? item.guild_link.slice(0, 40) + '...' : item.guild_link}
-                        </a>
-                      ) : (
-                        'N/A'
-                      )}
-                    </td>
-                    <td className="px-6 py-2 whitespace-nowrap">{item.added_by?.name || 'N/A'}</td>
-                    <td className="px-6 py-2">
-                      {item.added_by?.url ? (
-                        <a
-                          href={item.added_by.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="cursor-pointer text-blue-500 hover:underline"
-                        >
-                          Visit
-                        </a>
-                      ) : (
-                        <span className="text-primary">N/A</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
-                    <td className="px-6 py-2 relative">
-                      <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
-                        <HiEllipsisVertical size={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                paginatedData.map((item, index) => {
+                  const submissionUrl = item[submissionUrlKey]
+
+                  return (
+                    <tr key={item._id} className="border-t border-border-divider">
+                      <td className="px-6 py-2">
+                        {submissionUrl ? (
+                          <a
+                            href={submissionUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="cursor-pointer text-blue-500 hover:underline"
+                          >
+                            {submissionUrl.length > 40 ? submissionUrl.slice(0, 40) + '...' : submissionUrl}
+                          </a>
+                        ) : (
+                          'N/A'
+                        )}
+                      </td>
+                      <td className="px-6 py-2 whitespace-nowrap">{item.added_by?.name || 'N/A'}</td>
+                      <td className="px-6 py-2">
+                        {item.added_by?.url ? (
+                          <a
+                            href={item.added_by.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="cursor-pointer text-blue-500 hover:underline"
+                          >
+                            Visit
+                          </a>
+                        ) : (
+                          <span className="text-primary">N/A</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                      <td className="px-6 py-2 relative">
+                        <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
+                          <HiEllipsisVertical size={20} />
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })
               ) : (
                 <tr>
                   <td colSpan={5} className="text-center py-4 text-secondary">No submissions found.</td>
@@ -268,7 +292,7 @@ export default function GuildSubmissionsTable({
               <FaTrash size={32} className="text-red-600 mx-auto mb-4" />
               <h3 className="text-primary text-lg font-semibold mb-2">Delete Submission</h3>
               <p className="text-secondary mb-6">
-                Are you sure you want to delete this submission from{" "}
+                Are you sure you want to delete this {entityName} submission from{" "}
                 <span className="font-semibold text-primary">{selectedName}</span>?
               </p>
               <div className="flex justify-center gap-4">

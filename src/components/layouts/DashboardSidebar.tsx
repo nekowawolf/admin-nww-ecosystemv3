@@ -624,6 +624,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddCreatorActive = pathname === '/creators-menu/dashboard/add-creator'
     const isCreatorsDashboardPathActive = pathname.startsWith('/creators-menu/dashboard') && !pathname.includes('/add-creator')
     const isCreatorsListActive = pathname === '/creators-menu/dashboard/creators-list'
+    const isCreatorSubmissionsActive = pathname === '/creators-menu/dashboard/creator-submissions'
 
     // === GUILD ===
     const isGuildAnalyticActive = pathname === '/guild-menu/dashboard'
@@ -1577,6 +1578,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                         }`}
                                     >
                                         Creators List
+                                    </Link>
+                                    <Link
+                                        href="/creators-menu/dashboard/creator-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isCreatorSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Creator Submissions
                                     </Link>
                                 </div>
                             )}

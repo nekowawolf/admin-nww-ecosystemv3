@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { CreatorsRequest, CreatorsResponse } from '@/types/creators'
+import { CreatorSubmission, CreatorsRequest, CreatorsResponse } from '@/types/creators'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -43,6 +43,34 @@ export const updateCreator = async (_id: string, data: CreatorsRequest) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(errorData.message || 'Failed to update Creator')
+  }
+
+  return response.json()
+}
+
+export const getCreatorSubmissions = async (): Promise<CreatorSubmission[]> => {
+  const response = await authFetch(`${API_BASE_URL}/creator-submissions`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to fetch creator submissions')
+  }
+
+  const data = await response.json()
+  return Array.isArray(data.data) ? data.data : []
+}
+
+export const deleteCreatorSubmission = async (_id: string) => {
+  const response = await authFetch(`${API_BASE_URL}/creator-submissions/${_id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to delete creator submission')
   }
 
   return response.json()
