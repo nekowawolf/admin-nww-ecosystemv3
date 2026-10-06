@@ -17,11 +17,13 @@ export function useAddAITool() {
       await createAITool(data)
       toast.success('AI Tool added successfully!')
       setSuccessMessage('AI Tool added successfully!')
+      return true
     } catch (err: any) {
       console.error('Error creating AI Tool:', err)
       const errorMsg = err.message || 'Failed to add AI Tool. Please try again.'
       toast.error(errorMsg)
       setErrorMessage(errorMsg)
+      return false
     } finally {
       setIsSubmitting(false)
     }

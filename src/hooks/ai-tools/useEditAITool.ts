@@ -27,7 +27,11 @@ export function useEditAITool(id: string) {
               instagram: data.socials?.instagram || '',
               discord: data.socials?.discord || '',
               youtube: data.socials?.youtube || ''
-            }
+            },
+            added_by: {
+              name: data.added_by?.name || '',
+              url: data.added_by?.url || ''
+            },
           })
         }
       } catch (err: any) {

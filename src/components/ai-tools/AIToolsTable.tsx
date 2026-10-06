@@ -124,7 +124,7 @@ export default function AIToolsTable({
     setOpenDropdownIndex(index)
   }
 
-  const handleEdit = (item: any) => {
+  const handleEdit = (item: AIToolsResponse) => {
     router.push(`${editRoute}/${item._id}`)
     setOpenDropdownIndex(null)
   }
@@ -200,6 +200,7 @@ export default function AIToolsTable({
                 <th className="px-6 py-2 min-w-[250px]">Description</th>
                 <th className="px-6 py-2 min-w-[350px]">Categories</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
+                <th className="px-6 py-2 min-w-[140px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -266,7 +267,25 @@ export default function AIToolsTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                                        <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">
+                      {item.added_by?.name ? (
+                        item.added_by.url ? (
+                          <a
+                            href={item.added_by.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                          >
+                            {item.added_by.name}
+                          </a>
+                        ) : (
+                          item.added_by.name
+                        )
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />
@@ -276,7 +295,7 @@ export default function AIToolsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="text-center py-4 text-secondary">No AI Tools found.</td>
+                  <td colSpan={8} className="text-center py-4 text-secondary">No AI Tools found.</td>
                 </tr>
               )}
             </tbody>

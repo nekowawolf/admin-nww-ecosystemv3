@@ -597,6 +597,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddAIToolActive = pathname === '/ai-tools-menu/dashboard/add-ai-tool'
     const isAIToolsDashboardPathActive = pathname.startsWith('/ai-tools-menu/dashboard') && !pathname.includes('/add-ai-tool')
     const isAIToolsListActive = pathname === '/ai-tools-menu/dashboard/ai-tools-list'
+    const isAIToolSubmissionsActive = pathname === '/ai-tools-menu/dashboard/ai-tool-submissions'
 
     const isGithubReposAnalyticActive = pathname === '/github-repos-menu/dashboard'
     const isAddGithubRepoActive = pathname === '/github-repos-menu/dashboard/add-github-repo'
@@ -1251,6 +1252,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                         }`}
                                     >
                                         AI Tools List
+                                    </Link>
+                                    <Link
+                                        href="/ai-tools-menu/dashboard/ai-tool-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isAIToolSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        AI Tool Submissions
                                     </Link>
                                 </div>
                             )}

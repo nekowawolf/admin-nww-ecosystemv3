@@ -40,6 +40,10 @@ export default function AddAIToolsForm() {
       instagram: '',
       discord: '',
       youtube: ''
+    },
+    added_by: {
+      name: '',
+      url: ''
     }
   })
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -54,6 +58,9 @@ export default function AddAIToolsForm() {
       setFormData(prev => ({ ...prev, media: { ...prev.media, video_url: value } }))
     } else if (['twitter', 'instagram', 'discord', 'youtube'].includes(name)) {
       setFormData(prev => ({ ...prev, socials: { ...prev.socials, [name]: value } }))
+    } else if (name === 'added_by_name' || name === 'added_by_url') {
+      const addedByKey = name === 'added_by_name' ? 'name' : 'url'
+      setFormData(prev => ({ ...prev, added_by: { ...prev.added_by, [addedByKey]: value } }))
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
     }
@@ -107,6 +114,10 @@ export default function AddAIToolsForm() {
         instagram: '',
         discord: '',
         youtube: ''
+      },
+      added_by: {
+        name: '',
+        url: ''
       }
     })
     setSelectedCategories([])
@@ -125,14 +136,15 @@ export default function AddAIToolsForm() {
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
     if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return; }
+    if (formData.added_by?.url && !validateUrl(formData.added_by.url, 'website')) { toast.error('Invalid Added By URL format'); return; }
 
 
     const dataToSubmit = {
       ...formData,
       categories: selectedCategories
     }
-    await submitAITool(dataToSubmit)
-    resetForm()
+    const success = await submitAITool(dataToSubmit)
+    if (success) resetForm()
   }
 
   return (
@@ -286,6 +298,44 @@ export default function AddAIToolsForm() {
                 onValidationChange={setUrlExists}
                 errorMessage="This website is already listed."
               />
+
+              {/* Attribution */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="added_by_name">
+                    Added By Name
+                  </label>
+                  <div className="relative">
+                    <FiUsers className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                    <input
+                      type="text"
+                      id="added_by_name"
+                      name="added_by_name"
+                      value={formData.added_by?.name || ''}
+                      onChange={handleInputChange}
+                      placeholder="Contributor name"
+                      className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="added_by_url">
+                    Added By URL
+                  </label>
+                  <div className="relative">
+                    <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                    <input
+                      type="url"
+                      id="added_by_url"
+                      name="added_by_url"
+                      value={formData.added_by?.url || ''}
+                      onChange={handleInputChange}
+                      placeholder="https://example.com/profile"
+                      className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                    />
+                  </div>
+                </div>
+              </div>
 
               {/* Twitter */}
               <div className="flex flex-col gap-2">
