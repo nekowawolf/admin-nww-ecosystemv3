@@ -57,6 +57,8 @@ export default function AddGuildForm() {
   const { isSubmitting, submitGuild } = useAddGuild()
 
   const [urlExists, setUrlExists] = useState<boolean | null>(null)
+  const [addedByName, setAddedByName] = useState('')
+  const [addedByUrl, setAddedByUrl] = useState('')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -84,6 +86,8 @@ export default function AddGuildForm() {
         youtube: ''
       }
     })
+    setAddedByName('')
+    setAddedByUrl('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,7 +106,14 @@ export default function AddGuildForm() {
     if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return; }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return; }
 
-    await submitGuild(formData)
+    const payload = {
+      ...formData,
+      added_by: {
+        name: addedByName || 'nekowawolf',
+        url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz')
+      }
+    }
+    await submitGuild(payload)
     resetForm()
   }
 
@@ -317,6 +328,36 @@ export default function AddGuildForm() {
                   onChange={handleInputChange}
                   placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                  Name (added by)
+                </label>
+                <input
+                  type="text"
+                  id="addedByName"
+                  value={addedByName}
+                  onChange={(e) => setAddedByName(e.target.value)}
+                  placeholder="Your name or username"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Link */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                  Link (optional)
+                </label>
+                <input
+                  type="url"
+                  id="addedByUrl"
+                  value={addedByUrl}
+                  onChange={(e) => setAddedByUrl(e.target.value)}
+                  placeholder="https://..."
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
 

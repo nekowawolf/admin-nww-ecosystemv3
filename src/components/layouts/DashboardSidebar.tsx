@@ -630,6 +630,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddGuildActive = pathname === '/guild-menu/dashboard/add-guild'
     const isGuildDashboardPathActive = pathname.startsWith('/guild-menu/dashboard') && !pathname.includes('/add-guild')
     const isGuildListActive = pathname === '/guild-menu/dashboard/guild-list'
+    const isGuildSubmissionsActive = pathname === '/guild-menu/dashboard/guild-submissions'
 
     // === SIDEBAR CONTENT ===
     const content = (
@@ -1675,6 +1676,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                         }`}
                                     >
                                         Guild List
+                                    </Link>
+                                    <Link
+                                        href="/guild-menu/dashboard/guild-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGuildSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Guild Submissions
                                     </Link>
                                 </div>
                             )}

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import {
   Pagination,
   PaginationContent,
@@ -13,41 +12,35 @@ import {
 } from "@/components/ui/pagination"
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
-import { FallbackImage } from '@/components/ui/FallbackImage'
 import { HiEllipsisVertical } from "react-icons/hi2"
 import { FaTrash } from "react-icons/fa"
-import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
-import { GuildResponse } from '@/types/guild'
+import { GuildSubmission } from '@/types/guild'
 
-interface GuildTableProps {
-  data: GuildResponse[]
+interface GuildSubmissionsTableProps {
+  data: GuildSubmission[]
   loading: boolean
   error: string | null
   onDelete: (id: string) => Promise<void>
-  editRoute?: string
   title?: string
   subtitle?: string
 }
 
-export default function GuildTable({
+export default function GuildSubmissionsTable({
   data,
   loading,
   error,
   onDelete,
-  editRoute = '/guild-menu/dashboard/edit-guild',
-  title = 'Guild List',
-  subtitle = 'Manage your Guild listings'
-}: GuildTableProps) {
-  const router = useRouter()
-  
-  const safeData = Array.isArray(data) ? data.filter(item => 
-    item && 
-    item !== null && 
-    item !== undefined && 
-    item.name
+  title = 'Guild Submissions',
+  subtitle = 'Review and manage incoming Guild submissions'
+}: GuildSubmissionsTableProps) {
+  const safeData = Array.isArray(data) ? data.filter(item =>
+    item &&
+    item !== null &&
+    item !== undefined &&
+    item.guild_link
   ) : []
 
   // ===== STATE =====
@@ -79,7 +72,8 @@ export default function GuildTable({
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.guild_link?.toLowerCase() || '').includes(search.toLowerCase()) ||
+      (item.added_by?.name?.toLowerCase() || '').includes(search.toLowerCase())
     )
   }, [search, safeData])
 
@@ -118,11 +112,6 @@ export default function GuildTable({
     setOpenDropdownIndex(index)
   }
 
-  const handleEdit = (item: any) => {
-    router.push(`${editRoute}/${item._id}`)
-    setOpenDropdownIndex(null)
-  }
-
   const handleDeleteClick = (id: string, name: string) => {
     setSelectedId(id)
     setSelectedName(name)
@@ -134,9 +123,9 @@ export default function GuildTable({
     if (!selectedId) return
     try {
       await onDelete(selectedId)
-      toast.success("Guild deleted successfully!")
+      toast.success("Submission deleted successfully!")
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete Guild.")
+      toast.error(err.message || "Failed to delete submission.")
     } finally {
       setShowConfirmModal(false)
       setSelectedId(null)
@@ -146,11 +135,7 @@ export default function GuildTable({
   const formatDate = (dateStr?: string) => {
     if (!dateStr) return 'N/A'
     const date = new Date(dateStr)
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    }).format(date)
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
   }
 
   // ===== RENDER =====
@@ -162,11 +147,11 @@ export default function GuildTable({
       </div>
 
       <SearchInput
-        placeholder="Search Guild..."
+        placeholder="Search Guild submissions..."
         value={search}
         onChange={setSearch}
         suggestionData={safeData}
-        suggestionKey="name"
+        suggestionKey="guild_link"
       />
 
       {loading && (
@@ -186,17 +171,12 @@ export default function GuildTable({
       {/* Table */}
       {!loading && !error && (
         <div className="overflow-x-auto rounded-lg bg-[var(--fill-color)] border border-border-divider">
-          <table className="w-full text-left min-w-[1200px]">
+          <table className="w-full text-left">
             <thead className="bg-[var(--card-color3)]">
               <tr>
-                <th className="px-6 py-2 min-w-[80px]">Image</th>
-                <th className="px-6 py-2 min-w-[150px]">Name</th>
-                <th className="px-6 py-2 min-w-[200px]">Description</th>
-                <th className="px-6 py-2 min-w-[120px]">Platform</th>
-                <th className="px-6 py-2 min-w-[120px]">Category</th>
-                <th className="px-6 py-2 min-w-[100px]">Website</th>
+                <th className="px-6 py-2 min-w-[200px]">Guild Link</th>
+                <th className="px-6 py-2 min-w-[120px] whitespace-nowrap">Submitted By</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
-                <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -206,50 +186,26 @@ export default function GuildTable({
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
                     <td className="px-6 py-2">
-                          <div className="relative w-10 h-10">
-                            <FallbackImage 
-                              src={item.image_url || ''} 
-                              alt={item.name || 'Guild'}
-                              fill
-                              className="object-cover rounded-lg"
-                              sizes="40px"
-                            />
-                          </div>
-                    </td>
-                    <td className="px-6 py-2 whitespace-nowrap">{item.name || 'N/A'}</td>
-                    <td className="px-6 py-2">
-                      {item.description ? (
-                        <div className="max-w-[280px] truncate">
-                          {item.description.length > 15 ? item.description.slice(0, 15) + '...' : item.description}
-                        </div>
+                      {item.guild_link ? (
+                        <a
+                          href={item.guild_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cursor-pointer text-blue-500 hover:underline"
+                        >
+                          {item.guild_link.length > 40 ? item.guild_link.slice(0, 40) + '...' : item.guild_link}
+                        </a>
                       ) : (
                         'N/A'
                       )}
                     </td>
+                    <td className="px-6 py-2 whitespace-nowrap">{item.added_by?.name || 'N/A'}</td>
                     <td className="px-6 py-2">
-                      {item.platform ? (
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
-                          {item.platform}
-                        </span>
-                      ) : (
-                        'N/A'
-                      )}
-                    </td>
-                    <td className="px-6 py-2">
-                      {item.category ? (
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap">
-                          {item.category}
-                        </span>
-                      ) : (
-                        'N/A'
-                      )}
-                    </td>
-                    <td className="px-6 py-2 text-accent">
-                      {item.website ? (
-                        <a 
-                          href={item.website} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                      {item.added_by?.url ? (
+                        <a
+                          href={item.added_by.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="cursor-pointer text-blue-500 hover:underline"
                         >
                           Visit
@@ -257,38 +213,6 @@ export default function GuildTable({
                       ) : (
                         <span className="text-primary">N/A</span>
                       )}
-                    </td>
-                    <td className="px-6 py-2 text-accent">
-                      {item.link ? (
-                        <a 
-                          href={item.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="cursor-pointer text-blue-500 hover:underline"
-                        >
-                          Visit
-                        </a>
-                      ) : (
-                        <span className="text-primary">N/A</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-2">
-                      <div className="flex items-center gap-1">
-                        <span>{item.added_by?.name || 'N/A'}</span>
-                        <span className="text-secondary">/</span>
-                        {item.added_by?.url ? (
-                          <a
-                            href={item.added_by.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                          >
-                            Visit
-                          </a>
-                        ) : (
-                          <span className="text-secondary">N/A</span>
-                        )}
-                      </div>
                     </td>
                     <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
@@ -300,7 +224,7 @@ export default function GuildTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={10} className="text-center py-4 text-secondary">No Guild found.</td>
+                  <td colSpan={5} className="text-center py-4 text-secondary">No submissions found.</td>
                 </tr>
               )}
             </tbody>
@@ -321,17 +245,9 @@ export default function GuildTable({
             <ul className="py-2 text-sm text-primary">
               <li>
                 <button
-                  onClick={() => handleEdit(paginatedData[openDropdownIndex])}
-                  className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 hover:hover-bg"
-                >
-                  <MdEdit size={16} /> Edit
-                </button>
-              </li>
-              <li>
-                <button
                   onClick={() => handleDeleteClick(
-                    paginatedData[openDropdownIndex]._id, 
-                    paginatedData[openDropdownIndex].name || 'Unknown'
+                    paginatedData[openDropdownIndex]._id,
+                    paginatedData[openDropdownIndex].added_by?.name || 'Unknown'
                   )}
                   className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:hover-bg"
                 >
@@ -350,9 +266,9 @@ export default function GuildTable({
           <div className="fixed inset-0 flex items-center justify-center bg-[var(--overlay-bg)] z-50">
             <div className="dropdown-bg rounded-lg shadow-lg p-6 max-w-sm w-full text-center">
               <FaTrash size={32} className="text-red-600 mx-auto mb-4" />
-              <h3 className="text-primary text-lg font-semibold mb-2">Delete Guild</h3>
+              <h3 className="text-primary text-lg font-semibold mb-2">Delete Submission</h3>
               <p className="text-secondary mb-6">
-                Are you sure you want to delete this Guild:{" "}
+                Are you sure you want to delete this submission from{" "}
                 <span className="font-semibold text-primary">{selectedName}</span>?
               </p>
               <div className="flex justify-center gap-4">
@@ -383,7 +299,7 @@ export default function GuildTable({
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={cn("cursor-pointer", 
+                  className={cn("cursor-pointer",
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === 1 && "pointer-events-none opacity-50"
                   )}
@@ -398,7 +314,7 @@ export default function GuildTable({
                     <PaginationLink
                       isActive={currentPage === page}
                       onClick={() => handlePageChange(Number(page))}
-                      className={cn("cursor-pointer", 
+                      className={cn("cursor-pointer",
                         "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm transition-none",
                         currentPage === page
                          ? "text-primary hover-bg-accent border-[var(--border-divider)] shadow-sm"
@@ -414,7 +330,7 @@ export default function GuildTable({
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={cn("cursor-pointer", 
+                  className={cn("cursor-pointer",
                     "px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm",
                     currentPage === totalPages && "pointer-events-none opacity-50"
                   )}
@@ -425,7 +341,7 @@ export default function GuildTable({
 
           {/* Pagination Info */}
           <div className="text-center text-xs text-muted-foreground mt-2 text-secondary">
-            Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} Guild
+            Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredData.length)} of {filteredData.length} submissions
           </div>
         </>
       )}

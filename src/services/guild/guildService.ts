@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { GuildRequest, GuildResponse } from '@/types/guild'
+import { GuildRequest, GuildResponse, GuildSubmission } from '@/types/guild'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -43,6 +43,34 @@ export const updateGuild = async (_id: string, data: GuildRequest) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(errorData.message || 'Failed to update Guild')
+  }
+
+  return response.json()
+}
+
+export const getGuildSubmissions = async (): Promise<GuildSubmission[]> => {
+  const response = await authFetch(`${API_BASE_URL}/guild-submissions`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to fetch guild submissions')
+  }
+
+  const data = await response.json()
+  return Array.isArray(data.data) ? data.data : []
+}
+
+export const deleteGuildSubmission = async (_id: string) => {
+  const response = await authFetch(`${API_BASE_URL}/guild-submissions/${_id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to delete guild submission')
   }
 
   return response.json()
