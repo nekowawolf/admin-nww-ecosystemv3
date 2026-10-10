@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useAddCreator } from '@/hooks/creators/useAddCreator'
 import { CreatorsRequest } from '@/types/creators'
@@ -9,6 +9,8 @@ import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { validateUrl } from '@/utils/urlValidation'
 import { toast } from 'sonner'
+import { getCreators } from '@/services/creators/creatorsService'
+import { ValidatedUrlInput } from '@/components/ui/ValidatedUrlInput'
 
 const categories = [
   '3D', 'AI', 'Game Dev', 'Web3', 'Design', 'Artist', 
@@ -17,6 +19,17 @@ const categories = [
 ]
 
 const languages = ['EN', 'ID', 'CN', 'JP']
+const socialFields: Array<keyof CreatorsRequest['socials']> = ['twitter', 'instagram', 'discord', 'youtube', 'telegram', 'github', 'tiktok']
+const platformFields: Array<keyof CreatorsRequest['platforms']> = ['fiverr', 'upwork', 'peopleperhour', 'freelancer']
+
+const isValidHttpUrl = (value: string) => {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
 
 export default function AddCreatorForm() {
   useAuthGuard()
@@ -48,6 +61,18 @@ export default function AddCreatorForm() {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
 
   const { isSubmitting, submitCreator } = useAddCreator()
+  const [urlExists, setUrlExists] = useState<boolean | null>(null)
+  const [addedByName, setAddedByName] = useState('')
+  const [addedByUrl, setAddedByUrl] = useState('')
+
+  const fetchCreatorUrls = useCallback(async () => {
+    const creators = await getCreators()
+    return creators.map(creator => creator.website || '')
+  }, [])
+
+  const handleUrlValidationChange = useCallback((exists: boolean | null) => {
+    setUrlExists(exists)
+  }, [])
 
   const handleDropdownChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -94,15 +119,22 @@ export default function AddCreatorForm() {
       }
     })
     setSelectedLanguages([])
+    setUrlExists(null)
+    setAddedByName('')
+    setAddedByUrl('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!formData.name) { toast.error('Please fill out Name'); return; }
+    if (!formData.name.trim()) { toast.error('Please fill out Name'); return; }
+    if (!formData.description.trim()) { toast.error('Please fill out Description'); return; }
     if (!formData.category) { toast.error('Please select a Category'); return; }
-    if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
-
-    if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
+    if (!formData.image_url.trim()) { toast.error('Please fill out Image URL'); return; }
+    if (!formData.website.trim()) { toast.error('Please fill out Website URL'); return; }
+    if (urlExists === true) { toast.error('This Creator is already listed.'); return; }
+    if (!isValidHttpUrl(formData.image_url)) { toast.error('Invalid Image URL format'); return; }
+    if (!validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
+    if (addedByUrl && !isValidHttpUrl(addedByUrl)) { toast.error('Invalid contributor Link format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
     if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
@@ -117,11 +149,19 @@ export default function AddCreatorForm() {
 
     const dataToSubmit = {
       ...formData,
-      language: selectedLanguages.join(', ')
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+      image_url: formData.image_url.trim(),
+      website: formData.website.trim(),
+      language: selectedLanguages.join(', '),
+      added_by: {
+        name: addedByName.trim() || 'nekowawolf',
+        url: addedByUrl.trim() || (addedByName.trim() ? '' : 'https://nekowawolf.xyz')
+      }
     }
 
-    await submitCreator(dataToSubmit)
-    resetForm()
+    const success = await submitCreator(dataToSubmit)
+    if (success) resetForm()
   }
 
   return (
@@ -179,7 +219,7 @@ export default function AddCreatorForm() {
               {/* Description */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="description">
-                  Description
+                  Description *
                 </label>
                 <textarea
                   id="description"
@@ -212,23 +252,18 @@ export default function AddCreatorForm() {
                 </div>
 
                 {/* Website */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-medium" htmlFor="website">
-                    Website URL
-                  </label>
-                  <div className="relative">
-                    <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
-                    <input
-                      type="url"
-                      id="website"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleInputChange}
-                      placeholder="https://example.com"
-                      className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                    />
-                  </div>
-                </div>
+                <ValidatedUrlInput
+                  label="Website URL *"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  placeholder="https://example.com"
+                  icon={<FiLink />}
+                  fetchUrls={fetchCreatorUrls}
+                  onValidationChange={handleUrlValidationChange}
+                  errorMessage="This Creator is already listed."
+                />
 
                 {/* Language */}
                 <div className="flex flex-col gap-2">
@@ -268,7 +303,7 @@ export default function AddCreatorForm() {
               <div className="pt-4 border-t border-border-divider">
                 <h3 className="text-primary font-medium mb-4">Social Links</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['twitter', 'instagram', 'discord', 'youtube', 'telegram', 'github', 'tiktok'].map((social) => (
+                  {socialFields.map((social) => (
                     <div key={social} className="flex flex-col gap-2">
                       <label className="text-secondary text-sm font-medium capitalize" htmlFor={social}>
                         {social} URL
@@ -277,7 +312,7 @@ export default function AddCreatorForm() {
                         type="url"
                         id={social}
                         name={social}
-                        value={(formData.socials as any)[social] || ''}
+                        value={formData.socials[social] || ''}
                         onChange={handleInputChange}
                         placeholder={`https://${social}.com/...`}
                         className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
@@ -291,7 +326,7 @@ export default function AddCreatorForm() {
               <div className="pt-4 border-t border-border-divider">
                 <h3 className="text-primary font-medium mb-4">Freelance Platforms</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['fiverr', 'upwork', 'peopleperhour', 'freelancer'].map((platform) => (
+                  {platformFields.map((platform) => (
                     <div key={platform} className="flex flex-col gap-2">
                       <label className="text-secondary text-sm font-medium capitalize" htmlFor={platform}>
                         {platform} URL
@@ -300,7 +335,7 @@ export default function AddCreatorForm() {
                         type="url"
                         id={platform}
                         name={platform}
-                        value={(formData.platforms as any)[platform] || ''}
+                        value={formData.platforms[platform] || ''}
                         onChange={handleInputChange}
                         placeholder={`https://${platform}.com/...`}
                         className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
@@ -308,6 +343,36 @@ export default function AddCreatorForm() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Added By Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                  Name (added by)
+                </label>
+                <input
+                  type="text"
+                  id="addedByName"
+                  value={addedByName}
+                  onChange={(e) => setAddedByName(e.target.value)}
+                  placeholder="Your name or username"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Link */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                  Link (optional)
+                </label>
+                <input
+                  type="url"
+                  id="addedByUrl"
+                  value={addedByUrl}
+                  onChange={(e) => setAddedByUrl(e.target.value)}
+                  placeholder="https://..."
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
               </div>
 
               {/* Form Actions */}

@@ -17,7 +17,7 @@ export const useCreatorSubmissions = () => {
       setLoading(true)
       setError(null)
       const submissions = await getCreatorSubmissions()
-      setData(submissions)
+      setData([...submissions].reverse())
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch creator submissions')
     } finally {

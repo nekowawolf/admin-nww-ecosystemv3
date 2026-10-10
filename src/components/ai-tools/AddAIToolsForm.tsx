@@ -299,44 +299,6 @@ export default function AddAIToolsForm() {
                 errorMessage="This website is already listed."
               />
 
-              {/* Attribution */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-medium" htmlFor="added_by_name">
-                    Added By Name
-                  </label>
-                  <div className="relative">
-                    <FiUsers className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
-                    <input
-                      type="text"
-                      id="added_by_name"
-                      name="added_by_name"
-                      value={formData.added_by?.name || ''}
-                      onChange={handleInputChange}
-                      placeholder="Contributor name"
-                      className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-medium" htmlFor="added_by_url">
-                    Added By URL
-                  </label>
-                  <div className="relative">
-                    <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
-                    <input
-                      type="url"
-                      id="added_by_url"
-                      name="added_by_url"
-                      value={formData.added_by?.url || ''}
-                      onChange={handleInputChange}
-                      placeholder="https://example.com/profile"
-                      className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                    />
-                  </div>
-                </div>
-              </div>
-
               {/* Twitter */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="twitter">
@@ -398,6 +360,38 @@ export default function AddAIToolsForm() {
                   onChange={handleInputChange}
                   placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="added_by_name">
+                  Name (added by)
+                </label>
+                <input
+                  type="text"
+                  id="added_by_name"
+                  name="added_by_name"
+                  value={formData.added_by?.name || ''}
+                  onChange={handleInputChange}
+                  placeholder="Your name or username"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Link */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="added_by_url">
+                  Link (optional)
+                </label>
+                <input
+                  type="url"
+                  id="added_by_url"
+                  name="added_by_url"
+                  value={formData.added_by?.url || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://..."
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
 

@@ -78,8 +78,12 @@ export default function CreatorsTable({
 
   // ===== FILTER & PAGINATION =====
   const filteredData = useMemo(() => {
+    const query = search.toLowerCase()
     return safeData.filter(item =>
-      (item.name?.toLowerCase() || '').includes(search.toLowerCase())
+      (item.name?.toLowerCase() || '').includes(query) ||
+      (item.category?.toLowerCase() || '').includes(query) ||
+      (item.language?.toLowerCase() || '').includes(query) ||
+      (item.added_by?.name?.toLowerCase() || '').includes(query)
     )
   }, [search, safeData])
 
@@ -118,7 +122,7 @@ export default function CreatorsTable({
     setOpenDropdownIndex(index)
   }
 
-  const handleEdit = (item: any) => {
+  const handleEdit = (item: CreatorsResponse) => {
     router.push(`${editRoute}/${item._id}`)
     setOpenDropdownIndex(null)
   }
@@ -196,6 +200,7 @@ export default function CreatorsTable({
                 <th className="px-6 py-2 min-w-[100px]">Language</th>
                 <th className="px-6 py-2 min-w-[100px]">Open to Work</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
+                <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -203,7 +208,7 @@ export default function CreatorsTable({
             <tbody>
               {paginatedData.length > 0 ? (
                 paginatedData.map((item, index) => (
-                  <tr key={index} className="border-t border-border-divider">
+                  <tr key={item._id} className="border-t border-border-divider">
                     <td className="px-6 py-2">
                       <div className="relative w-10 h-10">
                         <FallbackImage 
@@ -256,7 +261,25 @@ export default function CreatorsTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                                        <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2">
+                      <div className="flex items-center gap-1">
+                        <span>{item.added_by?.name || 'N/A'}</span>
+                        <span className="text-secondary">/</span>
+                        {item.added_by?.url ? (
+                          <a
+                            href={item.added_by.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                          >
+                            Visit
+                          </a>
+                        ) : (
+                          <span className="text-secondary">N/A</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />
@@ -266,7 +289,7 @@ export default function CreatorsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="text-center py-4 text-secondary">No Creators found.</td>
+                  <td colSpan={10} className="text-center py-4 text-secondary">No Creators found.</td>
                 </tr>
               )}
             </tbody>

@@ -34,7 +34,8 @@ export function useEditCreator(id: string) {
               upwork: data.platforms?.upwork || '',
               peopleperhour: data.platforms?.peopleperhour || '',
               freelancer: data.platforms?.freelancer || ''
-            }
+            },
+            added_by: data.added_by
           })
         }
       } catch (err: any) {

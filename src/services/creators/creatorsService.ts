@@ -12,7 +12,7 @@ export const createCreator = async (data: CreatorsRequest) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to create Creator')
+    throw new Error(errorData.error || errorData.message || 'Failed to create Creator')
   }
 
   return response.json()
@@ -26,7 +26,7 @@ export const getCreators = async (): Promise<CreatorsResponse[]> => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to fetch Creators')
+    throw new Error(errorData.error || errorData.message || 'Failed to fetch Creators')
   }
 
   const data = await response.json()
@@ -42,7 +42,7 @@ export const updateCreator = async (_id: string, data: CreatorsRequest) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to update Creator')
+    throw new Error(errorData.error || errorData.message || 'Failed to update Creator')
   }
 
   return response.json()
@@ -56,7 +56,7 @@ export const getCreatorSubmissions = async (): Promise<CreatorSubmission[]> => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to fetch creator submissions')
+    throw new Error(errorData.error || errorData.message || 'Failed to fetch creator submissions')
   }
 
   const data = await response.json()
@@ -70,7 +70,7 @@ export const deleteCreatorSubmission = async (_id: string) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to delete creator submission')
+    throw new Error(errorData.error || errorData.message || 'Failed to delete creator submission')
   }
 
   return response.json()
@@ -112,7 +112,7 @@ export const deleteCreator = async (_id: string) => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to delete Creator')
+    throw new Error(errorData.error || errorData.message || 'Failed to delete Creator')
   }
 
   return response.json()

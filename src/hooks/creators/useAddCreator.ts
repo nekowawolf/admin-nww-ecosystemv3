@@ -17,11 +17,13 @@ export function useAddCreator() {
       await createCreator(data)
       toast.success('Creator added successfully!')
       setSuccessMessage('Creator added successfully!')
+      return true
     } catch (err: any) {
       console.error('Error creating Creator:', err)
       const errorMsg = err.message || 'Failed to add Creator. Please try again.'
       toast.error(errorMsg)
       setErrorMessage(errorMsg)
+      return false
     } finally {
       setIsSubmitting(false)
     }

@@ -10,6 +10,7 @@ export const useCreatorsData = () => {
   const fetchData = async () => {
     try {
       setLoading(true)
+      setError(null)
       const result = await getCreators()
       const validData = Array.isArray(result) ? result.filter(item => 
         item && 
@@ -17,7 +18,7 @@ export const useCreatorsData = () => {
         item !== undefined && 
         item.name
       ) : []
-      setData(validData.reverse())
+      setData([...validData].reverse())
     } catch (err: any) {
       setError(err.message || 'Failed to fetch Creators')
     } finally {
