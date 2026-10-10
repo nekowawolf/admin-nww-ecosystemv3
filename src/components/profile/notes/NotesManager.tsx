@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 import { FaPlus } from 'react-icons/fa'
 import { FiFilter, FiChevronDown, FiCheck } from 'react-icons/fi'
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
+import { SearchInput } from '@/components/ui/SearchInput'
 
 function FilterDropdown({ selectedType, setSelectedType }: { selectedType: string, setSelectedType: (type: string) => void }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -83,11 +84,21 @@ export default function NotesManager() {
   const [selectedNote, setSelectedNote] = useState<NoteResponse | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [selectedType, setSelectedType] = useState('All')
+  const [search, setSearch] = useState('')
 
   const filteredNotes = useMemo(() => {
-    if (selectedType === 'All') return notes;
-    return notes.filter(n => n.type?.toLowerCase() === selectedType.toLowerCase())
-  }, [notes, selectedType])
+    const query = search.trim().toLowerCase()
+
+    return notes.filter(note => {
+      const matchesType = selectedType === 'All' || note.type?.toLowerCase() === selectedType.toLowerCase()
+      const matchesSearch = !query ||
+        note.title?.toLowerCase().includes(query) ||
+        note.content?.toLowerCase().includes(query) ||
+        note.type?.toLowerCase().includes(query)
+
+      return matchesType && matchesSearch
+    })
+  }, [notes, search, selectedType])
 
   const fetchNotes = useCallback(async () => {
     setLoading(true)
@@ -179,6 +190,15 @@ export default function NotesManager() {
 
       {view === 'list' && (
         <>
+          <SearchInput
+            placeholder="Search Admin Notes..."
+            value={search}
+            onChange={setSearch}
+            suggestionData={notes}
+            suggestionKey="title"
+            wrapperClassName="mb-6"
+          />
+
           {loading ? (
             <div className="flex justify-center py-12">
               <Spinner variant="circle" size={40} className="text-blue-500" />

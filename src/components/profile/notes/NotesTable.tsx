@@ -35,6 +35,10 @@ export default function NotesTable({ data, onEdit, onDelete }: NotesTableProps) 
   const [selectedViewNote, setSelectedViewNote] = useState<NoteResponse | null>(null)
 
   useEffect(() => {
+    setCurrentPage(1)
+  }, [data])
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setOpenDropdownIndex(null)
