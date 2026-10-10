@@ -22,16 +22,20 @@ export function useAddAirdrop() {
         ...data,
         is_paid: type === 'paid'
       }
-      
+
       await createAirdrop(payload as AirdropRequest)
       const successText = `${type === 'free' ? 'Free' : 'Paid'} airdrop created successfully!`
       toast.success(successText)
       setSuccessMessage(successText)
-    } catch (err: any) {
-      console.error('Error creating airdrop:', err)
-      const errorMsg = err.message || 'Failed to create airdrop. Please try again.'
+      return true
+    } catch (error) {
+      console.error('Error creating airdrop:', error)
+      const errorMsg = error instanceof Error
+        ? error.message
+        : 'Failed to create airdrop. Please try again.'
       setErrorMessage(errorMsg)
       toast.error(errorMsg)
+      return false
     } finally {
       setIsSubmitting(false)
     }

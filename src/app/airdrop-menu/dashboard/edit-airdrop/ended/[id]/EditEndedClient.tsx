@@ -7,13 +7,14 @@ import EditAirdropForm from '@/components/airdrops/EditAirdropEndedForm'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { toast } from 'sonner'
+import { AirdropBase } from '@/types/airdrop'
 
 export default function EditAirdropEndedPage() {
   useAuthGuard()
-  
+
   const params = useParams()
   const router = useRouter()
-  const [airdropData, setAirdropData] = useState<any>(null)
+  const [airdropData, setAirdropData] = useState<AirdropBase | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -25,8 +26,8 @@ export default function EditAirdropEndedPage() {
         setLoading(true)
         const airdrop = await getAirdropById(id)
         setAirdropData(airdrop)
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch airdrop data')
+      } catch (error) {
+        setError(error instanceof Error ? error.message : 'Failed to fetch airdrop data')
         toast.error('Failed to fetch airdrop data')
       } finally {
         setLoading(false)

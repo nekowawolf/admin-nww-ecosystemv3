@@ -121,7 +121,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
             }
         }
 
-    
+
         // === WEB3 TOOLS PATH ===
         if (pathname.startsWith('/web3-tools-menu/dashboard')) {
             setOpenWeb3Tools(true)
@@ -549,6 +549,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isFreeActive = pathname === '/airdrop-menu/dashboard/airdrop/free'
     const isPaidActive = pathname === '/airdrop-menu/dashboard/airdrop/paid'
     const isEndedActive = pathname === '/airdrop-menu/dashboard/airdrop/ended'
+    const isAirdropSubmissionsActive = pathname === '/airdrop-menu/dashboard/airdrop-submissions'
     const isAddAirdropActive =
         pathname === '/airdrop-menu/dashboard/add-airdrop'
     const isDashboardPathActive =
@@ -571,7 +572,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isPortfolioDashboardPathActive =
         pathname.startsWith('/portfolio-menu/dashboard')
 
-    const isImagesActive = 
+    const isImagesActive =
         pathname === '/images-menu/dashboard/images-list'
     const isImagesDashboardActive =
         pathname.startsWith('/images-menu/dashboard') && !pathname.includes('/add-image')
@@ -587,7 +588,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
         pathname.startsWith('/links-menu/dashboard') && !pathname.includes('/add-post')
     const isLinkAnalyticActive = pathname === '/links-menu/dashboard'
 
-    
+
     const isWeb3ToolsAnalyticActive = pathname === '/web3-tools-menu/dashboard'
     const isAddWeb3ToolActive = pathname === '/web3-tools-menu/dashboard/add-web3-tool'
     const isWeb3ToolsDashboardPathActive = pathname.startsWith('/web3-tools-menu/dashboard') && !pathname.includes('/add-web3-tool')
@@ -751,6 +752,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                     >
                                         Airdrop Ended
                                     </Link>
+                                    <Link
+                                        href="/airdrop-menu/dashboard/airdrop-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isAirdropSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Airdrop Submissions
+                                    </Link>
                                 </div>
                             )}
 
@@ -885,7 +896,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                         </div>
                     )}
                 </div>
-                
+
                 {/* === Portfolio Group === */}
                 <div>
                     <button

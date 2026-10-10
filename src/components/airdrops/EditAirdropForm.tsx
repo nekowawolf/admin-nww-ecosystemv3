@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { FiGift } from 'react-icons/fi'
 import { useEditAirdrop } from '@/hooks/airdrop/useEditAirdrop'
-import { AirdropFormData } from '@/types/airdrop'
+import { AirdropBase, AirdropFormData } from '@/types/airdrop'
 import { useRouter } from 'next/navigation'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { validateUrl } from '@/utils/urlValidation'
@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 
 
 interface EditAirdropFormProps {
-  airdropData: any
+  airdropData: AirdropBase
   type: 'paid' | 'free'
   onSuccess?: () => void
 }
@@ -29,9 +29,9 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
     supply: airdropData?.supply || '',
     fdv: airdropData?.fdv || '',
     market_cap: airdropData?.market_cap || '',
-    price: airdropData?.price?.toString() || '',
+    price: airdropData?.price || 0,
     is_vesting: airdropData?.is_vesting || false,
-    usd_income: airdropData?.usd_income?.toString() || '',
+    usd_income: airdropData?.usd_income || 0,
     claim_url: airdropData?.claim_url || '',
     discord: airdropData?.discord || '',
     twitter: airdropData?.twitter || '',
@@ -43,6 +43,8 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
   })
 
   const { isSubmitting, editAirdrop } = useEditAirdrop(type)
+  const [addedByName, setAddedByName] = useState(airdropData.added_by?.name || '')
+  const [addedByUrl, setAddedByUrl] = useState(airdropData.added_by?.url || '')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -63,6 +65,9 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
     e.preventDefault()
     if (!formData.name) { toast.error('Please fill out Project Name'); return; }
     if (!formData.description) { toast.error('Please fill out Description'); return; }
+    if (!formData.website) { toast.error('Please fill out Project Link'); return; }
+    if (!validateUrl(formData.website, 'website')) { toast.error('Invalid Project Link format'); return; }
+    if (addedByUrl && !validateUrl(addedByUrl, 'website')) { toast.error('Invalid Added By Link format'); return; }
     if (formData.discord && !validateUrl(formData.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
     if (formData.telegram && !validateUrl(formData.telegram, 'telegram')) { toast.error('Invalid Telegram URL format'); return; }
     if (formData.twitter && !validateUrl(formData.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
@@ -79,10 +84,19 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
       telegram: formData.telegram,
       image_url: formData.image_url,
       description: formData.description,
-      guide_url: formData.guide_url
+      guide_url: formData.guide_url,
+      added_by: {
+        name: addedByName || 'nekowawolf',
+        url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz')
+      }
     }
 
-    const success = await editAirdrop(airdropData.id, payload)
+    if (!airdropData._id) {
+      toast.error('Airdrop ID is missing')
+      return
+    }
+
+    const success = await editAirdrop(airdropData._id, payload)
     if (success && onSuccess) {
       onSuccess()
     }
@@ -160,13 +174,13 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-medium" htmlFor="link">
+                  <label className="text-secondary text-sm font-medium" htmlFor="website">
                     Project Link *
                   </label>
                   <input
                     type="url"
-                    id="link"
-                    name="link"
+                    id="website"
+                    name="website"
                     value={formData.website}
                     onChange={handleInputChange}
                     placeholder="https://example.com"
@@ -281,7 +295,7 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
                     placeholder="Select Funding Level"
                   />
                 </div>
-                
+
                 <div className="flex flex-col gap-2">
                   <label className="text-secondary text-sm font-medium" htmlFor="status">
                     Status *
@@ -428,20 +442,49 @@ export default function EditAirdropForm({ airdropData, type, onSuccess }: EditAi
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="claim">
+                <label className="text-secondary text-sm font-medium" htmlFor="claim_url">
                   Claim *
                 </label>
                 <input
                   type="text"
-                  id="claim"
-                  name="claim"
+                  id="claim_url"
+                  name="claim_url"
                   value={formData.claim_url}
                   onChange={handleInputChange}
                   placeholder="https://example.com"
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
-              
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                    Name (added by)
+                  </label>
+                  <input
+                    type="text"
+                    id="addedByName"
+                    value={addedByName}
+                    onChange={(event) => setAddedByName(event.target.value)}
+                    placeholder="Your name or username"
+                    className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                    Link (optional)
+                  </label>
+                  <input
+                    type="url"
+                    id="addedByUrl"
+                    value={addedByUrl}
+                    onChange={(event) => setAddedByUrl(event.target.value)}
+                    placeholder="https://..."
+                    className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+              </div>
+
               <div className="flex justify-end gap-4 pt-6 border-t border-border-divider">
                 <button
                   type="button"

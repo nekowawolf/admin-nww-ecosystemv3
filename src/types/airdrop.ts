@@ -1,3 +1,8 @@
+export interface AddedByInfo {
+  name?: string
+  url?: string
+}
+
 export interface AirdropBase {
   _id?: string
   name: string
@@ -21,6 +26,7 @@ export interface AirdropBase {
   image_url: string
   description: string
   guide_url: string
+  added_by?: AddedByInfo
   created_at?: string
   ended_at?: string
 }
@@ -28,3 +34,10 @@ export interface AirdropBase {
 export interface AirdropFormData extends AirdropBase {}
 
 export interface AirdropRequest extends AirdropBase {}
+
+export interface AirdropSubmission {
+  _id: string
+  website: string
+  added_by?: AddedByInfo
+  created_at?: string
+}

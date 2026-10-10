@@ -1,13 +1,15 @@
 "use client"
 
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FiDollarSign, FiGift } from 'react-icons/fi'
 import { useAddAirdrop } from '@/hooks/airdrop/useAddAirdrop'
 import { AirdropFormData } from '@/types/airdrop'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { validateUrl } from '@/utils/urlValidation'
 import { toast } from 'sonner'
+import { getAirdrops } from '@/services/airdrop/airdropService'
+import { ValidatedUrlInput } from '@/components/ui/ValidatedUrlInput'
 
 
 export default function AddAirdropForm() {
@@ -37,7 +39,19 @@ export default function AddAirdropForm() {
     is_paid: false,
   })
 
-  const { isSubmitting, successMessage, errorMessage, submitAirdrop } = useAddAirdrop()
+  const { isSubmitting, submitAirdrop } = useAddAirdrop()
+  const [urlExists, setUrlExists] = useState<boolean | null>(null)
+  const [addedByName, setAddedByName] = useState('')
+  const [addedByUrl, setAddedByUrl] = useState('')
+
+  const fetchAirdropUrls = useCallback(async () => {
+    const airdrops = await getAirdrops()
+    return airdrops.map((airdrop) => airdrop.website).filter(Boolean)
+  }, [])
+
+  const handleUrlValidationChange = useCallback((exists: boolean | null) => {
+    setUrlExists(exists)
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -78,12 +92,19 @@ export default function AddAirdropForm() {
       guide_url: '',
       is_paid: false,
     })
+    setUrlExists(null)
+    setAddedByName('')
+    setAddedByUrl('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
     if (!formData.name) { toast.error('Please fill out Project Name'); return; }
     if (!formData.description) { toast.error('Please fill out Description'); return; }
+    if (!formData.website) { toast.error('Please fill out Project Link'); return; }
+    if (urlExists === true) { toast.error('This website is already listed.'); return; }
+    if (!validateUrl(formData.website, 'website')) { toast.error('Invalid Project Link format'); return; }
+    if (addedByUrl && !validateUrl(addedByUrl, 'website')) { toast.error('Invalid Added By Link format'); return; }
     if (formData.discord && !validateUrl(formData.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
     if (formData.telegram && !validateUrl(formData.telegram, 'telegram')) { toast.error('Invalid Telegram URL format'); return; }
     if (formData.twitter && !validateUrl(formData.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
@@ -100,11 +121,15 @@ export default function AddAirdropForm() {
       telegram: formData.telegram,
       image_url: formData.image_url,
       description: formData.description,
-      guide_url: formData.guide_url
+      guide_url: formData.guide_url,
+      added_by: {
+        name: addedByName || 'nekowawolf',
+        url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz')
+      }
     }
 
-    await submitAirdrop(payload, activeTab)
-    resetForm()
+    const success = await submitAirdrop(payload, activeTab)
+    if (success) resetForm()
   }
 
   return (
@@ -121,10 +146,10 @@ export default function AddAirdropForm() {
       <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 pb-1 shadow-lg w-full sm:w-5/6 mx-auto mb-8">
         <div className="mb-8">
           <div className="grid grid-cols-2 card-color2 rounded-lg p-1 mb-6 border border-border-divider">
-            <button 
+            <button
               className={`flex cursor-pointer items-center justify-center gap-2 py-2 px-4 font-medium text-sm rounded-md ${
-                activeTab === 'free' 
-                  ? 'bg-blue-600 text-white' 
+                activeTab === 'free'
+                  ? 'bg-blue-600 text-white'
                   : 'text-secondary hover:text-primary'
               }`}
               onClick={() => setActiveTab('free')}
@@ -132,10 +157,10 @@ export default function AddAirdropForm() {
               <FiGift className="w-4 h-4" />
               Free Airdrop
             </button>
-            <button 
+            <button
               className={`flex cursor-pointer items-center justify-center gap-2 py-2 px-4 font-medium text-sm rounded-md ${
-                activeTab === 'paid' 
-                  ? 'bg-blue-600 text-white' 
+                activeTab === 'paid'
+                  ? 'bg-blue-600 text-white'
                   : 'text-secondary hover:text-primary'
               }`}
               onClick={() => setActiveTab('paid')}
@@ -189,20 +214,18 @@ export default function AddAirdropForm() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-medium" htmlFor="link">
-                    Project Link *
-                  </label>
-                  <input
-                    type="url"
-                    id="link"
-                    name="link"
-                    value={formData.website}
-                    onChange={handleInputChange}
-                    placeholder="https://example.com"
-                    className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
-                  />
-                </div>
+                <ValidatedUrlInput
+                  label="Project Link *"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  placeholder="https://example.com"
+                  fetchUrls={fetchAirdropUrls}
+                  onValidationChange={handleUrlValidationChange}
+                  errorMessage="This airdrop website is already listed."
+                  successMessage="This airdrop website is not listed yet."
+                />
                 <div className="flex flex-col gap-2">
                   <label className="text-secondary text-sm font-medium" htmlFor="image_url">
                     Image URL
@@ -311,7 +334,7 @@ export default function AddAirdropForm() {
                     placeholder="Select Funding Level"
                   />
                 </div>
-                
+
                 <div className="flex flex-col gap-2">
                   <label className="text-secondary text-sm font-medium" htmlFor="status">
                     Status *
@@ -456,20 +479,49 @@ export default function AddAirdropForm() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="claim">
+                <label className="text-secondary text-sm font-medium" htmlFor="claim_url">
                   Claim *
                 </label>
                 <input
                   type="text"
-                  id="claim"
-                  name="claim"
+                  id="claim_url"
+                  name="claim_url"
                   value={formData.claim_url}
                   onChange={handleInputChange}
                   placeholder="https://example.com"
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
-              
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                    Name (added by)
+                  </label>
+                  <input
+                    type="text"
+                    id="addedByName"
+                    value={addedByName}
+                    onChange={(event) => setAddedByName(event.target.value)}
+                    placeholder="Your name or username"
+                    className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                    Link (optional)
+                  </label>
+                  <input
+                    type="url"
+                    id="addedByUrl"
+                    value={addedByUrl}
+                    onChange={(event) => setAddedByUrl(event.target.value)}
+                    placeholder="https://..."
+                    className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+              </div>
+
               <div className="flex justify-end gap-4 pt-6 border-t border-border-divider">
                 <button
                   type="button"
