@@ -33,6 +33,10 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     chains: [],
     image_url: '',
     website: '',
+    media: {
+      video_url: '',
+      screenshot_urls: []
+    },
     twitter: '',
     instagram: '',
     discord: '',
@@ -40,20 +44,25 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     youtube: ''
   })
   const [selectedChains, setSelectedChains] = useState<string[]>([])
+  const [addedByName, setAddedByName] = useState('')
+  const [addedByUrl, setAddedByUrl] = useState('')
 
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
       setSelectedChains(initialData.chains || [])
+      setAddedByName(initialData.added_by?.name || '')
+      setAddedByUrl(initialData.added_by?.url || '')
     }
   }, [initialData])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    if (name === 'video_url') {
+      setFormData(prev => ({ ...prev, media: { ...prev.media, video_url: value } }))
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }))
+    }
   }
 
   const handleDropdownChange = (name: string, value: string) => {
@@ -61,6 +70,32 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
       ...prev,
       [name]: value
     }))
+  }
+
+  const handleAddScreenshotUrl = () => {
+    setFormData(prev => ({
+      ...prev,
+      media: {
+        ...prev.media,
+        screenshot_urls: [...(prev.media?.screenshot_urls || []), '']
+      }
+    }))
+  }
+
+  const handleScreenshotUrlChange = (index: number, value: string) => {
+    setFormData(prev => {
+      const screenshotUrls = [...(prev.media?.screenshot_urls || [])]
+      screenshotUrls[index] = value
+      return { ...prev, media: { ...prev.media, screenshot_urls: screenshotUrls } }
+    })
+  }
+
+  const handleRemoveScreenshotUrl = (index: number) => {
+    setFormData(prev => {
+      const screenshotUrls = [...(prev.media?.screenshot_urls || [])]
+      screenshotUrls.splice(index, 1)
+      return { ...prev, media: { ...prev.media, screenshot_urls: screenshotUrls } }
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +115,11 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
 
     const dataToSubmit = {
       ...formData,
-      chains: selectedChains
+      chains: selectedChains,
+      added_by: {
+        name: addedByName || 'nekowawolf',
+        url: addedByUrl || (addedByName ? '' : 'https://nekowawolf.xyz')
+      }
     }
     const success = await submitEditWeb3Tool(dataToSubmit)
     if (success) {
@@ -207,6 +246,58 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                 </div>
               </div>
 
+              {/* Video URL */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="video_url">
+                  Video URL
+                </label>
+                <div className="relative">
+                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type="url"
+                    id="video_url"
+                    name="video_url"
+                    value={formData.media?.video_url || ''}
+                    onChange={handleInputChange}
+                    placeholder="https://youtube.com/..."
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                  />
+                </div>
+              </div>
+
+              {/* Screenshot URLs */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium">Screenshot URLs</label>
+                {(formData.media?.screenshot_urls || []).map((url, index) => (
+                  <div key={index} className="flex gap-2 relative items-center">
+                    <div className="relative flex-1">
+                      <FiImage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                      <input
+                        type="url"
+                        value={url}
+                        onChange={(e) => handleScreenshotUrlChange(index, e.target.value)}
+                        placeholder="https://example.com/screenshot.jpg"
+                        className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveScreenshotUrl(index)}
+                      className="px-4 py-3 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddScreenshotUrl}
+                  className="mt-2 w-fit px-4 py-2 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                >
+                  + Add Screenshot URL
+                </button>
+              </div>
+
               {/* Website */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="website">
@@ -303,6 +394,36 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                   onChange={handleInputChange}
                   placeholder="https://youtube.com/..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Name */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByName">
+                  Name (added by)
+                </label>
+                <input
+                  type="text"
+                  id="addedByName"
+                  value={addedByName}
+                  onChange={(e) => setAddedByName(e.target.value)}
+                  placeholder="Your name or username"
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* Added By Link */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="addedByUrl">
+                  Link (optional)
+                </label>
+                <input
+                  type="url"
+                  id="addedByUrl"
+                  value={addedByUrl}
+                  onChange={(e) => setAddedByUrl(e.target.value)}
+                  placeholder="https://..."
+                  className="w-full card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
 

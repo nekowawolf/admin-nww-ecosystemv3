@@ -593,6 +593,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isAddWeb3ToolActive = pathname === '/web3-tools-menu/dashboard/add-web3-tool'
     const isWeb3ToolsDashboardPathActive = pathname.startsWith('/web3-tools-menu/dashboard') && !pathname.includes('/add-web3-tool')
     const isWeb3ToolsListActive = pathname === '/web3-tools-menu/dashboard/web3-tools-list'
+    const isWeb3ToolSubmissionsActive = pathname === '/web3-tools-menu/dashboard/web3-tool-submissions'
 
     const isAIToolsAnalyticActive = pathname === '/ai-tools-menu/dashboard'
     const isAddAIToolActive = pathname === '/ai-tools-menu/dashboard/add-ai-tool'
@@ -1164,6 +1165,16 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                         }`}
                                     >
                                         Web3 Tools List
+                                    </Link>
+                                    <Link
+                                        href="/web3-tools-menu/dashboard/web3-tool-submissions"
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isWeb3ToolSubmissionsActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Web3 Tool Submissions
                                     </Link>
                                 </div>
                             )}

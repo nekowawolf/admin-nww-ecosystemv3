@@ -1,5 +1,5 @@
 import { authFetch } from '@/services/auth/authService'
-import { Web3ToolsRequest, Web3ToolsResponse } from '@/types/web3-tools'
+import { Web3ToolsRequest, Web3ToolsResponse, Web3ToolsSubmission } from '@/types/web3-tools'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -43,6 +43,34 @@ export const updateWeb3Tool = async (_id: string, data: Web3ToolsRequest) => {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(errorData.message || 'Failed to update Web3 tool')
+  }
+
+  return response.json()
+}
+
+export const getWeb3ToolSubmissions = async (): Promise<Web3ToolsSubmission[]> => {
+  const response = await authFetch(`${API_BASE_URL}/web3-tool-submissions`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to fetch Web3 Tool submissions')
+  }
+
+  const data = await response.json()
+  return Array.isArray(data.data) ? data.data : []
+}
+
+export const deleteWeb3ToolSubmission = async (_id: string) => {
+  const response = await authFetch(`${API_BASE_URL}/web3-tool-submissions/${_id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.message || 'Failed to delete Web3 Tool submission')
   }
 
   return response.json()

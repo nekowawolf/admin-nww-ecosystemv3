@@ -19,6 +19,11 @@ export function useEditWeb3Tool(id: string) {
             chains: data.chains || [],
             image_url: data.image_url || '',
             website: data.website || '',
+            media: {
+              video_url: data.media?.video_url || '',
+              screenshot_urls: data.media?.screenshot_urls || []
+            },
+            added_by: data.added_by,
             twitter: data.twitter || '',
             instagram: data.instagram || '',
             discord: data.discord || '',
