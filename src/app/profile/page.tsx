@@ -7,7 +7,6 @@ import { RiFolderUserFill } from "react-icons/ri"
 import BackButton from '@/components/ui/BackButton'
 import SessionActivity from './SessionActivity'
 import NotesManager from '@/components/profile/notes/NotesManager'
-import MessagesManager from '@/components/profile/messages/MessagesManager'
 import { dashboardMetadata } from '@/constants/metadataTemplates'
 
 export const metadata = dashboardMetadata('Admin Profile', 'Manage your account details and view system information')
@@ -95,11 +94,6 @@ export default function ProfilePage() {
       {/* Admin Notes Section */}
       <div className="w-full max-w-4xl mt-8">
         <NotesManager />
-      </div>
-
-      {/* Admin Messages Section */}
-      <div className="w-full max-w-4xl mt-8">
-        <MessagesManager />
       </div>
     </div>
   )
