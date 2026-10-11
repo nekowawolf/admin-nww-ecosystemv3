@@ -20,6 +20,7 @@ import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
 import { SupporterResponse } from '@/types/supporter'
+import { isValidSupportProof } from '@/utils/supportProof'
 
 interface SupporterTableProps {
   data: SupporterResponse[]
@@ -193,6 +194,7 @@ export default function SupporterTable({
                 <th className="px-6 py-2 min-w-[120px]">Platform</th>
                 <th className="px-6 py-2 min-w-[120px]">Amount</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
+                <th className="px-6 py-2 min-w-[160px]">Proof of Support</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -228,7 +230,17 @@ export default function SupporterTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                                        <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2 text-accent max-w-[220px]">
+                      {item.platform === 'Ko-fi' && item.proof && isValidSupportProof(item.platform, item.proof) ? (
+                        <a href={item.proof} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Ko-fi profile</a>
+                      ) : item.platform === 'Crypto' && item.proof ? (
+                        <button type="button" title={item.proof} onClick={async () => {
+                          try { await navigator.clipboard.writeText(item.proof!); toast.success('Transaction hash copied.') }
+                          catch { toast.error('Could not copy the transaction hash.') }
+                        }} className="text-blue-500 hover:underline cursor-pointer">Copy transaction hash</button>
+                      ) : 'N/A'}
+                    </td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />
@@ -238,7 +250,7 @@ export default function SupporterTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="text-center py-4 text-secondary">No Supporters found.</td>
+                    <td colSpan={7} className="text-center py-4 text-secondary">No Supporters found.</td>
                 </tr>
               )}
             </tbody>

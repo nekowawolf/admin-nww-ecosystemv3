@@ -12,7 +12,7 @@ export const createSupporter = async (data: Omit<SupporterResponse, '_id' | 'cre
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to create Supporter')
+    throw new Error(errorData.error || errorData.message || 'Failed to create Supporter')
   }
 
   return response.json()
@@ -42,7 +42,7 @@ export const updateSupporter = async (_id: string, data: Omit<SupporterResponse,
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
-    throw new Error(errorData.message || 'Failed to update Supporter')
+    throw new Error(errorData.error || errorData.message || 'Failed to update Supporter')
   }
 
   return response.json()

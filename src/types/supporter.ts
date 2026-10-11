@@ -3,6 +3,7 @@ export interface SupporterResponse {
   name: string;
   url: string;
   platform: string;
+  proof?: string;
   amount: number;
   created_at?: string;
 }
@@ -12,5 +13,6 @@ export interface SupportRequestResponse {
   name: string;
   url: string;
   platform: string;
+  proof?: string;
   created_at?: string;
 }

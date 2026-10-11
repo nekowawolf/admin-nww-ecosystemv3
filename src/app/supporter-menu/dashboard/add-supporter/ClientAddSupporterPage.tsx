@@ -1,24 +1,52 @@
 'use client'
 
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FiUsers, FiLink } from 'react-icons/fi'
 import { useAddSupporter } from '@/hooks/supporter/useAddSupporter'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
-import { validateUrl } from '@/utils/urlValidation'
+import { isValidSupportProof } from '@/utils/supportProof'
 import { toast } from 'sonner'
 import { AiOutlineDollar } from 'react-icons/ai'
+import { useRouter } from 'next/navigation'
+import { getSupporterById, updateSupporter } from '@/services/supporter/supporterService'
 
-export default function ClientAddSupporterPage() {
+export default function ClientAddSupporterPage({ editId }: { editId?: string }) {
   useAuthGuard()
+  const router = useRouter()
+  const [isUpdating, setIsUpdating] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     url: '',
     platform: '',
+    proof: '',
     amount: ''
   })
 
   const { isSubmitting, submitSupporter } = useAddSupporter()
+
+  useEffect(() => {
+    if (editId) {
+      getSupporterById(editId).then(item => setFormData({
+        name: item.name,
+        url: item.url || '',
+        platform: item.platform,
+        proof: item.proof || '',
+        amount: String(item.amount ?? '')
+      })).catch(err => toast.error(err instanceof Error ? err.message : 'Failed to load supporter.'))
+      return
+    }
+    const params = new URLSearchParams(window.location.search)
+    const platform = params.get('platform')
+    if (platform !== 'Ko-fi' && platform !== 'Crypto') return
+    setFormData({
+      name: params.get('name') || '',
+      url: params.get('url') || '',
+      platform,
+      proof: params.get('proof') || '',
+      amount: ''
+    })
+  }, [editId])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -31,7 +59,8 @@ export default function ClientAddSupporterPage() {
   const handleDropdownChange = (name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
+      ...(name === 'platform' && prev.platform !== value ? { proof: '' } : {})
     }))
   }
 
@@ -40,6 +69,7 @@ export default function ClientAddSupporterPage() {
       name: '',
       url: '',
       platform: '',
+      proof: '',
       amount: ''
     })
   }
@@ -48,10 +78,28 @@ export default function ClientAddSupporterPage() {
     e.preventDefault()
     if (!formData.name) { toast.error('Please fill out Name'); return; }
     if (!formData.platform) { toast.error('Please fill out Platform'); return; }
+    if (formData.platform !== 'Ko-fi' && formData.platform !== 'Crypto') { toast.error('Select a supported platform.'); return; }
     
-    if (formData.url && !validateUrl(formData.url, 'website')) { 
-      toast.error('Invalid URL format'); 
-      return; 
+    if (formData.url) {
+      try {
+        const link = new URL(formData.url)
+        if (!['http:', 'https:'].includes(link.protocol)) throw new Error('Invalid URL')
+      } catch {
+        toast.error('Enter a valid HTTP or HTTPS link.')
+        return
+      }
+    }
+    if (formData.platform === 'Ko-fi' && !formData.proof.trim()) {
+      toast.error('Ko-fi URL is required.')
+      return
+    }
+    if (formData.platform === 'Crypto' && !formData.proof.trim()) {
+      toast.error('Crypto transaction hash is required.')
+      return
+    }
+    if (formData.platform === 'Ko-fi' && !isValidSupportProof(formData.platform, formData.proof)) {
+      toast.error('Enter a Ko-fi URL, such as https://ko-fi.com/username.')
+      return
     }
     
     let parsedAmount = 0
@@ -67,21 +115,39 @@ export default function ClientAddSupporterPage() {
       name: formData.name,
       url: formData.url,
       platform: formData.platform,
+      proof: formData.proof,
       amount: parsedAmount
     }
 
-    await submitSupporter(payload)
-    resetForm()
+    if (editId) {
+      setIsUpdating(true)
+      try {
+        await updateSupporter(editId, payload)
+        toast.success('Supporter updated successfully.')
+        router.push('/supporter-menu/dashboard/supporter-list')
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Failed to update supporter.')
+      } finally {
+        setIsUpdating(false)
+      }
+    } else {
+      try {
+        await submitSupporter(payload)
+        resetForm()
+      } catch {
+        // useAddSupporter already displays the error.
+      }
+    }
   }
 
   return (
     <div className="space-y-12 mt-6 sm:mt-0">
       <div className="text-center sm:text-left">
         <h2 className="text-lg sm:text-2xl font-semibold text-primary">
-          Add New Supporter
+          {editId ? 'Edit Supporter' : 'Add New Supporter'}
         </h2>
         <p className="text-xs sm:text-sm text-secondary">
-          Create a new Supporter listing
+          {editId ? 'Update this supporter listing' : 'Create a new Supporter listing'}
         </p>
       </div>
 
@@ -111,7 +177,7 @@ export default function ClientAddSupporterPage() {
               {/* URL */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="url">
-                  Link / URL
+                  Link
                 </label>
                 <div className="relative">
                   <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
@@ -145,6 +211,25 @@ export default function ClientAddSupporterPage() {
                 />
               </div>
 
+              {/* Proof of Support */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="proof">
+                  {formData.platform === 'Ko-fi' ? 'Ko-fi URL *' : formData.platform === 'Crypto' ? 'Crypto transaction hash *' : 'Proof of Support *'}
+                </label>
+                <div className="relative">
+                  <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
+                  <input
+                    type={formData.platform === 'Crypto' ? 'text' : 'url'}
+                    id="proof"
+                    name="proof"
+                    value={formData.proof}
+                    onChange={handleInputChange}
+                    placeholder={formData.platform === 'Crypto' ? 'https://etherscan.io/tx/0x5f...' : 'https://ko-fi.com/username'}
+                    className="w-full card-color2 border border-border-divider rounded-lg pl-10 pr-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
               {/* Amount */}
               <div className="flex flex-col gap-2">
                 <label className="text-secondary text-sm font-medium" htmlFor="amount">
@@ -175,10 +260,10 @@ export default function ClientAddSupporterPage() {
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isUpdating}
                   className="bg-blue-600 hover:bg-blue-700 cursor-pointer disabled:bg-blue-400 text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-center transition-colors duration-200"
                 >
-                  {isSubmitting ? 'Creating...' : 'Create Supporter'}
+                  {isSubmitting || isUpdating ? 'Saving...' : editId ? 'Save Supporter' : 'Create Supporter'}
                 </button>
               </div>
             </div>
