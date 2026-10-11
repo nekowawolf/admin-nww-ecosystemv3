@@ -202,7 +202,15 @@ export default function SupporterTable({
                 paginatedData.map((item, index) => (
                   <tr key={index} className="border-t border-border-divider">
                     <td className="px-6 py-2 font-medium">{item.name || 'N/A'}</td>
-                    <td className="px-6 py-2">{item.platform || 'N/A'}</td>
+                    <td className="px-6 py-2">
+                      {item.platform ? (
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
+                          {item.platform}
+                        </span>
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
                     <td className="px-6 py-2 font-semibold">
                       {item.amount !== undefined ? `$${item.amount}` : 'N/A'}
                     </td>

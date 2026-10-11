@@ -237,11 +237,7 @@ export default function ImagesTable({
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                        item.media_type === 'video'
-                          ? 'bg-purple-500/20 text-purple-400'
-                          : 'bg-blue-500/20 text-blue-400'
-                      }`}>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
                         {item.media_type || 'image'}
                       </span>
                     </td>

@@ -20,6 +20,7 @@ import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
+import { SocialLinksCell } from '@/components/ui/SocialLinksCell'
 
 interface CommunityTableProps {
   data: any[]
@@ -196,6 +197,7 @@ export default function CommunityTable({
                 <th className="px-6 py-2 min-w-[120px]">Name</th>
                 <th className="px-6 py-2 min-w-[120px]">Platform</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
+                <th className="px-6 py-2 min-w-[160px]">Socials</th>
                 <th className="px-6 py-2 min-w-[80px]">Link</th>
                 <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
@@ -224,6 +226,7 @@ export default function CommunityTable({
                       </span>
                     </td>
                     <td className="px-6 py-2">{item.category || 'N/A'}</td>
+                    <SocialLinksCell socials={item.socials} />
                     <td className="px-6 py-2 text-accent">
                       {item.link ? (
                         <a 
@@ -266,7 +269,7 @@ export default function CommunityTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="text-center py-4 text-secondary">No communities found.</td>
+                  <td colSpan={9} className="text-center py-4 text-secondary">No communities found.</td>
                 </tr>
               )}
             </tbody>

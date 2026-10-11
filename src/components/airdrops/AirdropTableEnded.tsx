@@ -15,9 +15,8 @@ import {
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { cn } from "@/lib/utils"
 import { HiEllipsisVertical } from "react-icons/hi2"
-import { FaTrash, FaDiscord } from "react-icons/fa"
-import { FaXTwitter } from "react-icons/fa6";
-import { TbWorld } from "react-icons/tb";
+import { FaTrash } from "react-icons/fa"
+import { SocialLinksCell } from '@/components/ui/SocialLinksCell'
 import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
@@ -254,28 +253,7 @@ export default function EndedAirdropTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                    <td className="px-6 py-2">
-                      <div className="flex gap-2">
-                          {item.discord && (
-                            <a href={item.discord} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
-                              <FaDiscord size={16} />
-                            </a>
-                          )}
-                          {item.twitter && (
-                            <a href={item.twitter} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
-                              <FaXTwitter size={16} />
-                            </a>
-                          )}
-                          {item.guide_url && (
-                            <a href={item.guide_url} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-400 hover:text-blue-500">
-                              <TbWorld size={16} />
-                            </a>
-                          )}
-                          {!item.discord && !item.twitter && !item.guide_url && (
-                            <span className="text-muted text-xs">N/A</span>
-                          )}
-                      </div>
-                    </td>
+                    <SocialLinksCell socials={item} />
                     <td className="px-6 py-2 text-accent">
                       {item.guide_url ? (
                         <a href={item.guide_url} target="_blank" rel="noopener noreferrer" className="cursor-pointer text-blue-500">Visit</a>

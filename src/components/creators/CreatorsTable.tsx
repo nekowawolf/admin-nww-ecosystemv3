@@ -20,6 +20,7 @@ import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
+import { SocialLinksCell } from '@/components/ui/SocialLinksCell'
 import { CreatorsResponse } from '@/types/creators'
 
 interface CreatorsTableProps {
@@ -198,7 +199,8 @@ export default function CreatorsTable({
                 <th className="px-6 py-2 min-w-[200px]">Description</th>
                 <th className="px-6 py-2 min-w-[120px]">Category</th>
                 <th className="px-6 py-2 min-w-[100px]">Language</th>
-                <th className="px-6 py-2 min-w-[100px]">Open to Work</th>
+                <th className="px-6 py-2 min-w-[150px] whitespace-nowrap">Open to Work</th>
+                <th className="px-6 py-2 min-w-[160px]">Socials</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
@@ -247,6 +249,7 @@ export default function CreatorsTable({
                         <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">No</span>
                       )}
                     </td>
+                    <SocialLinksCell socials={item.socials} platforms={item.platforms} />
                     <td className="px-6 py-2 text-accent">
                       {item.website ? (
                         <a 
@@ -289,7 +292,7 @@ export default function CreatorsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={10} className="text-center py-4 text-secondary">No Creators found.</td>
+                  <td colSpan={11} className="text-center py-4 text-secondary">No Creators found.</td>
                 </tr>
               )}
             </tbody>

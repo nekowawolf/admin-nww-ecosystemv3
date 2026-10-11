@@ -19,6 +19,7 @@ import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
+import { SocialLinksCell } from '@/components/ui/SocialLinksCell'
 import { GithubRepoResponse } from '@/types/github-repos'
 
 interface GithubReposTableProps {
@@ -192,6 +193,7 @@ export default function GithubReposTable({
                 <th className="px-6 py-2 min-w-[250px]">Description</th>
                 <th className="px-6 py-2 min-w-[150px]">Category</th>
                 <th className="px-6 py-2 min-w-[200px]">Owner / Repo</th>
+                <th className="px-6 py-2 min-w-[160px]">Socials</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
@@ -212,12 +214,21 @@ export default function GithubReposTable({
                         'N/A'
                       )}
                     </td>
-                    <td className="px-6 py-2">{item.category || 'N/A'}</td>
+                    <td className="px-6 py-2">
+                      {item.category ? (
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs whitespace-nowrap flex-shrink-0">
+                          {item.category}
+                        </span>
+                      ) : (
+                        'N/A'
+                      )}
+                    </td>
                     <td className="px-6 py-2">
                       <div className="flex flex-wrap gap-1.5 min-w-[200px]">
                         <span className="text-secondary whitespace-nowrap">{item.owner} / {item.repo_name}</span>
                       </div>
                     </td>
+                    <SocialLinksCell socials={item} />
                     <td className="px-6 py-2 text-accent">
                       {item.repo_url ? (
                         <a 
@@ -260,7 +271,7 @@ export default function GithubReposTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="text-center py-4 text-secondary">No GitHub Repos found.</td>
+                  <td colSpan={9} className="text-center py-4 text-secondary">No GitHub Repos found.</td>
                 </tr>
               )}
             </tbody>

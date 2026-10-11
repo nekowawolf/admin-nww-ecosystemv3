@@ -20,6 +20,7 @@ import { MdEdit } from "react-icons/md"
 import { SearchInput } from "@/components/ui/SearchInput"
 import { createPortal } from "react-dom"
 import { toast } from 'sonner'
+import { SocialLinksCell } from '@/components/ui/SocialLinksCell'
 import { Web3ToolsResponse } from '@/types/web3-tools'
 
 interface Web3ToolsTableProps {
@@ -205,6 +206,7 @@ export default function Web3ToolsTable({
                 <th className="px-6 py-2 min-w-[250px]">Description</th>
                 <th className="px-6 py-2 min-w-[350px]">Categories</th>
                 <th className="px-6 py-2 min-w-[350px]">Chains</th>
+                <th className="px-6 py-2 min-w-[160px]">Socials</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
                 <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
@@ -282,6 +284,7 @@ export default function Web3ToolsTable({
                         )}
                       </div>
                     </td>
+                    <SocialLinksCell socials={item} />
                     <td className="px-6 py-2 text-accent">
                       {item.website ? (
                         <a 
@@ -324,7 +327,7 @@ export default function Web3ToolsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="text-center py-4 text-secondary">No Web3 Tools found.</td>
+                  <td colSpan={10} className="text-center py-4 text-secondary">No Web3 Tools found.</td>
                 </tr>
               )}
             </tbody>
