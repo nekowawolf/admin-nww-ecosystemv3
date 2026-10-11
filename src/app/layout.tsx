@@ -3,6 +3,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { Toaster } from 'sonner'
 import { ReactNode } from 'react'
 import { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
   title: '503 | Forbidden',
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <head>
         <script src="https://kit.fontawesome.com/2ff8362c80.js" crossOrigin="anonymous"></script>
         <script dangerouslySetInnerHTML={{
