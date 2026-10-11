@@ -201,6 +201,7 @@ export default function Web3ToolsTable({
                 <th className="px-6 py-2 min-w-[150px]">Category</th>
                 <th className="px-6 py-2 min-w-[350px]">Chains</th>
                 <th className="px-6 py-2 min-w-[100px]">Link</th>
+                <th className="px-6 py-2 min-w-[200px]">Added By</th>
                 <th className="px-6 py-2 min-w-[120px]">Date</th>
                 <th className="px-6 py-2 min-w-[80px]">Action</th>
               </tr>
@@ -268,7 +269,25 @@ export default function Web3ToolsTable({
                         <span className="text-primary">N/A</span>
                       )}
                     </td>
-                                        <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
+                    <td className="px-6 py-2">
+                      <div className="flex items-center gap-1">
+                        <span>{item.added_by?.name || 'N/A'}</span>
+                        <span className="text-secondary">/</span>
+                        {item.added_by?.url ? (
+                          <a
+                            href={item.added_by.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 hover:underline"
+                          >
+                            Visit
+                          </a>
+                        ) : (
+                          <span className="text-secondary">N/A</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-2 text-secondary whitespace-nowrap">{formatDate(item.created_at)}</td>
                     <td className="px-6 py-2 relative">
                       <button onClick={(e) => handleOpenDropdown(e, index)} className="cursor-pointer p-2">
                         <HiEllipsisVertical size={20} />
@@ -278,7 +297,7 @@ export default function Web3ToolsTable({
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="text-center py-4 text-secondary">No Web3 Tools found.</td>
+                  <td colSpan={9} className="text-center py-4 text-secondary">No Web3 Tools found.</td>
                 </tr>
               )}
             </tbody>

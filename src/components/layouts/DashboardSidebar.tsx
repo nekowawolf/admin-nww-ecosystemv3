@@ -1174,7 +1174,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                                                 : 'text-secondary hover:text-accent'
                                         }`}
                                     >
-                                        Web3 Tool Submissions
+                                        Web3 Submissions
                                     </Link>
                                 </div>
                             )}
