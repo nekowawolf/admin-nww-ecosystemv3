@@ -11,7 +11,7 @@ export interface Web3ToolsAddedBy {
 export interface Web3ToolsBase {
   name: string
   description: string
-  category: string
+  categories: string[]
   chains: string[]
   image_url: string
   website: string

@@ -6,11 +6,15 @@ import { FiUsers, FiLink, FiImage } from 'react-icons/fi'
 import { useEditWeb3Tool } from '@/hooks/web3-tools/useEditWeb3Tool'
 import { Web3ToolsRequest } from '@/types/web3-tools'
 import { useRouter } from 'next/navigation'
-import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { validateUrl } from '@/utils/urlValidation'
 import { toast } from 'sonner'
+
+const categories = [
+  'DEX', 'CEX', 'DeFi', 'Analytics', 'Bridge', 'Explorers', 'Quests', 'Faucets',
+  'Wallets', 'Security', 'Launchpad', 'Airdrop Tracker', 'NFT Marketplace', 'Research'
+]
 
 const chains = [
   "Ethereum", "Bitcoin", "Solana", "BNB Chain", "Polygon", "Optimism", "Arbitrum",
@@ -29,7 +33,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
   const [formData, setFormData] = useState<Web3ToolsRequest>({
     name: '',
     description: '',
-    category: '',
+    categories: [],
     chains: [],
     image_url: '',
     website: '',
@@ -43,6 +47,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     telegram: '',
     youtube: ''
   })
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedChains, setSelectedChains] = useState<string[]>([])
   const [addedByName, setAddedByName] = useState('')
   const [addedByUrl, setAddedByUrl] = useState('')
@@ -50,6 +55,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
+      setSelectedCategories(initialData.categories || [])
       setSelectedChains(initialData.chains || [])
       setAddedByName(initialData.added_by?.name || '')
       setAddedByUrl(initialData.added_by?.url || '')
@@ -63,13 +69,6 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
     }
-  }
-
-  const handleDropdownChange = (name: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
   }
 
   const handleAddScreenshotUrl = () => {
@@ -104,6 +103,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
     if (!formData.description) { toast.error('Please fill out Description'); return; }
     if (!formData.image_url) { toast.error('Please fill out Image URL'); return; }
     if (!formData.website) { toast.error('Please fill out Website URL'); return; }
+    if (selectedCategories.length === 0) { toast.error('Please select at least one Category'); return; }
     if (selectedChains.length === 0) { toast.error('Please select at least one Chain'); return; }
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.twitter && !validateUrl(formData.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
@@ -115,6 +115,7 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
 
     const dataToSubmit = {
       ...formData,
+      categories: selectedCategories,
       chains: selectedChains,
       added_by: {
         name: addedByName || 'nekowawolf',
@@ -184,32 +185,15 @@ export default function EditWeb3ToolsForm({ id }: { id: string }) {
                 />
               </div>
 
-              {/* Category */}
+              {/* Categories */}
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-medium" htmlFor="category">
-                  Category *
+                <label className="text-secondary text-sm font-medium">
+                  Categories *
                 </label>
-                <CustomDropdown
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={(value) => handleDropdownChange('category', value)}
-                  options={[
-                    { value: 'DEX', label: 'DEX' },
-                    { value: 'CEX', label: 'CEX' },
-                    { value: 'DeFi', label: 'DeFi' },
-                    { value: 'Analytics', label: 'Analytics' },
-                    { value: 'Bridge', label: 'Bridge' },
-                    { value: 'Explorers', label: 'Explorers' },
-                    { value: 'Quests', label: 'Quests' },
-                    { value: 'Faucets', label: 'Faucets' },
-                    { value: 'Wallets', label: 'Wallets' },
-                    { value: 'Security', label: 'Security' },
-                    { value: 'Launchpad', label: 'Launchpad' },
-                    { value: 'Airdrop Tracker', label: 'Airdrop Tracker' },
-                    { value: 'NFT Marketplace', label: 'NFT Marketplace' },
-                    { value: 'Research', label: 'Research' }
-                  ]}
+                <MultiSelectDropdown
+                  options={categories}
+                  selected={selectedCategories}
+                  onChange={setSelectedCategories}
                   placeholder="Select Category"
                 />
               </div>

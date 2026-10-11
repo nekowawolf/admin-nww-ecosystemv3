@@ -18,8 +18,8 @@ export default function ClientDashboardPage() {
   const totalCategories = useMemo(() => {
     const catSet = new Set()
     data.forEach(item => {
-      if (item.category) {
-        catSet.add(item.category.trim())
+      if (item.categories) {
+        item.categories.forEach((cat: string) => catSet.add(cat.trim()))
       }
     })
     return catSet.size

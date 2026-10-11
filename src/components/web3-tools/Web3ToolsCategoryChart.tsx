@@ -7,9 +7,11 @@ ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default function Web3ToolsCategoryChart({ data }: { data: any[] }) {
   const categoryCount = data.reduce((acc: any, curr: any) => {
-    if (curr.category) {
-      const trimmed = curr.category.trim()
-      if (trimmed) acc[trimmed] = (acc[trimmed] || 0) + 1
+    if (curr.categories && Array.isArray(curr.categories)) {
+      curr.categories.forEach((cat: string) => {
+        const trimmed = cat.trim()
+        if (trimmed) acc[trimmed] = (acc[trimmed] || 0) + 1
+      })
     }
     return acc
   }, {})

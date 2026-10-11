@@ -15,7 +15,7 @@ export function useEditWeb3Tool(id: string) {
           setInitialData({
             name: data.name || '',
             description: data.description || '',
-            category: data.category || '',
+            categories: data.categories || [],
             chains: data.chains || [],
             image_url: data.image_url || '',
             website: data.website || '',
