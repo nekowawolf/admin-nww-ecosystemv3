@@ -1,9 +1,10 @@
-'use client'
+import ClientEdit from './ClientEdit'
 
-import { useParams } from 'next/navigation'
-import ClientAddSupporterPage from '../../add-supporter/ClientAddSupporterPage'
+export const metadata = {
+  title: 'Edit Supporter | Admin',
+  description: 'Edit Supporter listing',
+}
 
 export default function EditSupporterPage() {
-  const { id } = useParams<{ id: string }>()
-  return <ClientAddSupporterPage editId={id} />
+  return <ClientEdit />
 }
