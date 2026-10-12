@@ -1,6 +1,7 @@
 export interface GuildSocials {
   twitter?: string
   instagram?: string
+  tiktok?: string
   discord?: string
   github?: string
   youtube?: string

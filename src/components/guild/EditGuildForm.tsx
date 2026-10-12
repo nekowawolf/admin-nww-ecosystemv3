@@ -50,6 +50,7 @@ export default function EditGuildForm({ id }: { id: string }) {
     socials: {
       twitter: '',
       instagram: '',
+      tiktok: '',
       discord: '',
       github: '',
       youtube: ''
@@ -68,7 +69,7 @@ export default function EditGuildForm({ id }: { id: string }) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    if (['twitter', 'instagram', 'discord', 'youtube', 'github'].includes(name)) {
+    if (['twitter', 'instagram', 'tiktok', 'discord', 'youtube', 'github'].includes(name)) {
       setFormData(prev => ({ ...prev, socials: { ...prev.socials, [name]: value } }))
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
@@ -86,6 +87,7 @@ export default function EditGuildForm({ id }: { id: string }) {
     if (formData.website && !validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
+    if (formData.socials?.tiktok && !validateUrl(formData.socials.tiktok, 'tiktok')) { toast.error('Invalid TikTok URL format'); return; }
     if (formData.socials?.discord && !validateUrl(formData.socials.discord, 'discord')) { toast.error('Invalid Discord URL format'); return; }
     if (formData.socials?.github && !validateUrl(formData.socials.github, 'github_profile')) { toast.error('Invalid Github URL format'); return; }
     if (formData.socials?.youtube && !validateUrl(formData.socials.youtube, 'youtube')) { toast.error('Invalid YouTube URL format'); return; }
@@ -275,6 +277,22 @@ export default function EditGuildForm({ id }: { id: string }) {
                   value={formData.socials?.instagram || ''}
                   onChange={handleInputChange}
                   placeholder="https://instagram.com/..."
+                  className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
+                />
+              </div>
+
+              {/* TikTok */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-medium" htmlFor="tiktok">
+                  TikTok URL
+                </label>
+                <input
+                  type="url"
+                  id="tiktok"
+                  name="tiktok"
+                  value={formData.socials?.tiktok || ''}
+                  onChange={handleInputChange}
+                  placeholder="https://tiktok.com/@..."
                   className="card-color2 border border-border-divider rounded-lg px-4 py-3 text-primary text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-blue-600/80 focus:border-blue-600"
                 />
               </div>
