@@ -91,10 +91,7 @@ export default function NotesManager() {
 
     return notes.filter(note => {
       const matchesType = selectedType === 'All' || note.type?.toLowerCase() === selectedType.toLowerCase()
-      const matchesSearch = !query ||
-        note.title?.toLowerCase().includes(query) ||
-        note.content?.toLowerCase().includes(query) ||
-        note.type?.toLowerCase().includes(query)
+      const matchesSearch = !query || note.title?.toLowerCase().includes(query)
 
       return matchesType && matchesSearch
     })
