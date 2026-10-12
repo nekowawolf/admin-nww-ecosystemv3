@@ -11,13 +11,15 @@ import { MdImage } from 'react-icons/md'
 import { AiOutlineDollar } from "react-icons/ai";
 import { TiMediaPause } from "react-icons/ti";
 import { RiFolderUserFill } from "react-icons/ri";
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 
 type SidebarProps = {
     isOpen?: boolean
     onClose?: () => void
+    onToggleCollapse?: () => void
 }
 
-export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
+export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: SidebarProps) {
     const pathname = usePathname()
 
     const [openAirdrop, setOpenAirdrop] = useState(false)
@@ -636,19 +638,85 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const isGuildListActive = pathname === '/guild-menu/dashboard/guild-list'
     const isGuildSubmissionsActive = pathname === '/guild-menu/dashboard/guild-submissions'
 
+    const compactItems = [
+        { label: 'Airdrop', href: '/airdrop-menu/dashboard', icon: HiMiniRocketLaunch },
+        { label: 'Community', href: '/community-menu/dashboard', icon: FaLayerGroup },
+        { label: 'Portfolio', href: '/portfolio-menu/dashboard', icon: FaUserCircle },
+        { label: 'Links', href: '/links-menu/dashboard', icon: FaLink },
+        { label: 'Web3 Tools', href: '/web3-tools-menu/dashboard', icon: FaBitcoin },
+        { label: 'AI Tools', href: '/ai-tools-menu/dashboard', icon: FaRobot },
+        { label: 'GitHub Repos', href: '/github-repos-menu/dashboard', icon: FaGithub },
+        { label: 'Net', href: '/net-menu/dashboard', icon: FaGlobe },
+        { label: 'Creators', href: '/creators-menu/dashboard', icon: TiMediaPause },
+        { label: 'Guild', href: '/guild-menu/dashboard', icon: RiFolderUserFill },
+        { label: 'Supporter', href: '/supporter-menu/dashboard', icon: AiOutlineDollar },
+        { label: 'Image Resources', href: '/images-menu/dashboard', icon: MdImage },
+    ]
+
+    const compactContent = (
+        <>
+            <div className="h-16 shrink-0 flex items-center justify-center sidebar-border">
+                <img
+                    src="https://cdn.nekowawolf.xyz/image/2026/1790671959_nwwonee_bot.webp"
+                    alt="Nww Admin logo"
+                    className="h-9 w-9 rounded-md object-cover"
+                />
+            </div>
+            <div className="flex justify-center py-3">
+                <button
+                    type="button"
+                    onClick={onToggleCollapse}
+                    title="Expand sidebar"
+                    aria-label="Expand sidebar"
+                    aria-expanded={false}
+                    className="cursor-pointer flex h-10 w-10 items-center justify-center rounded-lg text-secondary hover:hover-bg"
+                >
+                    <FiChevronRight size={20} />
+                </button>
+            </div>
+            <nav aria-label="Dashboard menu" className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-3 pb-6 space-y-2">
+                {compactItems.map(({ label, href, icon: Icon }) => {
+                    const active = pathname.startsWith(href)
+                    return (
+                        <Link
+                            key={href}
+                            href={href}
+                            title={label}
+                            aria-label={label}
+                            aria-current={pathname === href ? 'page' : undefined}
+                            className={`flex h-11 items-center justify-center rounded-lg transition-colors ${active ? 'text-accent bg-accent/10' : 'text-secondary hover:hover-bg'}`}
+                        >
+                            <Icon size={20} aria-hidden="true" />
+                        </Link>
+                    )
+                })}
+            </nav>
+        </>
+    )
+
     // === SIDEBAR CONTENT ===
     const content = (
         <>
             {/* Sidebar Header */}
-            <div className="h-16 shrink-0 flex items-center gap-3 px-6 pt-2 sidebar-border">
+            <div className="h-16 shrink-0 flex items-center gap-3 px-4 pt-2 sidebar-border">
                 <img
               src="https://cdn.nekowawolf.xyz/image/2026/1790671959_nwwonee_bot.webp"
                     alt="logo"
                     className="h-9 w-9 rounded-md object-cover"
                 />
-                <span className="text-xl font-semibold text-primary">
+                <span className="text-xl font-semibold text-primary whitespace-nowrap">
                     Nww Admin
                 </span>
+                <button
+                    type="button"
+                    onClick={onToggleCollapse}
+                    title="Collapse sidebar"
+                    aria-label="Collapse sidebar"
+                    aria-expanded={true}
+                    className="hidden md:flex ml-auto h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-secondary hover:hover-bg"
+                >
+                    <FiChevronLeft size={20} />
+                </button>
             </div>
 
             <p className="shrink-0 px-6 pt-6 pb-2 text-xs font-semibold uppercase text-muted tracking-wider">
@@ -1968,8 +2036,13 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="hidden md:flex md:flex-col fixed inset-y-0 left-0 w-64 overflow-hidden sidebar-bg sidebar-border border-r">
-                {content}
+            <aside className="dashboard-sidebar hidden md:flex md:flex-col md:w-64 fixed inset-y-0 left-0 overflow-hidden sidebar-bg sidebar-border border-r">
+                <div className="sidebar-expanded-content">
+                    {content}
+                </div>
+                <div className="sidebar-compact-content">
+                    {compactContent}
+                </div>
             </aside>
 
             {/* Mobile drawer */}

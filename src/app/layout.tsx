@@ -34,6 +34,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }
           })();`
         }} />
+        <script dangerouslySetInnerHTML={{
+          __html: `(function() {
+            try {
+              if (localStorage.getItem("adminSidebarCollapsed") === "true") {
+                document.documentElement.classList.add("sidebar-collapsed");
+              }
+            } catch (e) {}
+          })();`
+        }} />
       </head>
       <body className="body-color">
         <Toaster richColors position="top-center" />
