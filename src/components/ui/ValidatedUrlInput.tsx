@@ -16,6 +16,7 @@ interface ValidatedUrlInputProps {
   onValidationChange: (exists: boolean | null) => void;
   errorMessage?: string;
   successMessage?: string;
+  inputType?: 'url' | 'text';
 }
 
 export function ValidatedUrlInput({
@@ -29,7 +30,8 @@ export function ValidatedUrlInput({
   fetchUrls,
   onValidationChange,
   errorMessage = "This URL is already listed.",
-  successMessage = "This URL is not listed yet."
+  successMessage = "This URL is not listed yet.",
+  inputType = 'url'
 }: ValidatedUrlInputProps) {
   const [existingUrls, setExistingUrls] = useState<string[]>([])
   const [isCheckingUrl, setIsCheckingUrl] = useState(false)
@@ -126,7 +128,7 @@ export function ValidatedUrlInput({
           </div>
         )}
         <input
-          type="url"
+          type={inputType}
           id={id}
           name={name}
           value={value}

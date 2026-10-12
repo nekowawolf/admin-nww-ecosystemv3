@@ -130,10 +130,8 @@ export default function AddCreatorForm() {
     if (!formData.description.trim()) { toast.error('Please fill out Description'); return; }
     if (!formData.category) { toast.error('Please select a Category'); return; }
     if (!formData.image_url.trim()) { toast.error('Please fill out Image URL'); return; }
-    if (!formData.website.trim()) { toast.error('Please fill out Website URL'); return; }
-    if (urlExists === true) { toast.error('This Creator is already listed.'); return; }
+    if (formData.website.trim() && urlExists === true) { toast.error('This Creator is already listed.'); return; }
     if (!isValidHttpUrl(formData.image_url)) { toast.error('Invalid Image URL format'); return; }
-    if (!validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (addedByUrl && !isValidHttpUrl(addedByUrl)) { toast.error('Invalid contributor Link format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
@@ -253,7 +251,7 @@ export default function AddCreatorForm() {
 
                 {/* Website */}
                 <ValidatedUrlInput
-                  label="Website URL *"
+                  label="Website URL"
                   id="website"
                   name="website"
                   value={formData.website}
@@ -263,6 +261,7 @@ export default function AddCreatorForm() {
                   fetchUrls={fetchCreatorUrls}
                   onValidationChange={handleUrlValidationChange}
                   errorMessage="This Creator is already listed."
+                  inputType="text"
                 />
 
                 {/* Language */}

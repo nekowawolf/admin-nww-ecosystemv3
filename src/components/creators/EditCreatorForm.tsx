@@ -103,9 +103,7 @@ export default function EditCreatorForm({ id }: { id: string }) {
     if (!formData.description.trim()) { toast.error('Please fill out Description'); return; }
     if (!formData.category) { toast.error('Please select a Category'); return; }
     if (!formData.image_url.trim()) { toast.error('Please fill out Image URL'); return; }
-    if (!formData.website.trim()) { toast.error('Please fill out Website URL'); return; }
     if (!isValidHttpUrl(formData.image_url)) { toast.error('Invalid Image URL format'); return; }
-    if (!validateUrl(formData.website, 'website')) { toast.error('Invalid Website URL format'); return; }
     if (addedByUrl && !isValidHttpUrl(addedByUrl)) { toast.error('Invalid contributor Link format'); return; }
     if (formData.socials?.twitter && !validateUrl(formData.socials.twitter, 'twitter')) { toast.error('Invalid Twitter URL format'); return; }
     if (formData.socials?.instagram && !validateUrl(formData.socials.instagram, 'instagram')) { toast.error('Invalid Instagram URL format'); return; }
@@ -236,12 +234,12 @@ export default function EditCreatorForm({ id }: { id: string }) {
                 {/* Website */}
                 <div className="flex flex-col gap-2">
                   <label className="text-secondary text-sm font-medium" htmlFor="website">
-                    Website URL *
+                    Website URL
                   </label>
                   <div className="relative">
                     <FiLink className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted w-4 h-4" />
                     <input
-                      type="url"
+                      type="text"
                       id="website"
                       name="website"
                       value={formData.website}
