@@ -640,7 +640,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const content = (
         <>
             {/* Sidebar Header */}
-            <div className="h-16 shrink-0 flex items-center gap-3 px-6 sidebar-border">
+            <div className="h-16 shrink-0 flex items-center gap-3 px-6 pt-2 sidebar-border">
                 <img
               src="https://cdn.nekowawolf.xyz/image/2026/1790671959_nwwonee_bot.webp"
                     alt="logo"
