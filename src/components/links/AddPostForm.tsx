@@ -53,7 +53,7 @@ export default function AddPostForm() {
 
   return (
     <div className="space-y-6 min-h-screen p-6">
-      <div className="text-center sm:text-left">
+      <div className="text-center sm:text-left sm:w-5/6 sm:mx-auto">
         <h2 className="text-lg sm:text-2xl font-semibold text-primary">
           Add New Post
         </h2>

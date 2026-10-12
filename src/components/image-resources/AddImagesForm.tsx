@@ -104,7 +104,7 @@ export default function AddImagesForm() {
 
   return (
     <div className="space-y-12 mt-6 sm:mt-0">
-      <div className="text-center sm:text-left">
+      <div className="text-center sm:text-left sm:w-5/6 sm:mx-auto">
         <h2 className="text-lg sm:text-2xl font-semibold text-primary">
           Upload Media
         </h2>
@@ -114,7 +114,7 @@ export default function AddImagesForm() {
       </div>
 
       {/* Upload Section */}
-      <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 shadow-lg w-full sm:w-5/6 mx-auto">
+      <div className="bg-[var(--fill-color)] border border-border-divider rounded-xl p-6 shadow-lg w-full sm:w-5/6 mx-auto">
         <div className="mb-6">
           <h3 className="text-lg font-semibold text-primary mb-4">Upload New Media</h3>
           

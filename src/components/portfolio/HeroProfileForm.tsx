@@ -27,7 +27,7 @@ export default function HeroProfileForm({ data, onSubmit, isSubmitting }: HeroPr
   }
 
   return (
-    <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 shadow-lg">
+    <div className="bg-[var(--fill-color)] border border-border-divider rounded-xl p-6 shadow-lg">
       <h3 className="text-lg font-semibold text-primary mb-4">Hero Profile</h3>
       
       <form onSubmit={handleSubmit} className="space-y-4">

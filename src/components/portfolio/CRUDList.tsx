@@ -502,7 +502,7 @@ export default function CRUDList({
   }
 
   return (
-    <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 shadow-lg">
+    <div className="bg-[var(--fill-color)] border border-border-divider rounded-xl p-6 shadow-lg">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h3 className="text-lg font-semibold text-primary">{title}</h3>

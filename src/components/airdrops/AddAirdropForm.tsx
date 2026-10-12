@@ -134,7 +134,7 @@ export default function AddAirdropForm() {
 
   return (
     <div className="space-y-12 mt-6 sm:mt-0">
-      <div className="text-center sm:text-left">
+      <div className="text-center sm:text-left sm:w-5/6 sm:mx-auto">
         <h2 className="text-lg sm:text-2xl font-semibold text-primary">
           Add New Airdrop
         </h2>
@@ -143,7 +143,7 @@ export default function AddAirdropForm() {
         </p>
       </div>
 
-      <div className="bg-[var(--fill-color)] border border-border-color rounded-xl p-6 pb-1 shadow-lg w-full sm:w-5/6 mx-auto mb-8">
+      <div className="bg-[var(--fill-color)] border border-border-divider rounded-xl p-6 pb-1 shadow-lg w-full sm:w-5/6 mx-auto mb-8">
         <div className="mb-8">
           <div className="grid grid-cols-2 card-color2 rounded-lg p-1 mb-6 border border-border-divider">
             <button
