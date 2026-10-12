@@ -49,7 +49,7 @@ export default function DashboardHeader({ onToggleSidebar }: HeaderProps) {
 	}, [])
 
 	return (
-		<header className="h-16 body-color flex items-center justify-between px-4 md:px-6">
+		<header className="sticky top-0 z-40 h-16 shrink-0 body-color flex items-center justify-between px-4 md:px-6">
 			<div className="flex items-center gap-3">
 				<button onClick={onToggleSidebar} className="cursor-pointer md:hidden inline-flex h-9 w-9 items-center justify-center rounded-md button-hover">
 					<RxHamburgerMenu className="text-secondary" size={20} />

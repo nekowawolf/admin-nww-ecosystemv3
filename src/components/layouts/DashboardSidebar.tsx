@@ -640,7 +640,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     const content = (
         <>
             {/* Sidebar Header */}
-            <div className="h-16 flex items-center gap-3 px-6 sidebar-border">
+            <div className="h-16 shrink-0 flex items-center gap-3 px-6 sidebar-border">
                 <img
               src="https://cdn.nekowawolf.xyz/image/2026/1790671959_nwwonee_bot.webp"
                     alt="logo"
@@ -651,12 +651,12 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                 </span>
             </div>
 
-            {/* Navigation */}
-            <nav className="px-4 py-6 space-y-2 overflow-y-auto">
-                <p className="px-2 text-xs font-semibold uppercase text-muted tracking-wider">
-                    Menu
-                </p>
+            <p className="shrink-0 px-6 pt-6 pb-2 text-xs font-semibold uppercase text-muted tracking-wider">
+                Menu
+            </p>
 
+            {/* Scroll only the menu items, not the sidebar header */}
+            <nav className="flex-1 min-h-0 px-4 pb-6 space-y-2 overflow-y-auto overscroll-contain">
                 {/* === Airdrop Group === */}
                 <div>
                     <button
@@ -1968,7 +1968,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="hidden md:flex md:flex-col fixed inset-y-0 left-0 w-64 sidebar-bg sidebar-border border-r">
+            <aside className="hidden md:flex md:flex-col fixed inset-y-0 left-0 w-64 overflow-hidden sidebar-bg sidebar-border border-r">
                 {content}
             </aside>
 
@@ -1979,7 +1979,7 @@ export default function DashboardSidebar({ isOpen, onClose }: SidebarProps) {
                         className="cursor-pointer absolute inset-0 overlay-bg"
                         onClick={onClose}
                     />
-                    <div className="absolute inset-y-0 left-0 w-64 sidebar-bg sidebar-border border-r animate-[slideIn_.2s_ease-out]">
+                    <div className="absolute inset-y-0 left-0 w-64 flex flex-col overflow-hidden sidebar-bg sidebar-border border-r animate-[slideIn_.2s_ease-out]">
                         {content}
                     </div>
                     <style jsx global>{`
