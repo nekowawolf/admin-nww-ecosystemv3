@@ -143,7 +143,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === GITHUB REPOS PATH ===
         if (pathname.startsWith('/github-repos-menu/dashboard')) {
             setOpenGithubRepos(true)
-            if (!pathname.includes('/add-github-repo')) {
+            if (!pathname.includes('/add-github-repo') && !pathname.includes('/add-blog')) {
                 setOpenGithubReposDashboard(true)
             }
         }
@@ -605,7 +605,9 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
 
     const isGithubReposAnalyticActive = pathname === '/github-repos-menu/dashboard'
     const isAddGithubRepoActive = pathname === '/github-repos-menu/dashboard/add-github-repo'
-    const isGithubReposDashboardPathActive = pathname.startsWith('/github-repos-menu/dashboard') && !pathname.includes('/add-github-repo')
+    const isGithubReposDashboardPathActive = pathname.startsWith('/github-repos-menu/dashboard') && !pathname.includes('/add-github-repo') && !pathname.includes('/add-blog')
+    const isGithubBlogListActive = pathname === '/github-repos-menu/dashboard/blog-list' || pathname.startsWith('/github-repos-menu/dashboard/edit-blog/')
+    const isAddGithubBlogActive = pathname === '/github-repos-menu/dashboard/add-blog'
     const isGithubReposListActive = pathname === '/github-repos-menu/dashboard/github-repos-list'
     const isRepoSubmissionsActive = pathname === '/github-repos-menu/dashboard/repo-submissions'
     const isFeedbackActive = pathname === '/github-repos-menu/dashboard/feedback'
@@ -1453,6 +1455,18 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                         GitHub Repos List
                                     </Link>
                                     <Link
+                                        href="/github-repos-menu/dashboard/blog-list"
+                                        onClick={onClose}
+                                        aria-current={isGithubBlogListActive ? 'page' : undefined}
+                                        className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
+                                            isGithubBlogListActive
+                                                ? 'text-accent font-semibold'
+                                                : 'text-secondary hover:text-accent'
+                                        }`}
+                                    >
+                                        Blog List
+                                    </Link>
+                                    <Link
                                         href="/github-repos-menu/dashboard/repo-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
                                             isRepoSubmissionsActive
@@ -1490,6 +1504,24 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     size={18}
                                 />
                                 <span>Add GitHub Repo</span>
+                            </Link>
+                            <Link
+                                href="/github-repos-menu/dashboard/add-blog"
+                                onClick={onClose}
+                                aria-current={isAddGithubBlogActive ? 'page' : undefined}
+                                className={`group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors border-l-4 ${
+                                    isAddGithubBlogActive
+                                        ? 'border-accent text-accent bg-accent/10'
+                                        : 'border-transparent text-secondary hover:hover-bg'
+                                }`}
+                            >
+                                <IoIosAddCircleOutline
+                                    className={`${
+                                        isAddGithubBlogActive ? 'text-accent' : 'text-muted'
+                                    }`}
+                                    size={18}
+                                />
+                                <span>Add Blog</span>
                             </Link>
                         </div>
                     )}
