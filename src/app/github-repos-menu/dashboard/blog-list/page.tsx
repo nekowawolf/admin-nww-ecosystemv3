@@ -1,4 +1,4 @@
-import ClientList from './ClientList'
+import BlogListClient from '@/components/blog/BlogListClient'
 
 export const metadata = {
   title: 'Blog List | Admin',
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default function BlogListPage() {
-  return <ClientList />
+  return <BlogListClient project="github-repos" />
 }

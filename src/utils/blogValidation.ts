@@ -1,6 +1,6 @@
-import { GithubBlogRequest } from '@/types/github-blog'
+import { BlogRequest } from '@/types/blog'
 
-export function validateGithubBlog(data: GithubBlogRequest): string | null {
+export function validateBlog(data: BlogRequest): string | null {
   if (data.slug.length > 200 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug)) {
     return 'Slug must contain lowercase letters, numbers, and single hyphens (maximum 200 characters).'
   }

@@ -1,4 +1,4 @@
-import ClientEdit from './ClientEdit'
+import EditBlogClient from '@/components/blog/EditBlogClient'
 
 export const metadata = {
   title: 'Edit Blog | Admin',
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default function EditBlogPage() {
-  return <ClientEdit />
+  return <EditBlogClient project="github-repos" />
 }

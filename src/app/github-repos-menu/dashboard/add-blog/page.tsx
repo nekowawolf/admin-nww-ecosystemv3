@@ -1,4 +1,4 @@
-import ClientAdd from './ClientAdd'
+import BlogForm from '@/components/blog/BlogForm'
 
 export const metadata = {
   title: 'Add Blog | Admin',
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default function AddBlogPage() {
-  return <ClientAdd />
+  return <BlogForm project="github-repos" />
 }

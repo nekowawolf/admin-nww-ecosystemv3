@@ -1,11 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { deleteGithubBlog, getGithubBlogs } from '@/services/github-repos/githubBlogService'
-import { GithubBlogResponse } from '@/types/github-blog'
+import { BlogProject } from '@/config/blogProjects'
+import { deleteBlog, getBlogs } from '@/services/blog/blogService'
+import { BlogResponse } from '@/types/blog'
 
-export function useGithubBlogsData() {
-  const [data, setData] = useState<GithubBlogResponse[]>([])
+export function useBlogsData(project: BlogProject) {
+  const [data, setData] = useState<BlogResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -13,18 +14,19 @@ export function useGithubBlogsData() {
     setLoading(true)
     setError(null)
     try {
-      setData(await getGithubBlogs())
+      const result = await getBlogs(project)
+      setData([...result].reverse())
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load blogs')
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [project])
 
   useEffect(() => { void refetch() }, [refetch])
 
   const handleDelete = async (id: string) => {
-    await deleteGithubBlog(id)
+    await deleteBlog(project, id)
     setData(previous => previous.filter(blog => blog._id !== id))
   }
 

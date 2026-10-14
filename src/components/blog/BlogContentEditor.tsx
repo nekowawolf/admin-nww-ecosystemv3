@@ -1,17 +1,17 @@
 'use client'
 
 import { FiArrowDown, FiArrowUp, FiPlus, FiTrash2 } from 'react-icons/fi'
-import { GithubBlogSection, GithubBlogSubsection } from '@/types/github-blog'
+import { BlogSection, BlogSubsection } from '@/types/blog'
 import { CustomDropdown } from '@/components/ui/CustomDropdown'
 import BlogField, { blogButtonClass, blogDangerButtonClass } from './BlogField'
 
 interface Props {
-  content: GithubBlogSection[]
+  content: BlogSection[]
   screenshotURLs: string[]
-  onChange: (content: GithubBlogSection[]) => void
+  onChange: (content: BlogSection[]) => void
 }
 
-function newHeading(): GithubBlogSubsection {
+function newHeading(): BlogSubsection {
   return { _id: `heading-${crypto.randomUUID()}`, name: '', paragraphs: [] }
 }
 
@@ -32,7 +32,7 @@ function ParagraphsEditor({ paragraphs, onChange }: { paragraphs: string[]; onCh
 }
 
 export default function BlogContentEditor({ content, screenshotURLs, onChange }: Props) {
-  const updateSection = (index: number, patch: Partial<GithubBlogSection>) => {
+  const updateSection = (index: number, patch: Partial<BlogSection>) => {
     onChange(content.map((section, i) => i === index ? { ...section, ...patch } : section))
   }
   const moveSection = (index: number, offset: number) => {
@@ -89,7 +89,7 @@ export default function BlogContentEditor({ content, screenshotURLs, onChange }:
           )}
 
           {(section.subsections || []).map((subsection, subIndex) => {
-            const updateSubsection = (patch: Partial<GithubBlogSubsection>) => updateSection(index, { subsections: section.subsections!.map((item, i) => i === subIndex ? { ...item, ...patch } : item) })
+            const updateSubsection = (patch: Partial<BlogSubsection>) => updateSection(index, { subsections: section.subsections!.map((item, i) => i === subIndex ? { ...item, ...patch } : item) })
             return (
               <div key={subIndex} className="border-t border-border-divider pt-6 space-y-6">
                 <div className="flex items-center justify-between gap-2">

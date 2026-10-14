@@ -1,4 +1,4 @@
-import { GithubBlogRequest } from '@/types/github-blog'
+import { BlogRequest } from '@/types/blog'
 
 function safeURL(value: string) {
   try {
@@ -9,7 +9,7 @@ function safeURL(value: string) {
   }
 }
 
-export default function BlogPreview({ blog }: { blog: GithubBlogRequest }) {
+export default function BlogPreview({ blog }: { blog: BlogRequest }) {
   const cover = safeURL(blog.image_url)
   const authorURL = safeURL(blog.added_by.url)
   const videoURL = safeURL(blog.media.video_url)

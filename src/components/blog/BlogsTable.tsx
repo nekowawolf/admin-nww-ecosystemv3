@@ -11,25 +11,29 @@ import { SearchInput } from '@/components/ui/SearchInput'
 import { Spinner } from '@/components/ui/shadcn-io/spinner'
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
-import { GithubBlogResponse } from '@/types/github-blog'
+import { BlogProject, blogProjects, getBlogDashboardRoute } from '@/config/blogProjects'
+import { BlogResponse } from '@/types/blog'
 import { blogButtonClass } from './BlogField'
 
 interface Props {
-  data: GithubBlogResponse[]
+  project: BlogProject
+  data: BlogResponse[]
   loading: boolean
   error: string | null
   refetch: () => Promise<void>
   onDelete: (id: string) => Promise<void>
 }
 
-export default function GithubBlogsTable({ data, loading, error, refetch, onDelete }: Props) {
+export default function BlogsTable({ project, data, loading, error, refetch, onDelete }: Props) {
+  const label = blogProjects[project].label
+  const dashboardRoute = getBlogDashboardRoute(project)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
-  const [selected, setSelected] = useState<GithubBlogResponse | null>(null)
+  const [selected, setSelected] = useState<BlogResponse | null>(null)
   const [deleting, setDeleting] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const [actionBlog, setActionBlog] = useState<GithubBlogResponse | null>(null)
+  const [actionBlog, setActionBlog] = useState<BlogResponse | null>(null)
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
   const filtered = data.filter(blog => [blog.name, blog.slug, blog.added_by?.name, ...(blog.categories || [])].some(value => value?.toLowerCase().includes(search.toLowerCase())))
   const totalPages = Math.max(1, Math.ceil(filtered.length / 10))
@@ -90,10 +94,10 @@ export default function GithubBlogsTable({ data, loading, error, refetch, onDele
   return (
     <div className="space-y-6 min-h-screen p-6">
       <div className="text-center sm:text-left">
-        <h2 className="text-lg sm:text-2xl font-semibold text-primary">GitHub Blog List</h2>
-        <p className="text-xs sm:text-sm text-secondary">Manage your GitHub Blog articles</p>
+        <h2 className="text-lg sm:text-2xl font-semibold text-primary">{label} Blog List</h2>
+        <p className="text-xs sm:text-sm text-secondary">Manage your {label} Blog articles</p>
       </div>
-      <SearchInput aria-label="Search blogs" placeholder="Search GitHub Blogs..." value={search} onChange={value => { setSearch(value); setPage(1); setActionBlog(null) }} suggestionData={data} suggestionKey="name" />
+      <SearchInput aria-label="Search blogs" placeholder={`Search ${label} Blogs...`} value={search} onChange={value => { setSearch(value); setPage(1); setActionBlog(null) }} suggestionData={data} suggestionKey="name" />
       {loading ? (
         <div role="status" aria-label="Loading blogs" className="flex justify-center py-10"><Spinner variant="circle" size={40} className="text-blue-500" /></div>
       ) : error ? (
@@ -141,7 +145,7 @@ export default function GithubBlogsTable({ data, loading, error, refetch, onDele
                     </tr>
                   )
                 })}
-                {!rows.length && <tr><td colSpan={7} className="text-center py-4 text-secondary">No GitHub Blogs found.</td></tr>}
+                {!rows.length && <tr><td colSpan={7} className="text-center py-4 text-secondary">No {label} Blogs found.</td></tr>}
               </tbody>
             </table>
           </div>
@@ -160,7 +164,7 @@ export default function GithubBlogsTable({ data, loading, error, refetch, onDele
                   <PaginationItem><PaginationNext disabled={currentPage === totalPages} onClick={() => setPage(currentPage + 1)} className={cn('cursor-pointer px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm', currentPage === totalPages && 'pointer-events-none opacity-50')} /></PaginationItem>
                 </PaginationContent>
               </Pagination>
-              <div className="text-center text-xs mt-2 text-secondary">Showing {(currentPage - 1) * 10 + 1} to {Math.min(currentPage * 10, filtered.length)} of {filtered.length} GitHub Blogs</div>
+              <div className="text-center text-xs mt-2 text-secondary">Showing {(currentPage - 1) * 10 + 1} to {Math.min(currentPage * 10, filtered.length)} of {filtered.length} {label} Blogs</div>
             </>
           )}
         </>
@@ -168,15 +172,15 @@ export default function GithubBlogsTable({ data, loading, error, refetch, onDele
       {actionBlog && createPortal(
         <div ref={dropdownRef} className="fixed z-30 w-36 dropdown-bg divide-y divide-border-divider rounded-lg shadow-sm border border-border-divider" style={dropdownPosition}>
           <ul role="menu" aria-label={`Actions for ${actionBlog.name}`} className="py-2 text-sm text-primary">
-            <li><Link role="menuitem" href={`/github-repos-menu/dashboard/edit-blog/${actionBlog._id}`} onClick={() => setActionBlog(null)} className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 hover:bg-[var(--hover-bg)]"><MdEdit size={16} /> Edit</Link></li>
+            <li><Link role="menuitem" href={`${dashboardRoute}/edit-blog/${actionBlog._id}`} onClick={() => setActionBlog(null)} className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 hover:bg-[var(--hover-bg)]"><MdEdit size={16} /> Edit</Link></li>
             <li><button type="button" role="menuitem" onClick={() => { setSelected(actionBlog); setActionBlog(null) }} className="cursor-pointer flex items-center gap-2 w-full px-4 py-2 text-red-600 hover:bg-[var(--hover-bg)]"><FaTrash size={16} /> Delete</button></li>
           </ul>
         </div>, document.body
       )}
       <dialog ref={dialog} aria-labelledby="delete-blog-title" onCancel={event => { if (deleting) event.preventDefault(); else setSelected(null) }} onClose={() => setSelected(null)} className="fixed inset-0 m-auto w-[calc(100%_-_2rem)] max-w-sm dropdown-bg rounded-lg shadow-lg p-6 text-center text-primary backdrop:bg-[var(--overlay-bg)]">
         <FaTrash size={32} className="text-red-600 mx-auto mb-4" />
-        <h3 id="delete-blog-title" className="text-primary text-lg font-semibold mb-2">Delete GitHub Blog</h3>
-        <p className="text-secondary mb-6">Are you sure you want to delete this GitHub Blog: <span className="font-semibold text-primary">{selected?.name}</span>?</p>
+        <h3 id="delete-blog-title" className="text-primary text-lg font-semibold mb-2">Delete {label} Blog</h3>
+        <p className="text-secondary mb-6">Are you sure you want to delete this {label} Blog: <span className="font-semibold text-primary">{selected?.name}</span>?</p>
         <div className="flex justify-center gap-4">
           <button type="button" disabled={deleting} className="cursor-pointer bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200 disabled:opacity-50" onClick={() => void confirmDelete()}>{deleting ? 'Deleting...' : 'Yes'}</button>
           <button type="button" autoFocus disabled={deleting} className="cursor-pointer bg-gray-300 text-black px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-200 disabled:opacity-50" onClick={() => setSelected(null)}>No</button>

@@ -12,6 +12,7 @@ import { AiOutlineDollar } from "react-icons/ai";
 import { TiMediaPause } from "react-icons/ti";
 import { RiFolderUserFill } from "react-icons/ri";
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import BlogSidebarLink from '@/components/blog/BlogSidebarLink'
 
 type SidebarProps = {
     isOpen?: boolean
@@ -88,7 +89,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === AIRDROP PATH ===
         if (pathname.startsWith('/airdrop-menu/dashboard')) {
             setOpenAirdrop(true)
-            if (!pathname.includes('/add-airdrop')) {
+            if (!pathname.includes('/add-airdrop') && !pathname.includes('/add-blog')) {
                 setOpenDashboard(true)
             }
         }
@@ -96,7 +97,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === COMMUNITY PATH ===
         if (pathname.startsWith('/community-menu/dashboard')) {
             setOpenCommunity(true)
-            if (!pathname.includes('/add-community')) {
+            if (!pathname.includes('/add-community') && !pathname.includes('/add-blog')) {
                 setOpenCommunityDashboard(true)
             }
         }
@@ -127,7 +128,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === WEB3 TOOLS PATH ===
         if (pathname.startsWith('/web3-tools-menu/dashboard')) {
             setOpenWeb3Tools(true)
-            if (!pathname.includes('/add-web3-tool')) {
+            if (!pathname.includes('/add-web3-tool') && !pathname.includes('/add-blog')) {
                 setOpenWeb3ToolsDashboard(true)
             }
         }
@@ -135,7 +136,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === AI TOOLS PATH ===
         if (pathname.startsWith('/ai-tools-menu/dashboard')) {
             setOpenAITools(true)
-            if (!pathname.includes('/add-ai-tool')) {
+            if (!pathname.includes('/add-ai-tool') && !pathname.includes('/add-blog')) {
                 setOpenAIToolsDashboard(true)
             }
         }
@@ -151,7 +152,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === NET PATH ===
         if (pathname.startsWith('/net-menu/dashboard')) {
             setOpenNet(true)
-            if (!pathname.includes('/add-net')) {
+            if (!pathname.includes('/add-net') && !pathname.includes('/add-blog')) {
                 setOpenNetDashboard(true)
             }
         }
@@ -159,7 +160,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === CREATORS PATH ===
         if (pathname.startsWith('/creators-menu/dashboard')) {
             setOpenCreators(true)
-            if (!pathname.includes('/add-creator')) {
+            if (!pathname.includes('/add-creator') && !pathname.includes('/add-blog')) {
                 setOpenCreatorsDashboard(true)
             }
         }
@@ -167,7 +168,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         // === GUILD PATH ===
         if (pathname.startsWith('/guild-menu/dashboard')) {
             setOpenGuild(true)
-            if (!pathname.includes('/add-guild')) {
+            if (!pathname.includes('/add-guild') && !pathname.includes('/add-blog')) {
                 setOpenGuildDashboard(true)
             }
         }
@@ -556,14 +557,14 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
         pathname === '/airdrop-menu/dashboard/add-airdrop'
     const isDashboardPathActive =
         pathname.startsWith('/airdrop-menu/dashboard') &&
-        !pathname.includes('/add-airdrop')
+        !pathname.includes('/add-airdrop') && !pathname.includes('/add-blog')
 
     const isCommunityAnalyticActive = pathname === '/community-menu/dashboard'
     const isAddCommunityActive =
         pathname === '/community-menu/dashboard/add-community'
     const isCommunityDashboardPathActive =
         pathname.startsWith('/community-menu/dashboard') &&
-        !pathname.includes('/add-community')
+        !pathname.includes('/add-community') && !pathname.includes('/add-blog')
     const isCommunityListActive =
         pathname === '/community-menu/dashboard/community-list'
     const isCommunitySubmissionsActive =
@@ -593,13 +594,13 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
 
     const isWeb3ToolsAnalyticActive = pathname === '/web3-tools-menu/dashboard'
     const isAddWeb3ToolActive = pathname === '/web3-tools-menu/dashboard/add-web3-tool'
-    const isWeb3ToolsDashboardPathActive = pathname.startsWith('/web3-tools-menu/dashboard') && !pathname.includes('/add-web3-tool')
+    const isWeb3ToolsDashboardPathActive = pathname.startsWith('/web3-tools-menu/dashboard') && !pathname.includes('/add-web3-tool') && !pathname.includes('/add-blog')
     const isWeb3ToolsListActive = pathname === '/web3-tools-menu/dashboard/web3-tools-list'
     const isWeb3ToolSubmissionsActive = pathname === '/web3-tools-menu/dashboard/web3-tool-submissions'
 
     const isAIToolsAnalyticActive = pathname === '/ai-tools-menu/dashboard'
     const isAddAIToolActive = pathname === '/ai-tools-menu/dashboard/add-ai-tool'
-    const isAIToolsDashboardPathActive = pathname.startsWith('/ai-tools-menu/dashboard') && !pathname.includes('/add-ai-tool')
+    const isAIToolsDashboardPathActive = pathname.startsWith('/ai-tools-menu/dashboard') && !pathname.includes('/add-ai-tool') && !pathname.includes('/add-blog')
     const isAIToolsListActive = pathname === '/ai-tools-menu/dashboard/ai-tools-list'
     const isAIToolSubmissionsActive = pathname === '/ai-tools-menu/dashboard/ai-tool-submissions'
 
@@ -622,21 +623,21 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
     // === NET ===
     const isNetAnalyticActive = pathname === '/net-menu/dashboard'
     const isAddNetActive = pathname === '/net-menu/dashboard/add-net'
-    const isNetDashboardPathActive = pathname.startsWith('/net-menu/dashboard') && !pathname.includes('/add-net')
+    const isNetDashboardPathActive = pathname.startsWith('/net-menu/dashboard') && !pathname.includes('/add-net') && !pathname.includes('/add-blog')
     const isNetListActive = pathname === '/net-menu/dashboard/net-list'
     const isNetSubmissionsActive = pathname === '/net-menu/dashboard/net-submissions'
 
     // === CREATORS ===
     const isCreatorsAnalyticActive = pathname === '/creators-menu/dashboard'
     const isAddCreatorActive = pathname === '/creators-menu/dashboard/add-creator'
-    const isCreatorsDashboardPathActive = pathname.startsWith('/creators-menu/dashboard') && !pathname.includes('/add-creator')
+    const isCreatorsDashboardPathActive = pathname.startsWith('/creators-menu/dashboard') && !pathname.includes('/add-creator') && !pathname.includes('/add-blog')
     const isCreatorsListActive = pathname === '/creators-menu/dashboard/creators-list'
     const isCreatorSubmissionsActive = pathname === '/creators-menu/dashboard/creator-submissions'
 
     // === GUILD ===
     const isGuildAnalyticActive = pathname === '/guild-menu/dashboard'
     const isAddGuildActive = pathname === '/guild-menu/dashboard/add-guild'
-    const isGuildDashboardPathActive = pathname.startsWith('/guild-menu/dashboard') && !pathname.includes('/add-guild')
+    const isGuildDashboardPathActive = pathname.startsWith('/guild-menu/dashboard') && !pathname.includes('/add-guild') && !pathname.includes('/add-blog')
     const isGuildListActive = pathname === '/guild-menu/dashboard/guild-list'
     const isGuildSubmissionsActive = pathname === '/guild-menu/dashboard/guild-submissions'
 
@@ -823,6 +824,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Airdrop Ended
                                     </Link>
+                                    <BlogSidebarLink project="airdrop" variant="list" onClose={onClose} />
                                     <Link
                                         href="/airdrop-menu/dashboard/airdrop-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -854,6 +856,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Airdrop</span>
                             </Link>
+                            <BlogSidebarLink project="airdrop" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -937,7 +940,8 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Community List
                                     </Link>
-                                      <Link
+                                    <BlogSidebarLink project="crypto-community" variant="list" onClose={onClose} />
+                                    <Link
                                           href="/community-menu/dashboard/community-submissions"
                                           className={`block rounded-lg px-0 py-2 text-sm transition-colors ${isCommunitySubmissionsActive ? 'text-accent font-semibold' : 'text-secondary hover:text-accent'}`}
                                       >
@@ -964,6 +968,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Community</span>
                             </Link>
+                            <BlogSidebarLink project="crypto-community" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -1236,6 +1241,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Web3 Tools List
                                     </Link>
+                                    <BlogSidebarLink project="web3-tools" variant="list" onClose={onClose} />
                                     <Link
                                         href="/web3-tools-menu/dashboard/web3-tool-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -1265,6 +1271,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Web3 Tool</span>
                             </Link>
+                            <BlogSidebarLink project="web3-tools" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -1345,6 +1352,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         AI Tools List
                                     </Link>
+                                    <BlogSidebarLink project="ai-tools" variant="list" onClose={onClose} />
                                     <Link
                                         href="/ai-tools-menu/dashboard/ai-tool-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -1374,6 +1382,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add AI Tool</span>
                             </Link>
+                            <BlogSidebarLink project="ai-tools" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -1603,6 +1612,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Net List
                                     </Link>
+                                    <BlogSidebarLink project="net" variant="list" onClose={onClose} />
                                     <Link
                                         href="/net-menu/dashboard/net-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -1632,6 +1642,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Net</span>
                             </Link>
+                            <BlogSidebarLink project="net" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -1712,6 +1723,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Creators List
                                     </Link>
+                                    <BlogSidebarLink project="creators" variant="list" onClose={onClose} />
                                     <Link
                                         href="/creators-menu/dashboard/creator-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -1741,6 +1753,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Creator</span>
                             </Link>
+                            <BlogSidebarLink project="creators" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>
@@ -1821,6 +1834,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                     >
                                         Guild List
                                     </Link>
+                                    <BlogSidebarLink project="guild" variant="list" onClose={onClose} />
                                     <Link
                                         href="/guild-menu/dashboard/guild-submissions"
                                         className={`block rounded-lg px-0 py-2 text-sm transition-colors ${
@@ -1850,6 +1864,7 @@ export default function DashboardSidebar({ isOpen, onClose, onToggleCollapse }: 
                                 />
                                 <span>Add Guild</span>
                             </Link>
+                            <BlogSidebarLink project="guild" variant="add" onClose={onClose} />
                         </div>
                     )}
                 </div>

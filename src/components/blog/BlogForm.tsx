@@ -6,17 +6,16 @@ import { useRouter } from 'next/navigation'
 import { FiEye, FiImage, FiLink, FiUsers } from 'react-icons/fi'
 import { toast } from 'sonner'
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
-import { createGithubBlog, getGithubBlogById, updateGithubBlog } from '@/services/github-repos/githubBlogService'
-import { GithubBlogRequest } from '@/types/github-blog'
-import { validateGithubBlog } from '@/utils/githubBlogValidation'
+import { BlogProject, blogProjects, getBlogDashboardRoute } from '@/config/blogProjects'
+import { createBlog, getBlogById, updateBlog } from '@/services/blog/blogService'
+import { BlogRequest } from '@/types/blog'
+import { validateBlog } from '@/utils/blogValidation'
 import { Spinner } from '@/components/ui/shadcn-io/spinner'
 import BlogField, { blogButtonClass, blogInputClass } from './BlogField'
 import BlogContentEditor from './BlogContentEditor'
 import BlogPreview from './BlogPreview'
 
-const listRoute = '/github-repos-menu/dashboard/blog-list'
-
-function emptyBlog(): GithubBlogRequest {
+function emptyBlog(): BlogRequest {
   return {
     slug: '', name: '', description: '', image_url: '', categories: [],
     media: { screenshot_urls: [], video_url: '' },
@@ -25,10 +24,12 @@ function emptyBlog(): GithubBlogRequest {
   }
 }
 
-export default function GithubBlogForm({ id }: { id?: string }) {
+export default function BlogForm({ project, id }: { project: BlogProject; id?: string }) {
   useAuthGuard()
+  const label = blogProjects[project].label
+  const listRoute = `${getBlogDashboardRoute(project)}/blog-list`
   const router = useRouter()
-  const [form, setForm] = useState<GithubBlogRequest>(emptyBlog)
+  const [form, setForm] = useState<BlogRequest>(emptyBlog)
   const [categories, setCategories] = useState('')
   const [createdAt, setCreatedAt] = useState('')
   const [loading, setLoading] = useState(!!id)
@@ -42,7 +43,7 @@ export default function GithubBlogForm({ id }: { id?: string }) {
     let active = true
     setLoading(true)
     setError(null)
-    getGithubBlogById(id).then(blog => {
+    getBlogById(project, id).then(blog => {
       if (!active) return
       setForm({
         slug: blog.slug, name: blog.name, description: blog.description, image_url: blog.image_url,
@@ -59,10 +60,16 @@ export default function GithubBlogForm({ id }: { id?: string }) {
       if (active) setLoading(false)
     })
     return () => { active = false }
-  }, [id, retry])
+  }, [project, id, retry])
 
-  const update = (patch: Partial<GithubBlogRequest>) => setForm(previous => ({ ...previous, ...patch }))
-  const article: GithubBlogRequest = { ...form, categories: [...new Set(categories.split(',').map(value => value.trim()).filter(Boolean))] }
+  const update = (patch: Partial<BlogRequest>) => setForm(previous => ({ ...previous, ...patch }))
+  const article: BlogRequest = { ...form, categories: [...new Set(categories.split(',').map(value => value.trim()).filter(Boolean))] }
+
+  const resetForm = () => {
+    setForm(emptyBlog())
+    setCategories('')
+    setPreview(false)
+  }
 
   const removeScreenshot = (index: number) => {
     setForm(previous => ({
@@ -79,17 +86,18 @@ export default function GithubBlogForm({ id }: { id?: string }) {
     event.preventDefault()
     if (saving) return
     const payload = { ...article, slug: article.slug.trim(), name: article.name.trim() }
-    const validationError = validateGithubBlog(payload)
+    const validationError = validateBlog(payload)
     if (validationError) {
       toast.error(validationError)
       return
     }
     setSaving(true)
     try {
-      if (id) await updateGithubBlog(id, payload)
-      else await createGithubBlog(payload)
+      if (id) await updateBlog(project, id, payload)
+      else await createBlog(project, payload)
       toast.success(id ? 'Blog updated successfully!' : 'Blog created successfully!')
-      router.push(listRoute)
+      if (id) router.push(listRoute)
+      else resetForm()
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Failed to save blog')
     } finally {
@@ -103,8 +111,8 @@ export default function GithubBlogForm({ id }: { id?: string }) {
   return (
     <div className="space-y-12 mt-6 sm:mt-0">
       <div className="text-center sm:text-left sm:w-5/6 sm:mx-auto">
-        <h2 className="text-lg sm:text-2xl font-semibold text-primary">{id ? 'Edit GitHub Blog' : 'Add New GitHub Blog'}</h2>
-        <p className="text-xs sm:text-sm text-secondary">{id ? 'Update your GitHub Blog article' : 'Create a new GitHub Blog article'}</p>
+        <h2 className="text-lg sm:text-2xl font-semibold text-primary">{id ? `Edit ${label} Blog` : `Add New ${label} Blog`}</h2>
+        <p className="text-xs sm:text-sm text-secondary">{id ? `Update your ${label} Blog article` : `Create a new ${label} Blog article`}</p>
         {createdAt && <p className="text-xs sm:text-sm text-secondary mt-2">Created: {new Date(createdAt).toLocaleString()}</p>}
       </div>
       <form onSubmit={handleSubmit} className="bg-[var(--fill-color)] border border-border-divider rounded-xl p-6 pb-1 shadow-lg w-full sm:w-5/6 mx-auto mb-8">
@@ -169,7 +177,7 @@ export default function GithubBlogForm({ id }: { id?: string }) {
           <button type="button" className={blogButtonClass} onClick={() => setPreview(value => !value)} aria-expanded={preview}><FiEye /> {preview ? 'Hide preview' : 'Preview article'}</button>
           <button type="button" disabled={saving} className={`${blogButtonClass} px-6`} onClick={() => {
             if (id) router.push(listRoute)
-            else { setForm(emptyBlog()); setCategories(''); setPreview(false) }
+            else resetForm()
           }}>{id ? 'Cancel' : 'Reset Form'}</button>
           <button type="submit" disabled={saving} className="bg-blue-600 hover:bg-blue-700 cursor-pointer disabled:bg-blue-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg text-sm font-medium flex items-center justify-center transition-colors duration-200">{saving ? id ? 'Updating...' : 'Creating...' : id ? 'Update Blog' : 'Create Blog'}</button>
         </div>
