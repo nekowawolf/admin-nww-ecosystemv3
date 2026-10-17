@@ -1,17 +1,18 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { FaArrowLeft } from 'react-icons/fa'
+import { FiArrowLeft } from 'react-icons/fi'
 
 export default function BackButton() {
   const router = useRouter()
   
   return (
-    <button 
+    <button
+      type="button"
       onClick={() => router.back()} 
-      className="cursor-pointer flex items-center gap-2 text-secondary hover:text-primary transition-colors mb-6 group text-sm font-medium w-fit"
+      className="back-control mb-6 w-fit"
     >
-      <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> 
+      <FiArrowLeft aria-hidden="true" />
       <span>Back</span>
     </button>
   )

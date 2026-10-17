@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { FiArrowLeft } from 'react-icons/fi'
 import { getCommunityById } from '@/services/community/communityService'
 import EditCommunityForm from '@/components/community/EditCommunityForm'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
@@ -72,9 +73,11 @@ export default function EditCommunityClient() {
           <h2 className="text-xl font-semibold text-primary mb-2">Error</h2>
           <p className="text-secondary mb-4">{error}</p>
           <button
+            type="button"
             onClick={() => router.push('/community-menu/dashboard/community-list')}
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="back-control"
           >
+            <FiArrowLeft aria-hidden="true" />
             Back to Communities
           </button>
         </div>
@@ -89,9 +92,11 @@ export default function EditCommunityClient() {
           <h2 className="text-xl font-semibold text-primary mb-2">Community Not Found</h2>
           <p className="text-secondary mb-4 sm:text-base text-sm">The community you're looking for doesn't exist.</p>
           <button
+            type="button"
             onClick={() => router.push('/community-menu/dashboard/community-list')}
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="back-control"
           >
+            <FiArrowLeft aria-hidden="true" />
             Back to Communities
           </button>
         </div>

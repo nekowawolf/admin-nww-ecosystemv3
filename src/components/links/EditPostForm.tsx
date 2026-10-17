@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
+import { FiArrowLeft } from 'react-icons/fi'
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
 import { toast } from 'sonner'
@@ -91,9 +92,11 @@ export default function EditPostForm() {
           <h2 className="text-xl font-semibold text-primary mb-2">Error</h2>
           <p className="text-secondary mb-4">{error}</p>
           <button
+            type="button"
             onClick={() => router.push('/links-menu/dashboard/posts')}
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="back-control"
           >
+            <FiArrowLeft aria-hidden="true" />
             Back to Posts
           </button>
         </div>

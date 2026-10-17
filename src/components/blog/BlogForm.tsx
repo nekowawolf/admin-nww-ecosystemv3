@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FiEye, FiImage, FiLink, FiUsers } from 'react-icons/fi'
+import { FiArrowLeft, FiEye, FiImage, FiLink, FiUsers } from 'react-icons/fi'
 import { toast } from 'sonner'
 import { useAuthGuard } from '@/hooks/auth-guard/useAuthGuard'
 import { BlogProject, blogProjects, getBlogDashboardRoute } from '@/config/blogProjects'
@@ -106,7 +106,7 @@ export default function BlogForm({ project, id }: { project: BlogProject; id?: s
   }
 
   if (loading) return <div className="flex justify-center py-10" role="status" aria-label="Loading blog"><Spinner variant="circle" size={40} className="text-blue-500" /></div>
-  if (error) return <div className="flex flex-col items-center gap-4 py-10 px-6"><p role="alert" className="text-red-500 text-center py-4 px-6 bg-red-500/10 rounded-lg border border-red-500/20 w-full max-w-md">{error}</p><div className="flex gap-4"><button type="button" className={blogButtonClass} onClick={() => setRetry(value => value + 1)}>Retry</button><Link href={listRoute} className={blogButtonClass}>Back to blogs</Link></div></div>
+  if (error) return <div className="flex flex-col items-center gap-4 py-10 px-6"><p role="alert" className="text-red-500 text-center py-4 px-6 bg-red-500/10 rounded-lg border border-red-500/20 w-full max-w-md">{error}</p><div className="flex gap-4"><button type="button" className={blogButtonClass} onClick={() => setRetry(value => value + 1)}>Retry</button><Link href={listRoute} className="back-control"><FiArrowLeft aria-hidden="true" />Back to blogs</Link></div></div>
 
   return (
     <div className="space-y-12 mt-6 sm:mt-0">

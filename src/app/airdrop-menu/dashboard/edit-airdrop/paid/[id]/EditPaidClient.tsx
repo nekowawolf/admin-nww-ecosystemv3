@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { FiArrowLeft } from 'react-icons/fi'
 import { getAirdropById } from '@/services/airdrop/airdropService'
 import EditAirdropForm from '@/components/airdrops/EditAirdropForm'
 import { Spinner } from "@/components/ui/shadcn-io/spinner"
@@ -58,9 +59,11 @@ export default function EditAirdropPage() {
           <h2 className="text-xl font-semibold text-primary mb-2">Error</h2>
           <p className="text-secondary mb-4">{error}</p>
           <button
+            type="button"
             onClick={() => router.push('/airdrop-menu/dashboard/airdrop/paid')}
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="back-control"
           >
+            <FiArrowLeft aria-hidden="true" />
             Back to Dashboard
           </button>
         </div>
@@ -75,9 +78,11 @@ export default function EditAirdropPage() {
           <h2 className="text-xl font-semibold text-primary mb-2">Airdrop Not Found</h2>
           <p className="text-secondary mb-4">The airdrop you're looking for doesn't exist.</p>
           <button
+            type="button"
             onClick={() => router.push('/airdrop-menu/dashboard/airdrop/paid')}
-            className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg sm:text-base text-sm"
+            className="back-control"
           >
+            <FiArrowLeft aria-hidden="true" />
             Back to Dashboard
           </button>
         </div>
