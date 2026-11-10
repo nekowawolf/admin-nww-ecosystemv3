@@ -167,34 +167,32 @@ export default function NotesManager() {
 
   return (
     <div className="w-full mt-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-        <div>
-          <h2 className="text-xl font-bold text-primary">Admin Notes</h2>
-          <p className="text-sm text-secondary">Manage your journals, ideas, and tasks</p>
-        </div>
-        {view === 'list' && (
-          <div className="flex items-center gap-3 mt-4 sm:mt-0">
-            <FilterDropdown selectedType={selectedType} setSelectedType={setSelectedType} />
-            <button
-              onClick={() => setView('add')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <FaPlus size={12} /> Add Note
-            </button>
-          </div>
-        )}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold text-primary">Admin Notes</h2>
+        <p className="text-sm text-secondary">Manage your journals, ideas, and tasks</p>
       </div>
 
       {view === 'list' && (
         <>
-          <SearchInput
-            placeholder="Search Admin Notes..."
-            value={search}
-            onChange={setSearch}
-            suggestionData={notes}
-            suggestionKey="title"
-            wrapperClassName="mb-6"
-          />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <SearchInput
+              placeholder="Search Admin Notes..."
+              value={search}
+              onChange={setSearch}
+              suggestionData={notes}
+              suggestionKey="title"
+              wrapperClassName="w-full sm:max-w-xs md:max-w-sm"
+            />
+            <div className="flex items-center gap-3 shrink-0">
+              <FilterDropdown selectedType={selectedType} setSelectedType={setSelectedType} />
+              <button
+                onClick={() => setView('add')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <FaPlus size={12} /> Add Note
+              </button>
+            </div>
+          </div>
 
           {loading ? (
             <div className="flex justify-center py-12">
